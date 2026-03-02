@@ -1,0 +1,80 @@
+// ============================================
+// LORENZ CHAOS ATTRACTOR — Audio Rate
+// Phase 2, Step 2.1
+// ============================================
+//
+// The Lorenz system: three coupled differential equations
+// that produce deterministic chaos. Not random. Not periodic.
+// Structured unpredictability — alive.
+//
+// At audio rate, it produces a signal somewhere between
+// noise and tone. Sweep rho to find periodic orbits (pitched)
+// and chaotic regimes (noise-like).
+//
+// INPUTS:
+//   in1 = external modulation of rho (optional, additive)
+//
+// OUTPUTS:
+//   out1 = x axis (most chaotic — main audio output)
+//   out2 = y axis (smoother)
+//   out3 = z axis (slowest variation)
+//
+// USE AS EXCITATION:
+//   Connect out1/out2/out3 to resonator inputs.
+//   The chaos excites the resonant bodies.
+//   This is the foundation of Project 1 (Feedback Instrument).
+//
+// SEND TO TOUCHDESIGNER:
+//   Route out1, out2, out3 through [udpsend] as OSC
+//   /lorenz/x, /lorenz/y, /lorenz/z
+//   In TD: CHOP In → map to Geo COMP position → Trail SOP
+//   You see the strange attractor forming in 3D space.
+//
+// ============================================
+
+// --- Parameters ---
+Param sigma(10);      // Prandtl number (flow viscosity)
+Param rho(28);        // Rayleigh number (convective threshold)
+                      //   rho < 24.74: system converges to fixed point
+                      //   rho = 24.74: onset of chaos (Hopf bifurcation)
+                      //   rho = 28: classic chaotic regime
+                      //   rho > 28: different chaotic structures
+                      //   SWEEP THIS — it's your main timbral control
+Param beta(2.667);    // Geometric factor (aspect ratio)
+Param dt(0.0001);     // Integration step size
+                      //   Smaller = more stable, less aliasing
+                      //   Larger = more aggressive, risk of blowup
+                      //   0.0001 is safe. 0.001 is aggressive.
+Param gain(0.05);     // Output amplitude scaling
+                      //   The raw Lorenz values are ±20-30, need scaling
+
+// --- State variables ---
+History x(0.1);       // Initial conditions matter!
+History y(0);         // Different initial conditions = different trajectory
+History z(0);         // But same attractor shape (that's the point)
+
+// --- External modulation ---
+rho_mod = rho + in1;
+
+// --- Euler integration of the Lorenz system ---
+// dx/dt = sigma * (y - x)
+// dy/dt = x * (rho - z) - y
+// dz/dt = x * y - beta * z
+
+dx = sigma * (y - x);
+dy = x * (rho_mod - z) - y;
+dz = x * y - beta * z;
+
+x += dx * dt;
+y += dy * dt;
+z += dz * dt;
+
+// --- Safety clamp (prevent NaN/inf from blowing up your speakers) ---
+x = clamp(x, -100, 100);
+y = clamp(y, -100, 100);
+z = clamp(z, -100, 100);
+
+// --- Output ---
+out1 = x * gain;
+out2 = y * gain;
+out3 = z * gain;

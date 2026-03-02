@@ -1,0 +1,7 @@
+// TEST: simple echo. Click the button, hear repeated echoes.
+// If you hear echoes decaying, the Delay object works.
+// If just one click, the Delay syntax is wrong for your Max version.
+Delay d(48000);
+delayed = d.read(22050);
+d.write(in1 + delayed * 0.6);
+out1 = delayed;

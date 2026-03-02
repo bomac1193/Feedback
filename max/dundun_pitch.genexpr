@@ -1,0 +1,81 @@
+// ============================================
+// DUNDUN SPEECH-TONE PITCH MAPPER
+// Project 3, Step 4.3
+// ============================================
+//
+// Maps a Kuramoto oscillator's phase (0-1) to one of
+// three pitch states from the Yoruba dundun talking drum:
+//
+//   Low  (ohùn ìsàlè) — the ground, the statement
+//   Mid  (àárín)       — the question, the bridge
+//   High (òkè)         — the exclamation, the peak
+//
+// The dundun doesn't play "notes" — it SPEAKS.
+// The transitions between tones are GLIDES, not steps.
+// The glide IS the melody. The rhythm engine speaks Yoruba.
+//
+// INPUTS:
+//   in1 = phase (0-1 from Kuramoto out8-out13)
+//
+// OUTPUTS:
+//   out1 = frequency (Hz) with smooth glide between tones
+//
+// HOW TO WIRE:
+//   [gen~ kuramoto] out8 -> [gen~ dundun_pitch] -> [param freq] on resonator 1
+//   [gen~ kuramoto] out9 -> [gen~ dundun_pitch] -> [param freq] on resonator 2
+//   ... etc for all 6 oscillators
+//
+// Each resonator gets its own dundun_pitch instance.
+// Because each oscillator has different phase, each
+// resonator speaks a different "word" at any moment.
+// Together: a conversation.
+//
+// ============================================
+
+// --- Declarations ---
+Param root(110);          // Root frequency (Hz) — the Low tone sits here
+Param interval_low_mid(200);   // Cents between Low and Mid (~200 = Yoruba speech)
+Param interval_mid_high(200);  // Cents between Mid and High (~200 = Yoruba speech)
+Param glide_ms(30);       // Glide time in ms (30ms = quick speech-like bend)
+                          // Shorter = more percussive, speech-like
+                          // Longer = more melodic, singing
+History current_freq;
+
+// --- Compute the three frequencies ---
+// Dundun intervals are approximately 200 cents each
+// but the parameter lets you stretch/compress for expression
+
+low_freq  = root;
+mid_freq  = root * pow(2.0, interval_low_mid / 1200.0);
+high_freq = root * pow(2.0, (interval_low_mid + interval_mid_high) / 1200.0);
+
+// --- Phase input (0-1 from Kuramoto) ---
+phase = in1;
+
+// --- Map phase to target frequency ---
+// Phase 0.0  - 0.33: Low tone  (ohùn ìsàlè)
+// Phase 0.33 - 0.66: Mid tone  (àárín)
+// Phase 0.66 - 1.0:  High tone (òkè)
+//
+// As the oscillator cycles, it speaks: Low → Mid → High → Low → ...
+// When oscillators sync (high K), they speak in UNISON.
+// When free (low K), they speak INDEPENDENTLY — a cacophony of voices.
+
+target = (phase < 0.333) ? low_freq :
+         (phase < 0.666) ? mid_freq : high_freq;
+
+// --- Smooth glide to target ---
+// One-pole lowpass: responds in ~glide_ms milliseconds
+// This is how the dundun bends — not a step, a GLIDE
+
+// Initialize to root on first sample
+current_freq = (current_freq == 0) ? root : current_freq;
+
+// Glide coefficient: how fast we approach the target
+// exp(-1 / (time_constant * samplerate)) for one-pole smoothing
+glide_coeff = 1.0 - exp(-1.0 / (max(glide_ms, 0.1) * samplerate / 1000.0));
+
+current_freq += (target - current_freq) * glide_coeff;
+
+// --- Output ---
+out1 = current_freq;

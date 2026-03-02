@@ -1,0 +1,63 @@
+// ============================================
+// ROSSLER CHAOS ATTRACTOR — Audio Rate
+// Phase 2, Step 2.3
+// ============================================
+//
+// The Rossler system: simpler than Lorenz, with a different
+// character. More periodic orbits, smoother transitions,
+// less aggressive chaos.
+//
+// Where Lorenz = aggressive, chaotic, granular
+// Rossler = smoother, more melodic, spiral-like
+//
+// Good for: tonal moments, melodic chaos, gentler textures.
+// The two attractors together give you a full dynamic range.
+//
+// OUTPUTS:
+//   out1 = x axis
+//   out2 = y axis
+//   out3 = z axis (has the "spikes" — the most dramatic)
+//
+// ============================================
+
+// --- Parameters ---
+Param a(0.2);         // Controls spiral speed
+Param b(0.2);         // Controls spiral flatness
+Param c(5.7);         // Controls the "folding" — the chaos
+                      //   c < 4: periodic orbit (clean spiral)
+                      //   c = 5.7: classic chaos
+                      //   c > 6: more complex chaos
+                      //   SWEEP THIS for timbral control
+Param dt(0.0001);     // Integration step
+Param gain(0.1);      // Output scaling
+
+// --- State ---
+History x(0.1);
+History y(0);
+History z(0);
+
+// --- External modulation ---
+c_mod = c + in1;
+
+// --- Rossler equations ---
+// dx/dt = -y - z
+// dy/dt = x + a*y
+// dz/dt = b + z*(x - c)
+
+dx = -y - z;
+dy = x + a * y;
+dz = b + z * (x - c_mod);
+
+x += dx * dt;
+y += dy * dt;
+z += dz * dt;
+
+// --- Safety ---
+x = clamp(x, -200, 200);
+y = clamp(y, -200, 200);
+z = clamp(z, -200, 200);
+
+// --- Output ---
+out1 = x * gain;
+out2 = y * gain;
+out3 = z * gain;

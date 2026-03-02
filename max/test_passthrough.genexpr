@@ -1,0 +1,4 @@
+// TEST: does gen~ load this file?
+// If you hear the click, the file loaded.
+// If silence, gen~ can't find the file.
+out1 = in1;

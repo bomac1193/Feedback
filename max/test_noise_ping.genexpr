@@ -1,0 +1,10 @@
+// TEST: trigger a noise burst, no delay line.
+// Click the button. You should hear a short burst of noise.
+// If you hear this but not the resonator, the delay line is the issue.
+Param drive(0.5);
+History prev_trig(0);
+trigger = (in1 > 0.5) * (prev_trig <= 0.5);
+prev_trig = in1;
+History count(0);
+count = trigger ? 500 : max(count - 1, 0);
+out1 = (count > 0) ? noise() * drive : 0;

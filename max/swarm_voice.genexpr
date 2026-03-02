@@ -1,0 +1,71 @@
+// ============================================
+// SWARM VOICE — Single Resonator Voice for poly~
+// Project 4, Step 5.1
+// ============================================
+//
+// INPUTS:
+//   in1 = trigger (impulse, 0 or 1)
+//   in2 = frequency (Hz, from swarm note event)
+//   in3 = velocity (0-1, from swarm agent speed)
+//
+// OUTPUTS:
+//   out1 = audio left
+//   out2 = audio right
+//
+// ============================================
+
+// --- Declarations ---
+Param voice_id(0);         // 0-5, sets the timbral character
+Param master_gain(0.3);
+History prev_trig(0);
+History exc_count(0);
+Delay d(48000);
+History prev_del(0);
+
+// --- Per-voice timbre (heterogeneous sound ideal) ---
+damping = (voice_id == 0) ? 0.9995 :
+          (voice_id == 1) ? 0.998 :
+          (voice_id == 2) ? 0.996 :
+          (voice_id == 3) ? 0.97 :
+          (voice_id == 4) ? 0.9998 : 0.994;
+
+brightness = (voice_id == 0) ? 0.2 :
+             (voice_id == 1) ? 0.4 :
+             (voice_id == 2) ? 0.8 :
+             (voice_id == 3) ? 0.9 :
+             (voice_id == 4) ? 0.3 : 0.95;
+
+// --- Stereo pan per voice ---
+pan_l = (voice_id == 0) ? 0.7 :
+        (voice_id == 1) ? 0.5 :
+        (voice_id == 2) ? 0.2 :
+        (voice_id == 3) ? 0.4 :
+        (voice_id == 4) ? 0.6 : 0.3;
+
+pan_r = 1.0 - pan_l;
+
+// --- Inputs ---
+freq = max(in2, 20);
+velocity = max(in3, 0);
+delay_len = samplerate / freq;
+
+// --- Trigger → noise burst excitation ---
+trigger = (in1 > 0.5) * (prev_trig <= 0.5);
+prev_trig = in1;
+
+exc_count = trigger ? delay_len : max(exc_count - 1, 0);
+excitation = (exc_count > 0) ? noise() * velocity * 0.5 : 0;
+
+// --- Waveguide resonator ---
+delayed = d.read(delay_len);
+
+avg = (delayed + prev_del) * 0.5;
+prev_del = delayed;
+filtered = delayed * brightness + avg * (1.0 - brightness);
+
+output = filtered * damping;
+d.write(excitation + output);
+
+// --- Output ---
+out1 = output * pan_l * master_gain;
+out2 = output * pan_r * master_gain;

@@ -1,0 +1,88 @@
+// ============================================
+// YORUBA ANHEMITONIC PENTATONIC TUNING
+// Phase 1, Step 1.2
+// ============================================
+//
+// Converts scale degree (0-4) + octave to frequency.
+// Built from stacked fourths and fifths — NOT equal temperament.
+// Intervals: ~200, ~200, ~300, ~200, ~300 cents
+//
+// The flex parameter interpolates between Pythagorean tuning
+// (built from pure fifths) and just intonation (simpler ratios).
+// Yoruba intonation is FLEXIBLE — this models that.
+//
+// INPUTS:
+//   in1 = scale degree (0-4, integers. wraps if >4)
+//   in2 = octave offset (0 = root octave, 1 = octave up, -1 = down)
+//
+// OUTPUTS:
+//   out1 = frequency in Hz
+//
+// HOW TO USE IN MAX:
+//   1. [number] -> [sig~] -> [gen~ yoruba_tuning] -> next stage
+//   2. Degree 0 = root, degree 3 = the fifth (most consonant interval)
+//   3. Play degree 0 and degree 3 together. Should sound warm, resolved.
+//   4. Sweep flex: 0 = Pythagorean (bright fifths), 1 = just (sweeter thirds)
+//   5. Output goes to the resonator's freq input
+//
+// CONNECT TO RESONATOR:
+//   [gen~ yoruba_tuning] -> [gen~ resonator @freq (from output)]
+//   OR use [param freq] inside resonator and send the frequency as a message
+//
+// ============================================
+
+// --- Parameters ---
+Param root(110);       // Root frequency in Hz (A2 = 110, sub bass at 55 or 27.5)
+Param flex(0.5);       // 0 = Pythagorean, 1 = just intonation, 0.5 = between
+
+// --- Input: degree and octave ---
+degree_raw = in1;
+octave = in2;
+
+// --- Wrap degree to 0-4 range ---
+// If someone sends degree 5, it wraps to 0 in the next octave
+degree = mod(floor(degree_raw), 5);
+octave_extra = floor(degree_raw / 5);
+
+// --- Pythagorean ratios (built from pure fifths: 3/2) ---
+// C -> G -> D -> A -> E, reordered into one octave: C D E G A
+// degree 0: 1/1         = 0 cents
+// degree 1: 9/8         = 204 cents (two fifths up, octave down)
+// degree 2: 81/64       = 408 cents (four fifths up, two octaves down)
+// degree 3: 3/2         = 702 cents (one fifth up)
+// degree 4: 27/16       = 906 cents (three fifths up, octave down)
+
+pyth_0 = 1.0;           // 0 cents
+pyth_1 = 1.125;         // 9/8 = 204 cents
+pyth_2 = 1.265625;      // 81/64 = 408 cents
+pyth_3 = 1.5;           // 3/2 = 702 cents
+pyth_4 = 1.6875;        // 27/16 = 906 cents
+
+// --- Just intonation ratios (simpler, sweeter) ---
+// degree 0: 1/1         = 0 cents
+// degree 1: 10/9        = 182 cents (minor whole tone)
+// degree 2: 5/4         = 386 cents (just major third)
+// degree 3: 3/2         = 702 cents (same — the fifth is universal)
+// degree 4: 5/3         = 884 cents (just major sixth)
+
+just_0 = 1.0;
+just_1 = 1.111111;      // 10/9
+just_2 = 1.25;          // 5/4
+just_3 = 1.5;           // 3/2
+just_4 = 1.666667;      // 5/3
+
+// --- Interpolate between Pythagorean and just ---
+ratio_0 = 1.0;  // Root is always 1.0
+ratio_1 = pyth_1 * (1 - flex) + just_1 * flex;
+ratio_2 = pyth_2 * (1 - flex) + just_2 * flex;
+ratio_3 = 1.5;  // The fifth is stable across all systems
+ratio_4 = pyth_4 * (1 - flex) + just_4 * flex;
+
+// --- Select ratio based on degree ---
+ratio = (degree == 0) ? ratio_0 :
+        (degree == 1) ? ratio_1 :
+        (degree == 2) ? ratio_2 :
+        (degree == 3) ? ratio_3 : ratio_4;
+
+// --- Final frequency ---
+out1 = root * ratio * pow(2.0, octave + octave_extra);

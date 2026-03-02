@@ -1,0 +1,17 @@
+{
+	"patcher" : 	{
+		"fileversion" : 1,
+		"appversion" : { "major" : 8, "minor" : 6, "revision" : 0, "architecture" : "x64", "modernui" : 1 },
+		"rect" : [ 100, 100, 400, 250 ],
+		"editing_bgcolor" : [ 0.65, 0.65, 0.65, 1.0 ],
+		"boxes" : [
+			{ "box" : { "id" : "obj-in1", "maxclass" : "newobj", "text" : "in 1", "numinlets" : 0, "numoutlets" : 1, "outlettype" : [ "" ], "patching_rect" : [ 50.0, 15.0, 30.0, 22.0 ] } },
+			{ "box" : { "id" : "obj-cb", "maxclass" : "codebox", "numinlets" : 1, "numoutlets" : 1, "outlettype" : [ "" ], "patching_rect" : [ 50.0, 55.0, 350.0, 120.0 ], "code" : "// TEST: noise burst on trigger.\n// Hear burst = trigger + noise work.\nParam drive(0.5);\nHistory prev_trig(0);\ntrigger = (in1 > 0.5) * (prev_trig <= 0.5);\nprev_trig = in1;\nHistory count(0);\ncount = trigger ? 500 : max(count - 1, 0);\nout1 = (count > 0) ? noise() * drive : 0;" } },
+			{ "box" : { "id" : "obj-out1", "maxclass" : "newobj", "text" : "out 1", "numinlets" : 1, "numoutlets" : 0, "patching_rect" : [ 50.0, 195.0, 35.0, 22.0 ] } }
+		],
+		"lines" : [
+			{ "patchline" : { "source" : [ "obj-in1", 0 ], "destination" : [ "obj-cb", 0 ] } },
+			{ "patchline" : { "source" : [ "obj-cb", 0 ], "destination" : [ "obj-out1", 0 ] } }
+		]
+	}
+}

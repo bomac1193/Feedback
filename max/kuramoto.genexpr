@@ -1,0 +1,261 @@
+// ============================================
+// KURAMOTO COUPLED OSCILLATOR ENGINE
+// Project 3: Coupled Rhythm Engine
+// Phase 4, Step 4.1
+// ============================================
+//
+// 6 coupled oscillators whose synchronization is
+// controlled by coupling strength K.
+//
+// K = 0:   all oscillators free. Polymetric scatter.
+// K = 0.3-0.7: THE SWEET SPOT. Groove EMERGES.
+//              Partial sync. Some voices lock, others drift.
+//              This is where the music lives.
+// K = 1+:  all locked. Unison pulse. Dramatic.
+//
+// The frequency ratios encode African timeline relationships,
+// NOT Western subdivisions. These are polyrhythmic ratios
+// derived from West African bell patterns and interlocking.
+//
+// The math: dθi/dt = ωi + (K/N) * Σ sin(θj - θi)
+// Each oscillator is pulled toward every other oscillator
+// by an amount proportional to K.
+//
+// OUTPUTS:
+//   out1-out6:   trigger impulses (1-sample, excite resonators)
+//   out7:        order parameter r (0-1, groove meter for TD)
+//   out8-out13:  phases normalized 0-1 (for OSC to TD)
+//
+// HOW TO USE:
+//   [gen~ kuramoto]
+//   |1  |2  |3  |4  |5  |6     <- triggers to resonators
+//   |7                          <- order param r to TD
+//   |8  |9  |10 |11 |12 |13    <- phases to TD / dundun_pitch
+//
+// CONNECT TO RESONATORS:
+//   out1 -> resonator 1 excitation (sub bass)
+//   out2 -> resonator 2 excitation (body)
+//   out3 -> resonator 3 excitation (ogene metallic)
+//   out4 -> resonator 4 excitation (transient click)
+//   out5 -> resonator 5 excitation (drone)
+//   out6 -> resonator 6 excitation (crystalline)
+//
+// SEND TO TOUCHDESIGNER:
+//   out7 -> [udpsend] /kuramoto/r
+//   out8-out13 -> [pak f f f f f f] -> [udpsend] /kuramoto/phases
+//   Visualize: 6 dots on a circle at their phase angles.
+//   Lines between them, thickness = K. Color = warm(synced)/cool(free).
+//   Order parameter r = groove meter bar.
+//
+// ============================================
+
+
+// ====================
+// DECLARATIONS
+// ====================
+
+Param K(0.5);              // Coupling strength — YOUR MAIN KNOB
+                           // 0 = free, 0.3-0.7 = groove, 1+ = locked
+
+Param tempo(120);          // Base tempo in BPM
+
+// Natural frequency RATIOS — these encode the polyrhythm
+// Default: West African bell pattern relationships
+Param ratio1(1.0);         // Base pulse (the timeline)
+Param ratio2(1.5);         // 3:2 cross-rhythm (hemiola)
+Param ratio3(1.333);       // 4:3 relationship
+Param ratio4(0.75);        // Half-time feel
+Param ratio5(2.0);         // Double-time
+Param ratio6(0.667);       // Slow cycle (2:3 against base)
+
+// Trigger shape
+Param trig_width(0.001);   // Trigger pulse width in seconds
+                           // 0.001 = 1ms click
+                           // 0.01 = 10ms for softer attack
+
+// Phase state
+// Initial phases spread evenly so they don't all start synced
+History t1(0.0);
+History t2(1.047);       // 2π/6 apart
+History t3(2.094);
+History t4(3.142);
+History t5(4.189);
+History t6(5.236);
+
+// Trigger pulse counters
+History trig_count1(0);
+History trig_count2(0);
+History trig_count3(0);
+History trig_count4(0);
+History trig_count5(0);
+History trig_count6(0);
+
+
+// ====================
+// CONSTANTS
+// ====================
+
+twopi = 6.28318530718;
+N = 6;
+dt_step = 1.0 / samplerate;
+
+
+// ====================
+// NATURAL FREQUENCIES
+// ====================
+// Convert tempo (BPM) to frequency (Hz), then to angular velocity
+
+base_freq = tempo / 60.0;
+
+w1 = base_freq * ratio1 * twopi;
+w2 = base_freq * ratio2 * twopi;
+w3 = base_freq * ratio3 * twopi;
+w4 = base_freq * ratio4 * twopi;
+w5 = base_freq * ratio5 * twopi;
+w6 = base_freq * ratio6 * twopi;
+
+
+// ====================
+// KURAMOTO COUPLING
+// ====================
+// dθi/dt = ωi + (K/N) * Σ sin(θj - θi)
+//
+// The sin(θj - θi) term:
+//   - When θj is AHEAD of θi: sin > 0, pulls θi forward
+//   - When θj is BEHIND θi: sin < 0, pulls θi back
+//   - When they're IN PHASE: sin = 0, no pull
+// Net effect: oscillators attract toward phase alignment.
+// Higher K = stronger pull = faster synchronization.
+
+coupling = K / N;
+
+sum1 = sin(t2-t1) + sin(t3-t1) + sin(t4-t1) + sin(t5-t1) + sin(t6-t1);
+sum2 = sin(t1-t2) + sin(t3-t2) + sin(t4-t2) + sin(t5-t2) + sin(t6-t2);
+sum3 = sin(t1-t3) + sin(t2-t3) + sin(t4-t3) + sin(t5-t3) + sin(t6-t3);
+sum4 = sin(t1-t4) + sin(t2-t4) + sin(t3-t4) + sin(t5-t4) + sin(t6-t4);
+sum5 = sin(t1-t5) + sin(t2-t5) + sin(t3-t5) + sin(t4-t5) + sin(t6-t5);
+sum6 = sin(t1-t6) + sin(t2-t6) + sin(t3-t6) + sin(t4-t6) + sin(t5-t6);
+
+// Phase derivatives (angular velocity + coupling)
+d1 = w1 + coupling * sum1;
+d2 = w2 + coupling * sum2;
+d3 = w3 + coupling * sum3;
+d4 = w4 + coupling * sum4;
+d5 = w5 + coupling * sum5;
+d6 = w6 + coupling * sum6;
+
+
+// ====================
+// PHASE INTEGRATION
+// ====================
+
+t1_new = t1 + d1 * dt_step;
+t2_new = t2 + d2 * dt_step;
+t3_new = t3 + d3 * dt_step;
+t4_new = t4 + d4 * dt_step;
+t5_new = t5 + d5 * dt_step;
+t6_new = t6 + d6 * dt_step;
+
+
+// ====================
+// TRIGGER DETECTION
+// ====================
+// A trigger fires when the phase WRAPS past 2π
+// This means one complete cycle — the oscillator's "beat"
+
+wrap1 = (t1_new >= twopi) ? 1 : 0;
+wrap2 = (t2_new >= twopi) ? 1 : 0;
+wrap3 = (t3_new >= twopi) ? 1 : 0;
+wrap4 = (t4_new >= twopi) ? 1 : 0;
+wrap5 = (t5_new >= twopi) ? 1 : 0;
+wrap6 = (t6_new >= twopi) ? 1 : 0;
+
+
+// ====================
+// PHASE WRAP (modulo 2π)
+// ====================
+
+t1 = t1_new - twopi * floor(t1_new / twopi);
+t2 = t2_new - twopi * floor(t2_new / twopi);
+t3 = t3_new - twopi * floor(t3_new / twopi);
+t4 = t4_new - twopi * floor(t4_new / twopi);
+t5 = t5_new - twopi * floor(t5_new / twopi);
+t6 = t6_new - twopi * floor(t6_new / twopi);
+
+
+// ====================
+// TRIGGER PULSE SHAPING
+// ====================
+// Convert single-sample wrap detection into a short pulse
+// This gives the resonators a proper excitation impulse
+
+trig_samples = max(trig_width * samplerate, 1);
+
+// Start counter on wrap, count down
+trig_count1 = (wrap1 > 0) ? trig_samples : max(trig_count1 - 1, 0);
+trig_count2 = (wrap2 > 0) ? trig_samples : max(trig_count2 - 1, 0);
+trig_count3 = (wrap3 > 0) ? trig_samples : max(trig_count3 - 1, 0);
+trig_count4 = (wrap4 > 0) ? trig_samples : max(trig_count4 - 1, 0);
+trig_count5 = (wrap5 > 0) ? trig_samples : max(trig_count5 - 1, 0);
+trig_count6 = (wrap6 > 0) ? trig_samples : max(trig_count6 - 1, 0);
+
+// Pulse output: 1 during trigger, 0 otherwise
+pulse1 = (trig_count1 > 0) ? 1 : 0;
+pulse2 = (trig_count2 > 0) ? 1 : 0;
+pulse3 = (trig_count3 > 0) ? 1 : 0;
+pulse4 = (trig_count4 > 0) ? 1 : 0;
+pulse5 = (trig_count5 > 0) ? 1 : 0;
+pulse6 = (trig_count6 > 0) ? 1 : 0;
+
+
+// ====================
+// ORDER PARAMETER (groove meter)
+// ====================
+// r = (1/N) * |Σ e^(iθj)|
+// r = 0: completely desynchronized (no groove)
+// r = 1: perfectly synchronized (unison)
+// The RISE of r from 0 toward 1 is the moment groove emerges.
+
+// Sum of cos(θ) and sin(θ) for all oscillators
+cos_sum = cos(t1) + cos(t2) + cos(t3) + cos(t4) + cos(t5) + cos(t6);
+sin_sum = sin(t1) + sin(t2) + sin(t3) + sin(t4) + sin(t5) + sin(t6);
+
+// Magnitude of the mean phase vector
+r = sqrt(cos_sum * cos_sum + sin_sum * sin_sum) / N;
+
+
+// ====================
+// NORMALIZED PHASES (for TD visualization)
+// ====================
+// 0-1 range, easier for OSC and mapping
+
+phase1 = t1 / twopi;
+phase2 = t2 / twopi;
+phase3 = t3 / twopi;
+phase4 = t4 / twopi;
+phase5 = t5 / twopi;
+phase6 = t6 / twopi;
+
+
+// ====================
+// OUTPUTS
+// ====================
+
+// Triggers → resonator excitation (impulse pulses)
+out1 = pulse1;
+out2 = pulse2;
+out3 = pulse3;
+out4 = pulse4;
+out5 = pulse5;
+out6 = pulse6;
+
+// Order parameter → TD groove meter
+out7 = r;
+
+// Phases 0-1 → TD visualization / dundun pitch mapping
+out8  = phase1;
+out9  = phase2;
+out10 = phase3;
+out11 = phase4;
+out12 = phase5;
+out13 = phase6;

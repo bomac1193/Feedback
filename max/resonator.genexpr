@@ -1,0 +1,38 @@
+// WAVEGUIDE RESONATOR — Karplus-Strong
+// All declarations MUST come before expressions in gen~ codebox.
+
+Param freq(110);
+Param damping(0.997);
+Param brightness(0.5);
+Param drive(0.5);
+History prev_trig(0);
+History exc_count(0);
+History prev_del(0);
+Delay d(48000);
+
+// Delay length in samples
+delay_len = samplerate / max(freq, 20);
+
+// Trigger detection (rising edge)
+trigger = (in1 > 0.5) * (prev_trig <= 0.5);
+prev_trig = in1;
+
+// Noise burst: fill one delay cycle with noise on trigger
+exc_count = trigger ? delay_len : max(exc_count - 1, 0);
+excitation = (exc_count > 0) ? noise() * drive : 0;
+
+// Read from delay line
+delayed = d.read(delay_len);
+
+// Karplus-Strong averaging filter
+avg = (delayed + prev_del) * 0.5;
+prev_del = delayed;
+filtered = delayed * brightness + avg * (1.0 - brightness);
+
+// Damping
+output = filtered * damping;
+
+// Write excitation + feedback into delay
+d.write(excitation + output);
+
+out1 = output;

@@ -1,0 +1,68 @@
+{
+	"patcher" : 	{
+		"fileversion" : 1,
+		"appversion" : 		{
+			"major" : 8,
+			"minor" : 6,
+			"revision" : 0,
+			"architecture" : "x64",
+			"modernui" : 1
+		},
+		"rect" : [ 100, 100, 700, 500 ],
+		"editing_bgcolor" : [ 0.65, 0.65, 0.65, 1.0 ],
+		"bglocked" : 0,
+		"openinpresentation" : 0,
+		"default_fontsize" : 12.0,
+		"default_fontname" : "Arial",
+		"gridonopen" : 1,
+		"gridsize" : [ 15.0, 15.0 ],
+		"gridsnaponopen" : 1,
+		"toolbarvisible" : 1,
+		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-in1",
+					"maxclass" : "newobj",
+					"text" : "in 1",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 50.0, 15.0, 30.0, 22.0 ]
+				}
+			},
+			{
+				"box" : 				{
+					"id" : "obj-codebox",
+					"maxclass" : "codebox",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 50.0, 55.0, 600.0, 380.0 ],
+					"code" : "// WAVEGUIDE RESONATOR — Karplus-Strong\n\nParam freq(110);\nParam damping(0.997);\nParam brightness(0.5);\nParam drive(0.5);\n\ndelay_len = samplerate / max(freq, 20);\n\n// Trigger detection (rising edge)\nHistory prev_trig(0);\ntrigger = (in1 > 0.5) * (prev_trig <= 0.5);\nprev_trig = in1;\n\n// Noise burst excitation — fills one delay cycle\nHistory exc_count(0);\nexc_count = trigger ? delay_len : max(exc_count - 1, 0);\nexcitation = (exc_count > 0) ? noise() * drive : 0;\n\n// Delay line\nDelay d(48000);\ndelayed = d.read(delay_len);\n\n// Karplus-Strong averaging filter\nHistory prev_del(0);\navg = (delayed + prev_del) * 0.5;\nprev_del = delayed;\nfiltered = delayed * brightness + avg * (1.0 - brightness);\n\n// Damping\noutput = filtered * damping;\n\n// Write excitation + feedback\nd.write(excitation + output);\n\nout1 = output;"
+				}
+			},
+			{
+				"box" : 				{
+					"id" : "obj-out1",
+					"maxclass" : "newobj",
+					"text" : "out 1",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 50.0, 455.0, 35.0, 22.0 ]
+				}
+			}
+		],
+		"lines" : [ 			{
+				"patchline" : 				{
+					"source" : [ "obj-in1", 0 ],
+					"destination" : [ "obj-codebox", 0 ]
+				}
+			},
+			{
+				"patchline" : 				{
+					"source" : [ "obj-codebox", 0 ],
+					"destination" : [ "obj-out1", 0 ]
+				}
+			}
+		]
+	}
+}

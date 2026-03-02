@@ -1,0 +1,248 @@
+// ============================================
+// RESONATOR ENSEMBLE — 6 Heterogeneous Voices
+// Phase 1, Step 1.3
+// ============================================
+//
+// 6 waveguide resonators, each with different character.
+// Olly Wilson's heterogeneous sound ideal.
+//
+// INPUTS:
+//   in1-in6 = trigger for each resonator (impulse, 0 or 1)
+//
+// OUTPUTS:
+//   out1 = mixed stereo left
+//   out2 = mixed stereo right
+//
+// ============================================
+
+// --- Global Parameters ---
+Param root(110);
+Param flex(0.5);              // Yoruba tuning (0=Pythagorean, 1=just)
+Param tuning_system(0);       // 0=Yoruba, 1=Dundun, 2=Balafon, 3=Equiheptatonic
+Param master_gain(0.7);
+
+// --- Per-resonator degree selection ---
+Param deg1(0);
+Param deg2(1);
+Param deg3(3);    // fifth
+Param deg4(4);
+Param deg5(0);    // root, octave below
+Param deg6(2);
+
+// --- Per-resonator octave offset ---
+Param oct1(-1);
+Param oct2(0);
+Param oct3(0);
+Param oct4(1);
+Param oct5(-1);
+Param oct6(1);
+
+// --- Drive per resonator ---
+Param drive(0.5);
+
+// --- All History declarations ---
+History r1_pt(0);
+History r1_ec(0);
+History r1_pd(0);
+History r2_pt(0);
+History r2_ec(0);
+History r2_pd(0);
+History r3_pt(0);
+History r3_ec(0);
+History r3_pd(0);
+History r4_pt(0);
+History r4_ec(0);
+History r4_pd(0);
+History r5_pt(0);
+History r5_ec(0);
+History r5_pd(0);
+History r6_pt(0);
+History r6_ec(0);
+History r6_pd(0);
+
+// --- All Delay declarations ---
+Delay r1_d(48000);
+Delay r2_d(48000);
+Delay r3_d(48000);
+Delay r4_d(48000);
+Delay r5_d(48000);
+Delay r6_d(48000);
+
+
+// =============================================
+// TUNING SYSTEM
+// =============================================
+
+// Yoruba Anhemitonic Pentatonic
+pyth_0 = 1.0;  pyth_1 = 1.125;  pyth_2 = 1.265625;  pyth_3 = 1.5;  pyth_4 = 1.6875;
+just_0 = 1.0;  just_1 = 1.111111;  just_2 = 1.25;  just_3 = 1.5;  just_4 = 1.666667;
+
+yor_0 = 1.0;
+yor_1 = pyth_1 * (1-flex) + just_1 * flex;
+yor_2 = pyth_2 * (1-flex) + just_2 * flex;
+yor_3 = 1.5;
+yor_4 = pyth_4 * (1-flex) + just_4 * flex;
+
+// Dundun 3-Tone
+dun_0 = 1.0;  dun_1 = 1.122;  dun_2 = 1.26;
+
+// Balafon
+bal_0 = 1.0;  bal_1 = pow(2.0, 0.22);  bal_2 = pow(2.0, 0.46);
+bal_3 = pow(2.0, 0.69);  bal_4 = pow(2.0, 0.93);
+
+
+// =============================================
+// MACRO: compute freq for a degree/octave
+// (gen~ has no functions, so we repeat per voice)
+// =============================================
+
+// --- Resonator 1: Sub Bass (iya ilu) ---
+deg1_w = mod(floor(deg1), (tuning_system==1)?3:(tuning_system==3)?7:5);
+oct1_x = floor(deg1 / ((tuning_system==1)?3:(tuning_system==3)?7:5));
+r1_rat = (tuning_system==0) ? ((deg1_w==0)?yor_0:(deg1_w==1)?yor_1:(deg1_w==2)?yor_2:(deg1_w==3)?yor_3:yor_4)
+       : (tuning_system==1) ? ((deg1_w==0)?dun_0:(deg1_w==1)?dun_1:dun_2)
+       : (tuning_system==2) ? ((deg1_w==0)?bal_0:(deg1_w==1)?bal_1:(deg1_w==2)?bal_2:(deg1_w==3)?bal_3:bal_4)
+       : pow(2.0, deg1_w/7.0);
+r1_freq = root * r1_rat * pow(2.0, oct1 + oct1_x);
+r1_dlen = samplerate / max(r1_freq, 20);
+
+r1_trig = (in1 > 0.5) * (r1_pt <= 0.5);
+r1_pt = in1;
+r1_ec = r1_trig ? r1_dlen : max(r1_ec - 1, 0);
+r1_exc = (r1_ec > 0) ? noise() * drive : 0;
+
+r1_del = r1_d.read(r1_dlen);
+r1_avg = (r1_del + r1_pd) * 0.5;
+r1_pd = r1_del;
+r1_filt = r1_del * 0.2 + r1_avg * 0.8;    // brightness 0.2 = dark
+r1_out = r1_filt * 0.9995;                 // damping = very long
+r1_d.write(r1_exc + r1_out);
+
+
+// --- Resonator 2: Body (omele) ---
+deg2_w = mod(floor(deg2), (tuning_system==1)?3:(tuning_system==3)?7:5);
+oct2_x = floor(deg2 / ((tuning_system==1)?3:(tuning_system==3)?7:5));
+r2_rat = (tuning_system==0) ? ((deg2_w==0)?yor_0:(deg2_w==1)?yor_1:(deg2_w==2)?yor_2:(deg2_w==3)?yor_3:yor_4)
+       : (tuning_system==1) ? ((deg2_w==0)?dun_0:(deg2_w==1)?dun_1:dun_2)
+       : (tuning_system==2) ? ((deg2_w==0)?bal_0:(deg2_w==1)?bal_1:(deg2_w==2)?bal_2:(deg2_w==3)?bal_3:bal_4)
+       : pow(2.0, deg2_w/7.0);
+r2_freq = root * r2_rat * pow(2.0, oct2 + oct2_x);
+r2_dlen = samplerate / max(r2_freq, 20);
+
+r2_trig = (in2 > 0.5) * (r2_pt <= 0.5);
+r2_pt = in2;
+r2_ec = r2_trig ? r2_dlen : max(r2_ec - 1, 0);
+r2_exc = (r2_ec > 0) ? noise() * drive : 0;
+
+r2_del = r2_d.read(r2_dlen);
+r2_avg = (r2_del + r2_pd) * 0.5;
+r2_pd = r2_del;
+r2_filt = r2_del * 0.4 + r2_avg * 0.6;    // brightness 0.4 = warm
+r2_out = r2_filt * 0.998;                  // medium-long
+r2_d.write(r2_exc + r2_out);
+
+
+// --- Resonator 3: Metallic (ogene) ---
+deg3_w = mod(floor(deg3), (tuning_system==1)?3:(tuning_system==3)?7:5);
+oct3_x = floor(deg3 / ((tuning_system==1)?3:(tuning_system==3)?7:5));
+r3_rat = (tuning_system==0) ? ((deg3_w==0)?yor_0:(deg3_w==1)?yor_1:(deg3_w==2)?yor_2:(deg3_w==3)?yor_3:yor_4)
+       : (tuning_system==1) ? ((deg3_w==0)?dun_0:(deg3_w==1)?dun_1:dun_2)
+       : (tuning_system==2) ? ((deg3_w==0)?bal_0:(deg3_w==1)?bal_1:(deg3_w==2)?bal_2:(deg3_w==3)?bal_3:bal_4)
+       : pow(2.0, deg3_w/7.0);
+r3_freq = root * r3_rat * pow(2.0, oct3 + oct3_x);
+r3_dlen = samplerate / max(r3_freq, 20);
+
+r3_trig = (in3 > 0.5) * (r3_pt <= 0.5);
+r3_pt = in3;
+r3_ec = r3_trig ? r3_dlen : max(r3_ec - 1, 0);
+r3_exc = (r3_ec > 0) ? noise() * drive : 0;
+
+r3_del = r3_d.read(r3_dlen);
+r3_avg = (r3_del + r3_pd) * 0.5;
+r3_pd = r3_del;
+r3_filt = r3_del * 0.85 + r3_avg * 0.15;  // brightness 0.85 = bright
+r3_out = r3_filt * 0.996;                  // medium ring
+r3_d.write(r3_exc + r3_out);
+
+
+// --- Resonator 4: Transient (gudugudu) ---
+deg4_w = mod(floor(deg4), (tuning_system==1)?3:(tuning_system==3)?7:5);
+oct4_x = floor(deg4 / ((tuning_system==1)?3:(tuning_system==3)?7:5));
+r4_rat = (tuning_system==0) ? ((deg4_w==0)?yor_0:(deg4_w==1)?yor_1:(deg4_w==2)?yor_2:(deg4_w==3)?yor_3:yor_4)
+       : (tuning_system==1) ? ((deg4_w==0)?dun_0:(deg4_w==1)?dun_1:dun_2)
+       : (tuning_system==2) ? ((deg4_w==0)?bal_0:(deg4_w==1)?bal_1:(deg4_w==2)?bal_2:(deg4_w==3)?bal_3:bal_4)
+       : pow(2.0, deg4_w/7.0);
+r4_freq = root * r4_rat * pow(2.0, oct4 + oct4_x);
+r4_dlen = samplerate / max(r4_freq, 20);
+
+r4_trig = (in4 > 0.5) * (r4_pt <= 0.5);
+r4_pt = in4;
+r4_ec = r4_trig ? r4_dlen : max(r4_ec - 1, 0);
+r4_exc = (r4_ec > 0) ? noise() * drive * 1.2 : 0;
+
+r4_del = r4_d.read(r4_dlen);
+r4_avg = (r4_del + r4_pd) * 0.5;
+r4_pd = r4_del;
+r4_filt = r4_del * 0.9 + r4_avg * 0.1;    // brightness 0.9 = very bright
+r4_out = r4_filt * 0.97;                   // short decay
+r4_d.write(r4_exc + r4_out);
+
+
+// --- Resonator 5: Drone ---
+deg5_w = mod(floor(deg5), (tuning_system==1)?3:(tuning_system==3)?7:5);
+oct5_x = floor(deg5 / ((tuning_system==1)?3:(tuning_system==3)?7:5));
+r5_rat = (tuning_system==0) ? ((deg5_w==0)?yor_0:(deg5_w==1)?yor_1:(deg5_w==2)?yor_2:(deg5_w==3)?yor_3:yor_4)
+       : (tuning_system==1) ? ((deg5_w==0)?dun_0:(deg5_w==1)?dun_1:dun_2)
+       : (tuning_system==2) ? ((deg5_w==0)?bal_0:(deg5_w==1)?bal_1:(deg5_w==2)?bal_2:(deg5_w==3)?bal_3:bal_4)
+       : pow(2.0, deg5_w/7.0);
+r5_freq = root * r5_rat * pow(2.0, oct5 + oct5_x);
+r5_dlen = samplerate / max(r5_freq, 20);
+
+r5_trig = (in5 > 0.5) * (r5_pt <= 0.5);
+r5_pt = in5;
+r5_ec = r5_trig ? r5_dlen : max(r5_ec - 1, 0);
+r5_exc = (r5_ec > 0) ? noise() * drive * 0.7 : 0;
+
+r5_del = r5_d.read(r5_dlen);
+r5_avg = (r5_del + r5_pd) * 0.5;
+r5_pd = r5_del;
+r5_filt = r5_del * 0.3 + r5_avg * 0.7;    // brightness 0.3 = dark
+r5_out = r5_filt * 0.9998;                 // very long ring
+r5_d.write(r5_exc + r5_out);
+
+
+// --- Resonator 6: Crystalline (shekere) ---
+deg6_w = mod(floor(deg6), (tuning_system==1)?3:(tuning_system==3)?7:5);
+oct6_x = floor(deg6 / ((tuning_system==1)?3:(tuning_system==3)?7:5));
+r6_rat = (tuning_system==0) ? ((deg6_w==0)?yor_0:(deg6_w==1)?yor_1:(deg6_w==2)?yor_2:(deg6_w==3)?yor_3:yor_4)
+       : (tuning_system==1) ? ((deg6_w==0)?dun_0:(deg6_w==1)?dun_1:dun_2)
+       : (tuning_system==2) ? ((deg6_w==0)?bal_0:(deg6_w==1)?bal_1:(deg6_w==2)?bal_2:(deg6_w==3)?bal_3:bal_4)
+       : pow(2.0, deg6_w/7.0);
+r6_freq = root * r6_rat * pow(2.0, oct6 + oct6_x);
+r6_dlen = samplerate / max(r6_freq, 20);
+
+r6_trig = (in6 > 0.5) * (r6_pt <= 0.5);
+r6_pt = in6;
+r6_ec = r6_trig ? r6_dlen : max(r6_ec - 1, 0);
+r6_exc = (r6_ec > 0) ? noise() * drive : 0;
+
+r6_del = r6_d.read(r6_dlen);
+r6_avg = (r6_del + r6_pd) * 0.5;
+r6_pd = r6_del;
+r6_filt = r6_del * 0.95 + r6_avg * 0.05;  // brightness 0.95 = crystalline
+r6_out = r6_filt * 0.994;                  // medium ring
+r6_d.write(r6_exc + r6_out);
+
+
+// =============================================
+// STEREO MIX
+// =============================================
+
+left  = r1_out * 0.7 + r2_out * 0.5 + r3_out * 0.2
+      + r4_out * 0.4 + r5_out * 0.6 + r6_out * 0.3;
+
+right = r1_out * 0.3 + r2_out * 0.5 + r3_out * 0.8
+      + r4_out * 0.6 + r5_out * 0.4 + r6_out * 0.7;
+
+out1 = left * master_gain;
+out2 = right * master_gain;
