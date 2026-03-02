@@ -6,6 +6,8 @@
 // 6 waveguide resonators, each with different character.
 // Olly Wilson's heterogeneous sound ideal.
 //
+// 19 African tuning systems via Data lookup table.
+//
 // INPUTS:
 //   in1-in6 = trigger for each resonator (impulse, 0 or 1)
 //
@@ -18,7 +20,7 @@
 // --- Global Parameters ---
 Param root(110);
 Param flex(0.5);              // Yoruba tuning (0=Pythagorean, 1=just)
-Param tuning_system(0);       // 0=Yoruba, 1=Dundun, 2=Balafon, 3=Equiheptatonic
+Param tuning_system(0);       // 0-18, see table below
 Param master_gain(0.7);
 
 // --- Per-resonator degree selection ---
@@ -39,6 +41,12 @@ Param oct6(1);
 
 // --- Drive per resonator ---
 Param drive(0.5);
+
+// --- Tuning lookup table ---
+// 19 systems x 10 slots = 190 entries
+// Slot layout: [0]=scale_size, [1..7]=ratios, [8..9]=unused
+Data tuning_table(190);
+History init_done(0);
 
 // --- All History declarations ---
 History r1_pt(0);
@@ -70,39 +78,203 @@ Delay r6_d(48000);
 
 
 // =============================================
-// TUNING SYSTEM
+// TUNING TABLE INITIALIZATION (runs once)
 // =============================================
 
-// Yoruba Anhemitonic Pentatonic
-pyth_0 = 1.0;  pyth_1 = 1.125;  pyth_2 = 1.265625;  pyth_3 = 1.5;  pyth_4 = 1.6875;
-just_0 = 1.0;  just_1 = 1.111111;  just_2 = 1.25;  just_3 = 1.5;  just_4 = 1.666667;
+if (init_done < 0.5) {
 
-yor_0 = 1.0;
-yor_1 = pyth_1 * (1-flex) + just_1 * flex;
-yor_2 = pyth_2 * (1-flex) + just_2 * flex;
-yor_3 = 1.5;
-yor_4 = pyth_4 * (1-flex) + just_4 * flex;
+    // --- 0: Yoruba Pentatonic (Pythagorean base, flex-interpolated at runtime) ---
+    poke(tuning_table, 5, 0, 0);
+    poke(tuning_table, 1.0, 1, 0);
+    poke(tuning_table, 1.125, 2, 0);
+    poke(tuning_table, 1.265625, 3, 0);
+    poke(tuning_table, 1.5, 4, 0);
+    poke(tuning_table, 1.6875, 5, 0);
 
-// Dundun 3-Tone
-dun_0 = 1.0;  dun_1 = 1.122;  dun_2 = 1.26;
+    // --- 1: Dundun 3-Tone (0, 200, 400 cents) ---
+    poke(tuning_table, 3, 10, 0);
+    poke(tuning_table, 1.0, 11, 0);
+    poke(tuning_table, 1.12246, 12, 0);
+    poke(tuning_table, 1.25992, 13, 0);
 
-// Balafon
-bal_0 = 1.0;  bal_1 = pow(2.0, 0.22);  bal_2 = pow(2.0, 0.46);
-bal_3 = pow(2.0, 0.69);  bal_4 = pow(2.0, 0.93);
+    // --- 2: Balafon Equi-Pentatonic (0, 220, 460, 690, 930 cents) ---
+    poke(tuning_table, 5, 20, 0);
+    poke(tuning_table, 1.0, 21, 0);
+    poke(tuning_table, 1.13534, 22, 0);
+    poke(tuning_table, 1.30486, 23, 0);
+    poke(tuning_table, 1.49180, 24, 0);
+    poke(tuning_table, 1.71002, 25, 0);
+
+    // --- 3: Equi-Heptatonic 7-TET (0, 171, 343, 514, 686, 857, 1029 cents) ---
+    poke(tuning_table, 7, 30, 0);
+    poke(tuning_table, 1.0, 31, 0);
+    poke(tuning_table, 1.10409, 32, 0);
+    poke(tuning_table, 1.21901, 33, 0);
+    poke(tuning_table, 1.34590, 34, 0);
+    poke(tuning_table, 1.48599, 35, 0);
+    poke(tuning_table, 1.64059, 36, 0);
+    poke(tuning_table, 1.81145, 37, 0);
+
+    // --- 4: BaAka/Pygmy 5-TET (0, 240, 480, 720, 960 cents) ---
+    poke(tuning_table, 5, 40, 0);
+    poke(tuning_table, 1.0, 41, 0);
+    poke(tuning_table, 1.14870, 42, 0);
+    poke(tuning_table, 1.31951, 43, 0);
+    poke(tuning_table, 1.51572, 44, 0);
+    poke(tuning_table, 1.74110, 45, 0);
+
+    // --- 5: Shona Nyamaropa (0, 180, 380, 500, 700, 880, 1080 cents) ---
+    poke(tuning_table, 7, 50, 0);
+    poke(tuning_table, 1.0, 51, 0);
+    poke(tuning_table, 1.10957, 52, 0);
+    poke(tuning_table, 1.24574, 53, 0);
+    poke(tuning_table, 1.33484, 54, 0);
+    poke(tuning_table, 1.49831, 55, 0);
+    poke(tuning_table, 1.65948, 56, 0);
+    poke(tuning_table, 1.86121, 57, 0);
+
+    // --- 6: Shona Gandanga (0, 100, 300, 500, 700, 800, 1000 cents) ---
+    poke(tuning_table, 7, 60, 0);
+    poke(tuning_table, 1.0, 61, 0);
+    poke(tuning_table, 1.05946, 62, 0);
+    poke(tuning_table, 1.18921, 63, 0);
+    poke(tuning_table, 1.33484, 64, 0);
+    poke(tuning_table, 1.49831, 65, 0);
+    poke(tuning_table, 1.58740, 66, 0);
+    poke(tuning_table, 1.78180, 67, 0);
+
+    // --- 7: Kora Silaba (0, 200, 385, 500, 700, 900, 1085 cents) ---
+    poke(tuning_table, 7, 70, 0);
+    poke(tuning_table, 1.0, 71, 0);
+    poke(tuning_table, 1.12246, 72, 0);
+    poke(tuning_table, 1.24915, 73, 0);
+    poke(tuning_table, 1.33484, 74, 0);
+    poke(tuning_table, 1.49831, 75, 0);
+    poke(tuning_table, 1.68179, 76, 0);
+    poke(tuning_table, 1.86459, 77, 0);
+
+    // --- 8: Kora Sauta (0, 185, 405, 605, 700, 885, 1105 cents) ---
+    poke(tuning_table, 7, 80, 0);
+    poke(tuning_table, 1.0, 81, 0);
+    poke(tuning_table, 1.11278, 82, 0);
+    poke(tuning_table, 1.26330, 83, 0);
+    poke(tuning_table, 1.41747, 84, 0);
+    poke(tuning_table, 1.49831, 85, 0);
+    poke(tuning_table, 1.66230, 86, 0);
+    poke(tuning_table, 1.88800, 87, 0);
+
+    // --- 9: Ethiopian Tizita Major (0, 200, 400, 700, 900 cents) ---
+    poke(tuning_table, 5, 90, 0);
+    poke(tuning_table, 1.0, 91, 0);
+    poke(tuning_table, 1.12246, 92, 0);
+    poke(tuning_table, 1.25992, 93, 0);
+    poke(tuning_table, 1.49831, 94, 0);
+    poke(tuning_table, 1.68179, 95, 0);
+
+    // --- 10: Ethiopian Tizita Minor (0, 200, 300, 700, 800 cents) ---
+    poke(tuning_table, 5, 100, 0);
+    poke(tuning_table, 1.0, 101, 0);
+    poke(tuning_table, 1.12246, 102, 0);
+    poke(tuning_table, 1.18921, 103, 0);
+    poke(tuning_table, 1.49831, 104, 0);
+    poke(tuning_table, 1.58740, 105, 0);
+
+    // --- 11: Ethiopian Bati (0, 200, 500, 700, 900 cents) ---
+    poke(tuning_table, 5, 110, 0);
+    poke(tuning_table, 1.0, 111, 0);
+    poke(tuning_table, 1.12246, 112, 0);
+    poke(tuning_table, 1.33484, 113, 0);
+    poke(tuning_table, 1.49831, 114, 0);
+    poke(tuning_table, 1.68179, 115, 0);
+
+    // --- 12: Ethiopian Ambassel (0, 200, 400, 700, 800 cents) ---
+    poke(tuning_table, 5, 120, 0);
+    poke(tuning_table, 1.0, 121, 0);
+    poke(tuning_table, 1.12246, 122, 0);
+    poke(tuning_table, 1.25992, 123, 0);
+    poke(tuning_table, 1.49831, 124, 0);
+    poke(tuning_table, 1.58740, 125, 0);
+
+    // --- 13: Ethiopian Anchihoye (0, 100, 500, 600, 900 cents) ---
+    poke(tuning_table, 5, 130, 0);
+    poke(tuning_table, 1.0, 131, 0);
+    poke(tuning_table, 1.05946, 132, 0);
+    poke(tuning_table, 1.33484, 133, 0);
+    poke(tuning_table, 1.41421, 134, 0);
+    poke(tuning_table, 1.68179, 135, 0);
+
+    // --- 14: Bugandan Amadinda (0, 240, 480, 720, 960 cents) ---
+    poke(tuning_table, 5, 140, 0);
+    poke(tuning_table, 1.0, 141, 0);
+    poke(tuning_table, 1.14870, 142, 0);
+    poke(tuning_table, 1.31951, 143, 0);
+    poke(tuning_table, 1.51572, 144, 0);
+    poke(tuning_table, 1.74110, 145, 0);
+
+    // --- 15: Chopi Timbila (0, 175, 346, 519, 681, 854, 1025 cents) ---
+    poke(tuning_table, 7, 150, 0);
+    poke(tuning_table, 1.0, 151, 0);
+    poke(tuning_table, 1.10653, 152, 0);
+    poke(tuning_table, 1.22082, 153, 0);
+    poke(tuning_table, 1.34890, 154, 0);
+    poke(tuning_table, 1.48160, 155, 0);
+    poke(tuning_table, 1.63720, 156, 0);
+    poke(tuning_table, 1.80699, 157, 0);
+
+    // --- 16: San Musical Bow (0, 200, 386, 498, 702, 884 cents) ---
+    poke(tuning_table, 6, 160, 0);
+    poke(tuning_table, 1.0, 161, 0);
+    poke(tuning_table, 1.12246, 162, 0);
+    poke(tuning_table, 1.24984, 163, 0);
+    poke(tuning_table, 1.33322, 164, 0);
+    poke(tuning_table, 1.50000, 165, 0);
+    poke(tuning_table, 1.66212, 166, 0);
+
+    // --- 17: Wagogo Ilimba — harmonics 4-9 (0, 386, 702, 969, 1200, 1404 cents) ---
+    poke(tuning_table, 6, 170, 0);
+    poke(tuning_table, 1.0, 171, 0);
+    poke(tuning_table, 1.25, 172, 0);
+    poke(tuning_table, 1.5, 173, 0);
+    poke(tuning_table, 1.75, 174, 0);
+    poke(tuning_table, 2.0, 175, 0);
+    poke(tuning_table, 2.25, 176, 0);
+
+    // --- 18: Igbo Pentatonic (0, 200, 386, 702, 884 cents) ---
+    poke(tuning_table, 5, 180, 0);
+    poke(tuning_table, 1.0, 181, 0);
+    poke(tuning_table, 1.12246, 182, 0);
+    poke(tuning_table, 1.24984, 183, 0);
+    poke(tuning_table, 1.50000, 184, 0);
+    poke(tuning_table, 1.66212, 185, 0);
+
+    init_done = 1;
+}
 
 
 // =============================================
-// MACRO: compute freq for a degree/octave
-// (gen~ has no functions, so we repeat per voice)
+// TUNING LOOKUP SETUP
 // =============================================
 
-// --- Resonator 1: Sub Bass (iya ilu) ---
-deg1_w = mod(floor(deg1), (tuning_system==1)?3:(tuning_system==3)?7:5);
-oct1_x = floor(deg1 / ((tuning_system==1)?3:(tuning_system==3)?7:5));
-r1_rat = (tuning_system==0) ? ((deg1_w==0)?yor_0:(deg1_w==1)?yor_1:(deg1_w==2)?yor_2:(deg1_w==3)?yor_3:yor_4)
-       : (tuning_system==1) ? ((deg1_w==0)?dun_0:(deg1_w==1)?dun_1:dun_2)
-       : (tuning_system==2) ? ((deg1_w==0)?bal_0:(deg1_w==1)?bal_1:(deg1_w==2)?bal_2:(deg1_w==3)?bal_3:bal_4)
-       : pow(2.0, deg1_w/7.0);
+ts = clamp(floor(tuning_system), 0, 18);
+ts_base = ts * 10;
+ts_size = peek(tuning_table, ts_base, 0);
+// Clamp ts_size to valid range (avoid division by zero)
+ts_size = max(ts_size, 1);
+
+// Yoruba just-intonation ratios (for flex interpolation, system 0 only)
+j0 = 1.0; j1 = 1.111111; j2 = 1.25; j3 = 1.5; j4 = 1.666667;
+
+
+// =============================================
+// RESONATOR 1: Sub Bass (iya ilu) — bright=0.2
+// =============================================
+
+deg1_w = mod(floor(deg1), ts_size);
+oct1_x = floor(deg1 / ts_size);
+r1_rat = peek(tuning_table, ts_base + 1 + deg1_w, 0);
+// Flex interpolation (Yoruba only)
+r1_jrat = (deg1_w<0.5)?j0:(deg1_w<1.5)?j1:(deg1_w<2.5)?j2:(deg1_w<3.5)?j3:j4;
+r1_rat = (ts < 0.5) ? (r1_rat * (1.0-flex) + r1_jrat * flex) : r1_rat;
 r1_freq = root * r1_rat * pow(2.0, oct1 + oct1_x);
 r1_dlen = samplerate / max(r1_freq, 20);
 
@@ -119,13 +291,15 @@ r1_out = r1_filt * 0.9995;                 // damping = very long
 r1_d.write(r1_exc + r1_out);
 
 
-// --- Resonator 2: Body (omele) ---
-deg2_w = mod(floor(deg2), (tuning_system==1)?3:(tuning_system==3)?7:5);
-oct2_x = floor(deg2 / ((tuning_system==1)?3:(tuning_system==3)?7:5));
-r2_rat = (tuning_system==0) ? ((deg2_w==0)?yor_0:(deg2_w==1)?yor_1:(deg2_w==2)?yor_2:(deg2_w==3)?yor_3:yor_4)
-       : (tuning_system==1) ? ((deg2_w==0)?dun_0:(deg2_w==1)?dun_1:dun_2)
-       : (tuning_system==2) ? ((deg2_w==0)?bal_0:(deg2_w==1)?bal_1:(deg2_w==2)?bal_2:(deg2_w==3)?bal_3:bal_4)
-       : pow(2.0, deg2_w/7.0);
+// =============================================
+// RESONATOR 2: Body (omele) — bright=0.4
+// =============================================
+
+deg2_w = mod(floor(deg2), ts_size);
+oct2_x = floor(deg2 / ts_size);
+r2_rat = peek(tuning_table, ts_base + 1 + deg2_w, 0);
+r2_jrat = (deg2_w<0.5)?j0:(deg2_w<1.5)?j1:(deg2_w<2.5)?j2:(deg2_w<3.5)?j3:j4;
+r2_rat = (ts < 0.5) ? (r2_rat * (1.0-flex) + r2_jrat * flex) : r2_rat;
 r2_freq = root * r2_rat * pow(2.0, oct2 + oct2_x);
 r2_dlen = samplerate / max(r2_freq, 20);
 
@@ -142,13 +316,15 @@ r2_out = r2_filt * 0.998;                  // medium-long
 r2_d.write(r2_exc + r2_out);
 
 
-// --- Resonator 3: Metallic (ogene) ---
-deg3_w = mod(floor(deg3), (tuning_system==1)?3:(tuning_system==3)?7:5);
-oct3_x = floor(deg3 / ((tuning_system==1)?3:(tuning_system==3)?7:5));
-r3_rat = (tuning_system==0) ? ((deg3_w==0)?yor_0:(deg3_w==1)?yor_1:(deg3_w==2)?yor_2:(deg3_w==3)?yor_3:yor_4)
-       : (tuning_system==1) ? ((deg3_w==0)?dun_0:(deg3_w==1)?dun_1:dun_2)
-       : (tuning_system==2) ? ((deg3_w==0)?bal_0:(deg3_w==1)?bal_1:(deg3_w==2)?bal_2:(deg3_w==3)?bal_3:bal_4)
-       : pow(2.0, deg3_w/7.0);
+// =============================================
+// RESONATOR 3: Metallic (ogene) — bright=0.85
+// =============================================
+
+deg3_w = mod(floor(deg3), ts_size);
+oct3_x = floor(deg3 / ts_size);
+r3_rat = peek(tuning_table, ts_base + 1 + deg3_w, 0);
+r3_jrat = (deg3_w<0.5)?j0:(deg3_w<1.5)?j1:(deg3_w<2.5)?j2:(deg3_w<3.5)?j3:j4;
+r3_rat = (ts < 0.5) ? (r3_rat * (1.0-flex) + r3_jrat * flex) : r3_rat;
 r3_freq = root * r3_rat * pow(2.0, oct3 + oct3_x);
 r3_dlen = samplerate / max(r3_freq, 20);
 
@@ -165,13 +341,15 @@ r3_out = r3_filt * 0.996;                  // medium ring
 r3_d.write(r3_exc + r3_out);
 
 
-// --- Resonator 4: Transient (gudugudu) ---
-deg4_w = mod(floor(deg4), (tuning_system==1)?3:(tuning_system==3)?7:5);
-oct4_x = floor(deg4 / ((tuning_system==1)?3:(tuning_system==3)?7:5));
-r4_rat = (tuning_system==0) ? ((deg4_w==0)?yor_0:(deg4_w==1)?yor_1:(deg4_w==2)?yor_2:(deg4_w==3)?yor_3:yor_4)
-       : (tuning_system==1) ? ((deg4_w==0)?dun_0:(deg4_w==1)?dun_1:dun_2)
-       : (tuning_system==2) ? ((deg4_w==0)?bal_0:(deg4_w==1)?bal_1:(deg4_w==2)?bal_2:(deg4_w==3)?bal_3:bal_4)
-       : pow(2.0, deg4_w/7.0);
+// =============================================
+// RESONATOR 4: Transient (gudugudu) — bright=0.9
+// =============================================
+
+deg4_w = mod(floor(deg4), ts_size);
+oct4_x = floor(deg4 / ts_size);
+r4_rat = peek(tuning_table, ts_base + 1 + deg4_w, 0);
+r4_jrat = (deg4_w<0.5)?j0:(deg4_w<1.5)?j1:(deg4_w<2.5)?j2:(deg4_w<3.5)?j3:j4;
+r4_rat = (ts < 0.5) ? (r4_rat * (1.0-flex) + r4_jrat * flex) : r4_rat;
 r4_freq = root * r4_rat * pow(2.0, oct4 + oct4_x);
 r4_dlen = samplerate / max(r4_freq, 20);
 
@@ -188,13 +366,15 @@ r4_out = r4_filt * 0.97;                   // short decay
 r4_d.write(r4_exc + r4_out);
 
 
-// --- Resonator 5: Drone ---
-deg5_w = mod(floor(deg5), (tuning_system==1)?3:(tuning_system==3)?7:5);
-oct5_x = floor(deg5 / ((tuning_system==1)?3:(tuning_system==3)?7:5));
-r5_rat = (tuning_system==0) ? ((deg5_w==0)?yor_0:(deg5_w==1)?yor_1:(deg5_w==2)?yor_2:(deg5_w==3)?yor_3:yor_4)
-       : (tuning_system==1) ? ((deg5_w==0)?dun_0:(deg5_w==1)?dun_1:dun_2)
-       : (tuning_system==2) ? ((deg5_w==0)?bal_0:(deg5_w==1)?bal_1:(deg5_w==2)?bal_2:(deg5_w==3)?bal_3:bal_4)
-       : pow(2.0, deg5_w/7.0);
+// =============================================
+// RESONATOR 5: Drone — bright=0.3
+// =============================================
+
+deg5_w = mod(floor(deg5), ts_size);
+oct5_x = floor(deg5 / ts_size);
+r5_rat = peek(tuning_table, ts_base + 1 + deg5_w, 0);
+r5_jrat = (deg5_w<0.5)?j0:(deg5_w<1.5)?j1:(deg5_w<2.5)?j2:(deg5_w<3.5)?j3:j4;
+r5_rat = (ts < 0.5) ? (r5_rat * (1.0-flex) + r5_jrat * flex) : r5_rat;
 r5_freq = root * r5_rat * pow(2.0, oct5 + oct5_x);
 r5_dlen = samplerate / max(r5_freq, 20);
 
@@ -211,13 +391,15 @@ r5_out = r5_filt * 0.9998;                 // very long ring
 r5_d.write(r5_exc + r5_out);
 
 
-// --- Resonator 6: Crystalline (shekere) ---
-deg6_w = mod(floor(deg6), (tuning_system==1)?3:(tuning_system==3)?7:5);
-oct6_x = floor(deg6 / ((tuning_system==1)?3:(tuning_system==3)?7:5));
-r6_rat = (tuning_system==0) ? ((deg6_w==0)?yor_0:(deg6_w==1)?yor_1:(deg6_w==2)?yor_2:(deg6_w==3)?yor_3:yor_4)
-       : (tuning_system==1) ? ((deg6_w==0)?dun_0:(deg6_w==1)?dun_1:dun_2)
-       : (tuning_system==2) ? ((deg6_w==0)?bal_0:(deg6_w==1)?bal_1:(deg6_w==2)?bal_2:(deg6_w==3)?bal_3:bal_4)
-       : pow(2.0, deg6_w/7.0);
+// =============================================
+// RESONATOR 6: Crystalline (shekere) — bright=0.95
+// =============================================
+
+deg6_w = mod(floor(deg6), ts_size);
+oct6_x = floor(deg6 / ts_size);
+r6_rat = peek(tuning_table, ts_base + 1 + deg6_w, 0);
+r6_jrat = (deg6_w<0.5)?j0:(deg6_w<1.5)?j1:(deg6_w<2.5)?j2:(deg6_w<3.5)?j3:j4;
+r6_rat = (ts < 0.5) ? (r6_rat * (1.0-flex) + r6_jrat * flex) : r6_rat;
 r6_freq = root * r6_rat * pow(2.0, oct6 + oct6_x);
 r6_dlen = samplerate / max(r6_freq, 20);
 
