@@ -16,7 +16,7 @@ Param rho(28);
 Param beta(2.667);
 Param lorenz_dt(0.0012);
 Param chaos_gain(0.01);
-Param root(110);
+Param root(55);
 Param flex(0.5);
 Param tuning_system(0);
 Param master_gain(0.7);
@@ -46,6 +46,12 @@ Param env_release(0.1);
 Param mute(0);
 Param transpose(0);
 Param arp_reset(0);
+Param clk_enable(0);
+Param user_pat_len(16);
+Param us0(63); Param us1(0); Param us2(0); Param us3(0);
+Param us4(63); Param us5(0); Param us6(0); Param us7(0);
+Param us8(63); Param us9(0); Param us10(0); Param us11(0);
+Param us12(63); Param us13(0); Param us14(0); Param us15(0);
 Param brightness(0);
 Param register(0);
 Param bass_oct(0);
@@ -60,6 +66,9 @@ Param att_b_sel(-1);
 Param combine_mode(0);
 Param blend_mix(0.5);
 Param mod_depth(0.5);
+Param root_offset(0);
+Param root_mode(0);
+Param root_return(0.5);
 Param ross_c(5.7);
 Param chua_alpha(15.6);
 Param halv_a(1.89);
@@ -112,6 +121,10 @@ History chx(0.1); History chy(0); History chz(0);
 History hx(1); History hy(0); History hz(0);
 History aix(0.1); History aiy(0); History aiz_h(0);
 History bx_h(0); History by_h(0); History bz_h(0);
+History s_root_off(0);
+History clk_prev(0);
+History clk_count(0);
+History clk_bpm(120);
 Delay r1_d(48000);
 Delay r2_d(48000);
 Delay r3_d(48000);
@@ -570,6 +583,15 @@ cx_456 = (b_active && cm > 1.5) ? bx_raw : cx;
 cy_456 = (b_active && cm > 1.5) ? by_raw : cy;
 cz_456 = (b_active && cm > 1.5) ? bz_raw : cz;
 
+// === ANALOG CLOCK INPUT (rising edge → BPM) ===
+clk_in = in2;
+clk_edge = (clk_in > 0.5) * (clk_prev < 0.5) * (clk_enable > 0.5);
+clk_prev = clk_in;
+clk_count = clk_edge ? 0 : clk_count + 1;
+clk_hz = clk_edge ? (samplerate / max(clk_count, 1)) : 0;
+clk_bpm = clk_edge ? clamp(clk_hz * 60.0, 20, 300) : clk_bpm;
+arp_bpm = (clk_enable > 0.5) ? clk_bpm : arp_bpm;
+
 // === ARPEGGIATOR (BPM sync + patterns + MIDI reset) ===
 eff_rate = (arp_div > 0.01) ? (arp_bpm / 60.0 * arp_div) : arp_rate;
 arp_ph_new = arp_phase + eff_rate / samplerate;
@@ -577,10 +599,11 @@ arp_trig_flag = (arp_ph_new >= 1.0);
 arp_phase = arp_ph_new - floor(arp_ph_new);
 
 // Pattern detection
+is_user_pat = (arp_mode > 14.5);
 is_pattern = (arp_mode > 5.5);
 pat_idx = clamp(floor(arp_mode - 6), 0, 8);
 pat_base = pat_idx * 16;
-pat_len = is_pattern ? max(peek(arp_pat_data, pat_base, 0), 1) : 6;
+pat_len = is_user_pat ? max(user_pat_len, 1) : (is_pattern ? max(peek(arp_pat_data, pat_base, 0), 1) : 6);
 
 // Standard mode stepping
 up_s = mod(arp_step + 1, 6);
@@ -618,7 +641,9 @@ st5 = arp_active ? (abs(cur - 4) < 0.5 ? 1.0 : 0.0) : 1.0;
 st6 = arp_active ? (abs(cur - 5) < 0.5 ? 1.0 : 0.0) : 1.0;
 
 // Pattern voice activation (bitmask decode)
-mask = peek(arp_pat_data, pat_base + 1 + clamp(cur, 0, 15), 0);
+ucur = clamp(cur, 0, 15);
+user_mask = (ucur<0.5)?us0:(ucur<1.5)?us1:(ucur<2.5)?us2:(ucur<3.5)?us3:(ucur<4.5)?us4:(ucur<5.5)?us5:(ucur<6.5)?us6:(ucur<7.5)?us7:(ucur<8.5)?us8:(ucur<9.5)?us9:(ucur<10.5)?us10:(ucur<11.5)?us11:(ucur<12.5)?us12:(ucur<13.5)?us13:(ucur<14.5)?us14:us15;
+mask = is_user_pat ? user_mask : peek(arp_pat_data, pat_base + 1 + clamp(cur, 0, 15), 0);
 m = floor(mask);
 pt1 = mod(m, 2) > 0.5;
 pt2 = mod(floor(m / 2), 2) > 0.5;
@@ -675,6 +700,15 @@ mute_coeff = 1.0 - exp(-1.0 / (0.005 * samplerate));
 mute_s = mute_s + (mute - mute_s) * mute_coeff;
 unmute = 1.0 - mute_s;
 
+// === ROOT SPRING / LATCH SYSTEM ===
+spring_target = (root_mode > 0.5) ? root_offset : 0.0;
+track_c = 1.0 - exp(-1.0 / (0.01 * samplerate));
+spring_c = 1.0 - exp(-1.0 / max(root_return * samplerate, 1));
+moving_away = abs(root_offset - spring_target) > abs(s_root_off - spring_target);
+rcoeff = moving_away ? track_c : spring_c;
+s_root_off = s_root_off + (root_offset - s_root_off) * rcoeff;
+eff_root = root * pow(2.0, s_root_off / 12.0);
+
 // === Voice 1: Sub Bass (iya ilu) ===
 inv_adj1 = (oct1 < -0.5) * inv_up + (oct1 > 0.5) * inv_dn;
 eff_oct1 = oct1 + inv_adj1 + reg + (oct1 < -0.5) * boct + (oct1 > 0.5) * toct;
@@ -684,7 +718,7 @@ oct1_x = floor(deg1_eff / ts_size);
 r1_rat = peek(tuning_table, ts_base + 1 + deg1_w, 0);
 r1_jrat = (deg1_w<0.5)?j0:(deg1_w<1.5)?j1:(deg1_w<2.5)?j2:(deg1_w<3.5)?j3:j4;
 r1_rat = (ts < 0.5) ? (r1_rat * (1.0-flex) + r1_jrat * flex) : r1_rat;
-r1_freq = root * r1_rat * pow(2.0, eff_oct1 + oct1_x);
+r1_freq = eff_root * r1_rat * pow(2.0, eff_oct1 + oct1_x);
 r1_target = samplerate / max(r1_freq, 20);
 r1_sdl = (r1_sdl < 1) ? r1_target : r1_sdl + (r1_target - r1_sdl) * glide;
 exc1 = cx * s_cg * v_amp1 * unmute;
@@ -723,7 +757,7 @@ oct2_x = floor(deg2_eff / ts_size);
 r2_rat = peek(tuning_table, ts_base + 1 + deg2_w, 0);
 r2_jrat = (deg2_w<0.5)?j0:(deg2_w<1.5)?j1:(deg2_w<2.5)?j2:(deg2_w<3.5)?j3:j4;
 r2_rat = (ts < 0.5) ? (r2_rat * (1.0-flex) + r2_jrat * flex) : r2_rat;
-r2_freq = root * r2_rat * pow(2.0, eff_oct2 + oct2_x);
+r2_freq = eff_root * r2_rat * pow(2.0, eff_oct2 + oct2_x);
 r2_target = samplerate / max(r2_freq, 20);
 r2_sdl = (r2_sdl < 1) ? r2_target : r2_sdl + (r2_target - r2_sdl) * glide;
 exc2 = cy * s_cg * v_amp2 * unmute;
@@ -744,7 +778,7 @@ oct3_x = floor(deg3_eff / ts_size);
 r3_rat = peek(tuning_table, ts_base + 1 + deg3_w, 0);
 r3_jrat = (deg3_w<0.5)?j0:(deg3_w<1.5)?j1:(deg3_w<2.5)?j2:(deg3_w<3.5)?j3:j4;
 r3_rat = (ts < 0.5) ? (r3_rat * (1.0-flex) + r3_jrat * flex) : r3_rat;
-r3_freq = root * r3_rat * pow(2.0, eff_oct3 + oct3_x);
+r3_freq = eff_root * r3_rat * pow(2.0, eff_oct3 + oct3_x);
 r3_target = samplerate / max(r3_freq, 20);
 r3_sdl = (r3_sdl < 1) ? r3_target : r3_sdl + (r3_target - r3_sdl) * glide;
 exc3 = cz * s_cg * v_amp3 * unmute;
@@ -765,7 +799,7 @@ oct4_x = floor(deg4_eff / ts_size);
 r4_rat = peek(tuning_table, ts_base + 1 + deg4_w, 0);
 r4_jrat = (deg4_w<0.5)?j0:(deg4_w<1.5)?j1:(deg4_w<2.5)?j2:(deg4_w<3.5)?j3:j4;
 r4_rat = (ts < 0.5) ? (r4_rat * (1.0-flex) + r4_jrat * flex) : r4_rat;
-r4_freq = root * r4_rat * pow(2.0, eff_oct4 + oct4_x);
+r4_freq = eff_root * r4_rat * pow(2.0, eff_oct4 + oct4_x);
 r4_target = samplerate / max(r4_freq, 20);
 r4_sdl = (r4_sdl < 1) ? r4_target : r4_sdl + (r4_target - r4_sdl) * glide;
 exc4 = cx_456 * s_cg * v_amp4 * unmute;
@@ -786,7 +820,7 @@ oct5_x = floor(deg5_eff / ts_size);
 r5_rat = peek(tuning_table, ts_base + 1 + deg5_w, 0);
 r5_jrat = (deg5_w<0.5)?j0:(deg5_w<1.5)?j1:(deg5_w<2.5)?j2:(deg5_w<3.5)?j3:j4;
 r5_rat = (ts < 0.5) ? (r5_rat * (1.0-flex) + r5_jrat * flex) : r5_rat;
-r5_freq = root * r5_rat * pow(2.0, eff_oct5 + oct5_x);
+r5_freq = eff_root * r5_rat * pow(2.0, eff_oct5 + oct5_x);
 r5_target = samplerate / max(r5_freq, 20);
 r5_sdl = (r5_sdl < 1) ? r5_target : r5_sdl + (r5_target - r5_sdl) * glide;
 exc5 = cy_456 * s_cg * v_amp5 * unmute;
@@ -807,7 +841,7 @@ oct6_x = floor(deg6_eff / ts_size);
 r6_rat = peek(tuning_table, ts_base + 1 + deg6_w, 0);
 r6_jrat = (deg6_w<0.5)?j0:(deg6_w<1.5)?j1:(deg6_w<2.5)?j2:(deg6_w<3.5)?j3:j4;
 r6_rat = (ts < 0.5) ? (r6_rat * (1.0-flex) + r6_jrat * flex) : r6_rat;
-r6_freq = root * r6_rat * pow(2.0, eff_oct6 + oct6_x);
+r6_freq = eff_root * r6_rat * pow(2.0, eff_oct6 + oct6_x);
 r6_target = samplerate / max(r6_freq, 20);
 r6_sdl = (r6_sdl < 1) ? r6_target : r6_sdl + (r6_target - r6_sdl) * glide;
 exc6 = cz_456 * s_cg * v_amp6 * unmute;
@@ -820,12 +854,16 @@ r6_out = tanh(r6_filt) * 0.994;
 r6_d.write(exc6 + r6_out);
 
 // === STEREO MIX (with sub-bass + drive saturation) ===
-sub_g = sub_amt * 0.8;
+sub_g = sub_amt;
 left = r1_out*v_amp1*0.7 + r2_out*v_amp2*0.5 + r3_out*v_amp3*0.2 + r4_out*v_amp4*0.4 + r5_out*v_amp5*0.6 + r6_out*v_amp6*0.3 + sub_out*sub_g;
 right = r1_out*v_amp1*0.3 + r2_out*v_amp2*0.5 + r3_out*v_amp3*0.8 + r4_out*v_amp4*0.6 + r5_out*v_amp5*0.4 + r6_out*v_amp6*0.7 + sub_out*sub_g;
 drv = max(1.0 + sub_drive, 1.0);
 out1 = tanh(left * drv) * master_gain * unmute;
-out2 = tanh(right * drv) * master_gain * unmute;"""
+out2 = tanh(right * drv) * master_gain * unmute;
+// Attractor state outputs (for visual sync — normalized chaos XYZ)
+out3 = cx * s_cg;
+out4 = cy * s_cg;
+out5 = cz * s_cg;"""
 
 # ==============================================================================
 # LAYOUT HELPERS
@@ -1155,86 +1193,41 @@ boxes.append(msg("obj-root-m", "root $1", [BX, RES_Y+67, 55.0, 22.0]))
 lines.append(line("obj-root-n", 0, "obj-root-m", 0))
 res_msg_ids.append("obj-root-m")
 
-# Root snap-back subpatcher (delay-based — detects when user stops dragging)
-# Inlet 0: raw value from intnum outlet 0 (every change)
-# Inlet 1: snap toggle on/off
-# Outlet 0: "set N" messages for intnum display
-# How it works: each value change restarts a 400ms delay. When values stop
-# (user releases mouse), delay fires → gate → recall home → update display + gen~.
-# Presets intercepted via [r toGen] → [route root] → store home + update display.
+# Root display subpatcher (simplified — spring logic moved to gen~ DSP)
+# Inlet 0: unused (kept for backwards compat)
+# Outlet 0: "set N" messages for intnum display when presets change root
+# Presets intercepted via [r toGen] → [route root] → update display.
 rs_boxes = [
-    # --- Inlets ---
+    # --- Inlet (unused, kept for wiring compat) ---
     {"box": {"id": "rs-in1", "maxclass": "newobj", "text": "in 1", "numinlets": 0, "numoutlets": 1,
              "outlettype": [""], "patching_rect": [200.0, 15.0, 30.0, 22.0],
-             "comment": "value from intnum (every change)"}},
-    {"box": {"id": "rs-in2", "maxclass": "newobj", "text": "in 2", "numinlets": 0, "numoutlets": 1,
-             "outlettype": [""], "patching_rect": [350.0, 15.0, 30.0, 22.0],
-             "comment": "snap toggle 0/1"}},
-    # --- Preset interception (always stores home) ---
+             "comment": "unused (kept for compat)"}},
+    # --- Preset interception ---
     {"box": {"id": "rs-recv", "maxclass": "newobj", "text": "r toGen", "numinlets": 0, "numoutlets": 1,
              "outlettype": [""], "patching_rect": [30.0, 15.0, 50.0, 22.0]}},
     {"box": {"id": "rs-route", "maxclass": "newobj", "text": "route root", "numinlets": 1, "numoutlets": 2,
              "outlettype": ["", ""], "patching_rect": [30.0, 50.0, 68.0, 22.0]}},
-    {"box": {"id": "rs-t1", "maxclass": "newobj", "text": "t i i", "numinlets": 1, "numoutlets": 2,
-             "outlettype": ["int", "int"], "patching_rect": [30.0, 85.0, 33.0, 22.0]}},
-    # --- Home value storage (default 110 Hz) ---
-    {"box": {"id": "rs-home", "maxclass": "newobj", "text": "i 110", "numinlets": 2, "numoutlets": 1,
-             "outlettype": ["int"], "patching_rect": [140.0, 120.0, 35.0, 22.0]}},
-    # --- Display update (shared by preset + snap paths) ---
+    # --- Display update ---
     {"box": {"id": "rs-set", "maxclass": "newobj", "text": "prepend set", "numinlets": 1, "numoutlets": 1,
-             "outlettype": [""], "patching_rect": [30.0, 155.0, 72.0, 22.0]}},
+             "outlettype": [""], "patching_rect": [30.0, 85.0, 72.0, 22.0]}},
     {"box": {"id": "rs-out1", "maxclass": "newobj", "text": "out 1", "numinlets": 1, "numoutlets": 0,
-             "patching_rect": [30.0, 190.0, 35.0, 22.0]}},
-    # --- Value split: [t b i] — right=int (store home when snap OFF), left=bang (delay) ---
-    {"box": {"id": "rs-tbi", "maxclass": "newobj", "text": "t b i", "numinlets": 1, "numoutlets": 2,
-             "outlettype": ["bang", "int"], "patching_rect": [200.0, 55.0, 33.0, 22.0]}},
-    # --- Home-store gate: open when snap OFF (inverted toggle) ---
-    {"box": {"id": "rs-inv", "maxclass": "newobj", "text": "!- 1", "numinlets": 2, "numoutlets": 1,
-             "outlettype": ["int"], "patching_rect": [350.0, 55.0, 30.0, 22.0]}},
-    {"box": {"id": "rs-hgate", "maxclass": "newobj", "text": "gate 1", "numinlets": 2, "numoutlets": 1,
-             "outlettype": [""], "patching_rect": [200.0, 90.0, 42.0, 22.0]}},
-    # --- Snap-back delay ---
-    {"box": {"id": "rs-del", "maxclass": "newobj", "text": "delay 400", "numinlets": 2, "numoutlets": 1,
-             "outlettype": ["bang"], "patching_rect": [270.0, 90.0, 55.0, 22.0]}},
-    # --- Snap gate: open when snap ON (direct toggle) ---
-    {"box": {"id": "rs-gate", "maxclass": "newobj", "text": "gate 1", "numinlets": 2, "numoutlets": 1,
-             "outlettype": [""], "patching_rect": [350.0, 90.0, 42.0, 22.0]}},
-    # --- Snap output fork: right=display, left=gen~ ---
-    {"box": {"id": "rs-t2", "maxclass": "newobj", "text": "t i i", "numinlets": 1, "numoutlets": 2,
-             "outlettype": ["int", "int"], "patching_rect": [200.0, 155.0, 33.0, 22.0]}},
-    {"box": {"id": "rs-rootmsg", "maxclass": "newobj", "text": "prepend root", "numinlets": 1, "numoutlets": 1,
-             "outlettype": [""], "patching_rect": [200.0, 190.0, 78.0, 22.0]}},
-    {"box": {"id": "rs-send", "maxclass": "newobj", "text": "s toGen", "numinlets": 1, "numoutlets": 0,
-             "patching_rect": [200.0, 225.0, 50.0, 22.0]}},
+             "patching_rect": [30.0, 120.0, 35.0, 22.0]}},
+    # --- Display current root value ---
+    {"box": {"id": "rs-num", "maxclass": "number", "numinlets": 1, "numoutlets": 2,
+             "outlettype": ["", "bang"], "parameter_enable": 0,
+             "patching_rect": [30.0, 155.0, 55.0, 22.0]}},
     # --- Label ---
     {"box": {"id": "rs-label", "maxclass": "comment",
-             "text": "Root snap-back v2\nSnap OFF: values update home\nSnap ON: 400ms after release → snap to home\nPresets always update home",
-             "numinlets": 1, "numoutlets": 0, "patching_rect": [30.0, 250.0, 250.0, 60.0], "fontsize": 10.0, "linecount": 4}},
+             "text": "Root display (spring logic in gen~ DSP)\nPresets update display via [r toGen]",
+             "numinlets": 1, "numoutlets": 0, "patching_rect": [30.0, 185.0, 250.0, 40.0], "fontsize": 10.0, "linecount": 2}},
 ]
 
 rs_lines = [
-    # --- Preset interception: r toGen → route root → store home + display ---
+    # Preset interception: r toGen → route root → display
     line("rs-recv", 0, "rs-route", 0),
-    line("rs-route", 0, "rs-t1", 0),
-    line("rs-t1", 1, "rs-home", 1),      # right (fires first): store home
-    line("rs-t1", 0, "rs-set", 0),       # left: update display
+    line("rs-route", 0, "rs-set", 0),
     line("rs-set", 0, "rs-out1", 0),
-    # --- Toggle routing ---
-    line("rs-in2", 0, "rs-gate", 0),     # toggle → snap gate control (1=open)
-    line("rs-in2", 0, "rs-inv", 0),      # toggle → invert
-    line("rs-inv", 0, "rs-hgate", 0),    # inverted toggle → home-store gate control (1=open when snap OFF)
-    # --- Value split: in1 → [t b i] ---
-    line("rs-in1", 0, "rs-tbi", 0),
-    line("rs-tbi", 1, "rs-hgate", 1),    # right (int, fires first): → home-store gate data
-    line("rs-hgate", 0, "rs-home", 1),   # gate open when snap OFF → store as home
-    line("rs-tbi", 0, "rs-del", 0),      # left (bang, fires second): → restart 400ms delay
-    # --- Snap-back: delay → snap gate → recall home → fork ---
-    line("rs-del", 0, "rs-gate", 1),     # delayed bang → snap gate data
-    line("rs-gate", 0, "rs-home", 0),    # gate open when snap ON → [i] left inlet = recall
-    line("rs-home", 0, "rs-t2", 0),      # home value → fork
-    line("rs-t2", 1, "rs-set", 0),       # right: update display (set N → intnum, silent)
-    line("rs-t2", 0, "rs-rootmsg", 0),   # left: prepend root → send to gen~
-    line("rs-rootmsg", 0, "rs-send", 0),
+    line("rs-route", 0, "rs-num", 0),     # also show in number box
 ]
 
 rs_patcher = {
@@ -1251,17 +1244,11 @@ rs_patcher = {
 }
 
 boxes.append({"box": {"id": "obj-root-snap", "maxclass": "newobj", "text": "p root_snap",
-              "numinlets": 2, "numoutlets": 1, "outlettype": [""],
+              "numinlets": 1, "numoutlets": 1, "outlettype": [""],
               "patching_rect": [15.0, 620.0, 78.0, 22.0], "patcher": rs_patcher}})
 
-# Snap toggle (Zone A, next to STOP)
-boxes.append({"box": {"id": "obj-snap-tog", "maxclass": "toggle", "numinlets": 1, "numoutlets": 1,
-              "outlettype": ["int"], "parameter_enable": 0, "patching_rect": [180.0, 215.0, 24.0, 24.0]}})
-boxes.append(comment("obj-snap-l", "ROOT SNAP", [208.0, 220.0, 75.0, 20.0], fontface=1))
-
-# Wiring: intnum value → snap inlet 0, toggle → snap inlet 1, snap out → intnum
-lines.append(line("obj-root-n", 0, "obj-root-snap", 0))    # every value change
-lines.append(line("obj-snap-tog", 0, "obj-root-snap", 1))  # toggle on/off
+# Wiring: intnum value → root_snap inlet 0 (unused but kept), snap out → intnum (preset display)
+lines.append(line("obj-root-n", 0, "obj-root-snap", 0))    # value passthrough
 lines.append(line("obj-root-snap", 0, "obj-root-n", 0))    # set message → intnum
 
 # Brightness (waveguide feedback filter)
@@ -1273,7 +1260,7 @@ res_msg_ids.append("obj-brt-m")
 
 # Resonator defaults button
 boxes.append(comment("obj-res-def-l", "defaults:", [BX, RES_Y+94, 55.0, 20.0], fontface=1))
-boxes.append(msg("obj-res-def", "root 110, flex 0.5, master_gain 0.7, glide 0.001, brightness 0, sub_amt 0.5, sub_drive 0, sub_drone 1, sub_oct -1", [BX+60, RES_Y+94, 400.0, 22.0]))
+boxes.append(msg("obj-res-def", "root 55, flex 0.5, master_gain 0.7, glide 0.001, brightness 0, sub_amt 0.5, sub_drive 0, sub_drone 1, sub_oct -1", [BX+60, RES_Y+94, 400.0, 22.0]))
 res_msg_ids.append("obj-res-def")
 
 # Resonator section sender (offset right to avoid collision with sub-bass label)
@@ -1287,7 +1274,7 @@ boxes.append(comment("obj-sub-label", "\u2014\u2014 SUB-BASS \u2014\u2014", [BX,
 sub_msg_ids = []
 # Sub amount (mix level of sub waveguide)
 boxes.append(comment("obj-sub-l", "sub amt", [BX, SUB_Y+22, 55.0, 20.0], fontface=1))
-boxes.append(flonum("obj-sub-n", [BX, SUB_Y+42, 55.0, 22.0], 0.0, 1.0))
+boxes.append(flonum("obj-sub-n", [BX, SUB_Y+42, 55.0, 22.0], 0.0, 1.5))
 boxes.append(msg("obj-sub-m", "sub_amt $1", [BX, SUB_Y+67, 70.0, 22.0]))
 lines.append(line("obj-sub-n", 0, "obj-sub-m", 0))
 sub_msg_ids.append("obj-sub-m")
@@ -1360,13 +1347,49 @@ boxes.append(msg("obj-toct-m", "treble_oct $1", [BX+235, TUN_Y+135, 78.0, 22.0])
 lines.append(line("obj-toct-n", 0, "obj-toct-m", 0))
 tun_msg_ids.append("obj-toct-m")
 
+# Row 3: Root Spring / Latch system
+boxes.append(comment("obj-rsp-label", "—— ROOT SPRING ——", [BX, TUN_Y+165, 160.0, 20.0], fontface=1))
+
+# Root offset (semitones, -24 to +24)
+boxes.append(comment("obj-roff-l", "offset (st)", [BX, TUN_Y+185, 70.0, 20.0]))
+boxes.append(flonum("obj-roff-n", [BX, TUN_Y+205, 55.0, 22.0], -24.0, 24.0))
+boxes.append(msg("obj-roff-m", "root_offset $1", [BX, TUN_Y+230, 95.0, 22.0]))
+lines.append(line("obj-roff-n", 0, "obj-roff-m", 0))
+tun_msg_ids.append("obj-roff-m")
+
+# Spring / Latch toggle
+boxes.append(comment("obj-rmod-l", "mode", [BX+120, TUN_Y+185, 40.0, 20.0], fontface=1))
+boxes.append({"box": {"id": "obj-rmod-tog", "maxclass": "toggle", "numinlets": 1, "numoutlets": 1,
+              "outlettype": ["int"], "parameter_enable": 0, "patching_rect": [BX+120, TUN_Y+205, 24.0, 24.0]}})
+boxes.append(msg("obj-rmod-m", "root_mode $1", [BX+120, TUN_Y+230, 85.0, 22.0]))
+boxes.append(comment("obj-rmod-hint", "0=Spring 1=Latch", [BX+150, TUN_Y+207, 110.0, 16.0], fontsize=9.0))
+lines.append(line("obj-rmod-tog", 0, "obj-rmod-m", 0))
+tun_msg_ids.append("obj-rmod-m")
+
+# Return speed (seconds)
+boxes.append(comment("obj-rret-l", "return (s)", [BX+235, TUN_Y+185, 70.0, 20.0]))
+boxes.append(flonum("obj-rret-n", [BX+235, TUN_Y+205, 55.0, 22.0], 0.05, 3.0))
+boxes.append(msg("obj-rret-m", "root_return $1", [BX+235, TUN_Y+230, 95.0, 22.0]))
+lines.append(line("obj-rret-n", 0, "obj-rret-m", 0))
+tun_msg_ids.append("obj-rret-m")
+
+# MIDI CC input for root_offset: [ctlin] → [scale 0 127 -24 24] → [prepend root_offset] → [s toGen]
+boxes.append(comment("obj-rcc-l", "MIDI CC → offset", [BX, TUN_Y+258, 110.0, 16.0], fontsize=10.0))
+boxes.append(newobj("obj-rcc-ctl", "ctlin", [BX, TUN_Y+276, 40.0, 22.0], numinlets=1, numoutlets=3, outlettype=["", "", ""]))
+boxes.append(newobj("obj-rcc-scl", "scale 0 127 -24 24", [BX, TUN_Y+301, 115.0, 22.0]))
+boxes.append(newobj("obj-rcc-prep", "prepend root_offset", [BX, TUN_Y+326, 110.0, 22.0]))
+lines.append(line("obj-rcc-ctl", 0, "obj-rcc-scl", 0))
+lines.append(line("obj-rcc-scl", 0, "obj-rcc-prep", 0))
+lines.append(line("obj-rcc-scl", 0, "obj-roff-n", 0))  # also update flonum display
+tun_msg_ids.append("obj-rcc-prep")
+
 # Tuning section sender
-boxes.append(newobj("obj-s-tun", "s toGen", [BX, TUN_Y+160, 52.0, 22.0], numinlets=1, numoutlets=0))
+boxes.append(newobj("obj-s-tun", "s toGen", [BX, TUN_Y+355, 52.0, 22.0], numinlets=1, numoutlets=0))
 for mid in tun_msg_ids:
     lines.append(line(mid, 0, "obj-s-tun", 0))
 
 # --- ARPEGGIATOR (y=1000) ---
-ARP_Y = 1000
+ARP_Y = 1200
 arp_msg_ids = []
 boxes.append(comment("obj-arp-label", "\u2014\u2014 ARPEGGIATOR \u2014\u2014", [BX, ARP_Y, 160.0, 20.0], fontface=1))
 
@@ -1411,7 +1434,7 @@ arp_msg_ids.append("obj-bpm-m")
 
 # Free Hz flonum
 boxes.append(comment("obj-arpr-l", "free Hz", [BX+130, ARP_Y+188, 50.0, 20.0], fontface=1))
-boxes.append(flonum("obj-arpr-n", [BX+185, ARP_Y+188, 50.0, 22.0], 0.1, 20.0))
+boxes.append(flonum("obj-arpr-n", [BX+185, ARP_Y+188, 50.0, 22.0], 0.1, 50.0))
 boxes.append(msg("obj-arpr-m", "arp_rate $1", [BX+185, ARP_Y+213, 68.0, 22.0]))
 lines.append(line("obj-arpr-n", 0, "obj-arpr-m", 0))
 arp_msg_ids.append("obj-arpr-m")
@@ -1421,8 +1444,76 @@ boxes.append(newobj("obj-s-arp", "s toGen", [BX+200, ARP_Y+240, 52.0, 22.0], num
 for mid in arp_msg_ids:
     lines.append(line(mid, 0, "obj-s-arp", 0))
 
-# --- ADSR ENVELOPE (y=1260) ---
-ADSR_Y = 1260
+# --- USER PATTERN GRID (y=ARP_Y+270) ---
+GRID_Y = ARP_Y + 270
+boxes.append(comment("obj-ugrid-label", "\u2014\u2014 USER PATTERN (mode 15) \u2014\u2014", [BX, GRID_Y, 250.0, 20.0], fontface=1))
+boxes.append(comment("obj-ugrid-voices", "v1 v2 v3 v4 v5 v6", [BX+2, GRID_Y+20, 200.0, 14.0], fontsize=9.0))
+# matrixctrl: 16 columns (steps) × 6 rows (voices), each cell = toggle
+boxes.append({"box": {"id": "obj-ugrid", "maxclass": "matrixctrl", "numinlets": 1, "numoutlets": 2,
+              "outlettype": ["list", ""], "parameter_enable": 0,
+              "patching_rect": [BX, GRID_Y+35, 320.0, 120.0],
+              "columns": 16, "rows": 6}})
+# JS-free bitmask converter subpatcher: matrixctrl → [p grid_to_bitmask] → us0-us15 msgs → s toGen
+# Subpatcher receives "col row state" lists, maintains internal state, outputs "usN bitmask" messages
+grid_boxes = [
+    {"box": {"id": "g-in1", "maxclass": "newobj", "text": "in 1", "numinlets": 0, "numoutlets": 1,
+             "outlettype": [""], "patching_rect": [30.0, 15.0, 30.0, 22.0],
+             "comment": "col row state from matrixctrl"}},
+    {"box": {"id": "g-unpack", "maxclass": "newobj", "text": "unpack i i i", "numinlets": 1, "numoutlets": 3,
+             "outlettype": ["int", "int", "int"], "patching_rect": [30.0, 50.0, 70.0, 22.0]}},
+    # col=step (0-15), row=voice (0-5, top=v1), state=0/1
+    # bitmask: voice_bit = (1 << row) * state, added/subtracted from step's current mask
+    # We use a coll to store 16 bitmask values, keyed 0-15
+    {"box": {"id": "g-coll", "maxclass": "newobj", "text": "coll grid_masks", "numinlets": 1, "numoutlets": 4,
+             "outlettype": ["", "", "", ""], "patching_rect": [30.0, 180.0, 100.0, 22.0]}},
+    # Pack col and output for retrieval
+    {"box": {"id": "g-getmsg", "maxclass": "newobj", "text": "prepend refer", "numinlets": 1, "numoutlets": 1,
+             "outlettype": [""], "patching_rect": [200.0, 50.0, 78.0, 22.0]}},
+    # JavaScript for bitmask computation (simplest reliable approach)
+    {"box": {"id": "g-js", "maxclass": "newobj", "text": "js grid_bitmask.js", "numinlets": 1, "numoutlets": 1,
+             "outlettype": [""], "patching_rect": [30.0, 85.0, 110.0, 22.0]}},
+    {"box": {"id": "g-out1", "maxclass": "newobj", "text": "out 1", "numinlets": 1, "numoutlets": 0,
+             "patching_rect": [30.0, 120.0, 35.0, 22.0]}},
+    {"box": {"id": "g-label", "maxclass": "comment",
+             "text": "Converts matrixctrl col/row/state to usN bitmask messages",
+             "numinlets": 1, "numoutlets": 0, "patching_rect": [30.0, 150.0, 280.0, 20.0], "fontsize": 10.0}},
+]
+grid_lines = [
+    line("g-in1", 0, "g-js", 0),
+    line("g-js", 0, "g-out1", 0),
+]
+grid_patcher = {
+    "fileversion": 1,
+    "appversion": {"major": 8, "minor": 6, "revision": 0, "architecture": "x64", "modernui": 1},
+    "rect": [300, 200, 350, 200],
+    "editing_bgcolor": [0.65, 0.65, 0.65, 1.0],
+    "bglocked": 0, "openinpresentation": 0,
+    "default_fontsize": 12.0, "default_fontname": "Arial",
+    "gridonopen": 1, "gridsize": [15.0, 15.0],
+    "gridsnaponopen": 1, "toolbarvisible": 1,
+    "boxes": grid_boxes,
+    "lines": grid_lines
+}
+boxes.append({"box": {"id": "obj-grid-p", "maxclass": "newobj", "text": "p grid_to_bitmask",
+              "numinlets": 1, "numoutlets": 1, "outlettype": [""],
+              "patching_rect": [BX, GRID_Y+160, 110.0, 22.0], "patcher": grid_patcher}})
+boxes.append(newobj("obj-s-grid", "s toGen", [BX, GRID_Y+185, 52.0, 22.0], numinlets=1, numoutlets=0))
+# Activate user pattern mode button
+boxes.append(msg("obj-ugrid-act", "arp_mode 15", [BX+135, GRID_Y+160, 75.0, 22.0]))
+boxes.append(comment("obj-ugrid-hint", "\u2190 activate", [BX+215, GRID_Y+162, 60.0, 16.0], fontsize=10.0))
+# Pattern length
+boxes.append(comment("obj-upl-l", "steps:", [BX+135, GRID_Y+185, 40.0, 16.0], fontsize=10.0))
+boxes.append(intnum("obj-upl-n", [BX+178, GRID_Y+185, 35.0, 22.0], 1, 16))
+boxes.append(msg("obj-upl-m", "user_pat_len $1", [BX+218, GRID_Y+185, 100.0, 22.0]))
+lines.append(line("obj-upl-n", 0, "obj-upl-m", 0))
+
+lines.append(line("obj-ugrid", 0, "obj-grid-p", 0))
+lines.append(line("obj-grid-p", 0, "obj-s-grid", 0))
+lines.append(line("obj-ugrid-act", 0, "obj-s-grid", 0))
+lines.append(line("obj-upl-m", 0, "obj-s-grid", 0))
+
+# --- ADSR ENVELOPE (y=GRID_Y+215) ---
+ADSR_Y = GRID_Y + 215
 adsr_msg_ids = []
 boxes.append(comment("obj-adsr-label", "\u2014\u2014 ADSR ENVELOPE \u2014\u2014", [BX, ADSR_Y, 180.0, 20.0], fontface=1))
 adsr_params = [
@@ -1460,25 +1551,49 @@ gen_patcher = {
     "boxes": [
         {"box": {"id": "obj-gin1", "maxclass": "newobj", "text": "in 1", "numinlets": 0, "numoutlets": 1,
                  "outlettype": [""], "patching_rect": [50.0, 15.0, 30.0, 22.0]}},
-        {"box": {"id": "obj-gcb", "maxclass": "codebox", "numinlets": 1, "numoutlets": 2,
-                 "outlettype": ["", ""], "patching_rect": [50.0, 55.0, 800.0, 600.0], "code": code}},
+        {"box": {"id": "obj-gin2", "maxclass": "newobj", "text": "in 2", "numinlets": 0, "numoutlets": 1,
+                 "outlettype": [""], "patching_rect": [150.0, 15.0, 30.0, 22.0]}},
+        {"box": {"id": "obj-gcb", "maxclass": "codebox", "numinlets": 2, "numoutlets": 5,
+                 "outlettype": ["", "", "", "", ""], "patching_rect": [50.0, 55.0, 800.0, 600.0], "code": code}},
         {"box": {"id": "obj-gout1", "maxclass": "newobj", "text": "out 1", "numinlets": 1, "numoutlets": 0,
                  "patching_rect": [50.0, 675.0, 35.0, 22.0]}},
         {"box": {"id": "obj-gout2", "maxclass": "newobj", "text": "out 2", "numinlets": 1, "numoutlets": 0,
-                 "patching_rect": [250.0, 675.0, 35.0, 22.0]}}
+                 "patching_rect": [250.0, 675.0, 35.0, 22.0]}},
+        {"box": {"id": "obj-gout3", "maxclass": "newobj", "text": "out 3", "numinlets": 1, "numoutlets": 0,
+                 "patching_rect": [450.0, 675.0, 35.0, 22.0]}},
+        {"box": {"id": "obj-gout4", "maxclass": "newobj", "text": "out 4", "numinlets": 1, "numoutlets": 0,
+                 "patching_rect": [550.0, 675.0, 35.0, 22.0]}},
+        {"box": {"id": "obj-gout5", "maxclass": "newobj", "text": "out 5", "numinlets": 1, "numoutlets": 0,
+                 "patching_rect": [650.0, 675.0, 35.0, 22.0]}}
     ],
     "lines": [
         line("obj-gin1", 0, "obj-gcb", 0),
+        line("obj-gin2", 0, "obj-gcb", 1),
         line("obj-gcb", 0, "obj-gout1", 0),
-        line("obj-gcb", 1, "obj-gout2", 0)
+        line("obj-gcb", 1, "obj-gout2", 0),
+        line("obj-gcb", 2, "obj-gout3", 0),
+        line("obj-gcb", 3, "obj-gout4", 0),
+        line("obj-gcb", 4, "obj-gout5", 0)
     ]
 }
-boxes.append({"box": {"id": "obj-gen", "maxclass": "newobj", "text": "gen~", "numinlets": 1, "numoutlets": 2,
-              "patching_rect": [100.0, 530.0+GEN_SHIFT, 200.0, 22.0], "outlettype": ["signal", "signal"], "patcher": gen_patcher}})
+boxes.append({"box": {"id": "obj-gen", "maxclass": "newobj", "text": "gen~", "numinlets": 2, "numoutlets": 5,
+              "patching_rect": [100.0, 530.0+GEN_SHIFT, 200.0, 22.0], "outlettype": ["signal", "signal", "signal", "signal", "signal"], "patcher": gen_patcher}})
 
 # Receive for presets
 boxes.append(newobj("obj-r-toGen", "r toGen", [100.0, 507.0+GEN_SHIFT, 52.0, 22.0], numinlets=0, numoutlets=1, outlettype=[""]))
 lines.append(line("obj-r-toGen", 0, "obj-gen", 0))
+
+# Analog clock input (audio-rate pulse from hardware)
+boxes.append(newobj("obj-adc-clk", "adc~ 3", [310.0, 507.0+GEN_SHIFT, 50.0, 22.0], numinlets=1, numoutlets=1, outlettype=["signal"]))
+lines.append(line("obj-adc-clk", 0, "obj-gen", 1))
+# Clock enable toggle + message
+boxes.append({"box": {"id": "obj-clk-tog", "maxclass": "toggle", "numinlets": 1, "numoutlets": 1,
+              "outlettype": ["int"], "parameter_enable": 0, "patching_rect": [370.0, 507.0+GEN_SHIFT, 20.0, 20.0]}})
+boxes.append(msg("obj-clk-m", "clk_enable $1", [395.0, 507.0+GEN_SHIFT, 85.0, 22.0]))
+boxes.append(comment("obj-clk-hint", "ANALOG CLK\n(adc~ 3 in)", [370.0, 488.0+GEN_SHIFT, 80.0, 28.0], fontsize=9.0, linecount=2))
+boxes.append(newobj("obj-s-clk", "s toGen", [395.0, 532.0+GEN_SHIFT, 52.0, 22.0], numinlets=1, numoutlets=0))
+lines.append(line("obj-clk-tog", 0, "obj-clk-m", 0))
+lines.append(line("obj-clk-m", 0, "obj-s-clk", 0))
 
 # Audio chain
 boxes.append(newobj("obj-gain-l", "*~ 0.8", [100.0, 560.0+GEN_SHIFT, 42.0, 22.0], numinlets=2, outlettype=["signal"]))
@@ -1502,6 +1617,15 @@ lines.append(line("obj-gen", 0, "obj-scope-l", 0))
 lines.append(line("obj-gen", 1, "obj-scope-r", 0))
 lines.append(line("obj-gain-l", 0, "obj-meter-l", 0))
 lines.append(line("obj-gain-r", 0, "obj-meter-r", 0))
+
+# Chaos attractor outputs (for visual sync via send~)
+boxes.append(newobj("obj-chaos-sx", "send~ chaos_x", [500.0, 530.0+GEN_SHIFT, 100.0, 22.0], numinlets=1, numoutlets=0))
+boxes.append(newobj("obj-chaos-sy", "send~ chaos_y", [500.0, 555.0+GEN_SHIFT, 100.0, 22.0], numinlets=1, numoutlets=0))
+boxes.append(newobj("obj-chaos-sz", "send~ chaos_z", [500.0, 580.0+GEN_SHIFT, 100.0, 22.0], numinlets=1, numoutlets=0))
+boxes.append(comment("obj-chaos-hint", "chaos XYZ\n(receive~ in\nvisual patches)", [605.0, 540.0+GEN_SHIFT, 100.0, 48.0], fontsize=10.0, linecount=3))
+lines.append(line("obj-gen", 2, "obj-chaos-sx", 0))
+lines.append(line("obj-gen", 3, "obj-chaos-sy", 0))
+lines.append(line("obj-gen", 4, "obj-chaos-sz", 0))
 
 # Record — one-click with auto-timestamped filenames
 # Subpatcher: toggle ON → date → sprintf filename → open → delay → start
@@ -1704,6 +1828,13 @@ y = add_preset_group("\u2014\u2014 PATTERN PRESETS \u2014\u2014", [
     ("obj-pp8", "arp_mode 14, arp_div 4, arp_bpm 140", "Kassa \u2014 Manding harvest"),
 ], y, "obj-pp-label")
 
+y = add_preset_group("\u2014\u2014 ROOT SPRING \u2014\u2014", [
+    ("obj-rsp1", "root_offset 0, root_mode 0, root_return 0.1", "Tight (fast snap)"),
+    ("obj-rsp2", "root_offset 0, root_mode 0, root_return 0.5", "Elastic (default)"),
+    ("obj-rsp3", "root_offset 0, root_mode 0, root_return 2.0", "Slow (glacial drift)"),
+    ("obj-rsp4", "root_mode 1", "Latch (hold position)"),
+], y, "obj-rsp-label")
+
 # Tuning systems
 boxes.append(comment("obj-tsp-label", "\u2014\u2014 TUNING SYSTEMS \u2014\u2014", [RX, y, 200.0, 20.0], fontface=1))
 ty = y + 22
@@ -1745,7 +1876,7 @@ patch = {
         "fileversion": 1,
         "appversion": {"major": 8, "minor": 6, "revision": 0, "architecture": "x64", "modernui": 1},
         "classnamespace": "box",
-        "rect": [34, 76, 1469, 2050],
+        "rect": [34, 76, 1469, 2250],
         "bglocked": 0, "openinpresentation": 0,
         "default_fontsize": 12.0, "default_fontface": 0, "default_fontname": "Arial",
         "gridonopen": 1, "gridsize": [15.0, 15.0],
@@ -1762,7 +1893,7 @@ with open("/home/sphinxy/Feedback/max/step6_chaos_resonator.maxpat", "w") as f:
     json.dump(patch, f, indent="\t", ensure_ascii=False)
 
 print(f"Done! {len(boxes)} boxes, {len(lines)} lines")
-print(f"Window: 1469x2050")
+print(f"Window: 1469x2250")
 print()
 print("=== CHAOS RESONATOR v4.1 — FIXED + CLEAN ===")
 print("FIXES:")
@@ -1780,3 +1911,18 @@ print()
 print("MIDI SYNC:")
 print("  - midiin → 24ppqn clock detection → BPM")
 print("  - MIDI Start → unmute + phase reset, MIDI Stop → mute")
+print()
+print("ROOT SPRING:")
+print("  - Asymmetric spring model in gen~ DSP (fast attack, slow release)")
+print("  - root_offset: semitones (-24 to +24), root_mode: 0=Spring 1=Latch")
+print("  - root_return: spring return time in seconds (0.05 to 3.0)")
+print("  - MIDI CC → root_offset via [ctlin] → [scale 0 127 -24 24]")
+print("  - Old delay-based root_snap simplified to display-only")
+print()
+print("ICP FEATURES (v4.2):")
+print("  - Root default 55 Hz (club-ready), sub_amt uncapped to 1.5")
+print("  - Chaos attractor XYZ outputs (out3-5, send~ chaos_x/y/z for visuals)")
+print("  - Analog clock input (adc~ 3 → edge detect → BPM, clk_enable toggle)")
+print("  - User pattern grid: 16x6 matrixctrl → bitmask → arp_mode 15")
+print("  - Arp rate max raised to 50 Hz (footwork-ready)")
+print("  - grid_bitmask.js converts matrixctrl clicks to us0-us15 params")
