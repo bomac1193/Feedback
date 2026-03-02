@@ -61,6 +61,9 @@ Param sub_amt(0.5);
 Param sub_drive(0.0);
 Param sub_drone(1);
 Param sub_oct(-1);
+Param sub_chaos(0);
+Param eucl_pulses(3);
+Param eucl_steps(8);
 Param att_sel(0);
 Param att_b_sel(-1);
 Param combine_mode(0);
@@ -75,7 +78,7 @@ Param halv_a(1.89);
 Param aiz_c(0.6);
 Param aiz_d(3.5);
 Data tuning_table(190);
-Data arp_pat_data(160);
+Data arp_pat_data(240);
 History init_done(0);
 History s_sigma(10);
 History s_rho(28);
@@ -411,6 +414,76 @@ if (init_done < 0.5) {
     poke(arp_pat_data, 10, 139, 0);  // step 10: v2+v4 low-mid+mid-high
     poke(arp_pat_data, 0, 140, 0);
 
+    // === LUSOPHONE / DIASPORA PATTERNS ===
+
+    // Pattern 9 — Kuduro (arp_mode 15, offset 144, length 16)
+    // Angolan: heavy kick pattern, syncopated. x..x..x.x..x..x. at 140 BPM
+    poke(arp_pat_data, 16, 144, 0);
+    poke(arp_pat_data, 3, 145, 0);   // step 0: v1+v2 bass+body (kick)
+    poke(arp_pat_data, 0, 146, 0);
+    poke(arp_pat_data, 0, 147, 0);
+    poke(arp_pat_data, 3, 148, 0);   // step 3: kick
+    poke(arp_pat_data, 0, 149, 0);
+    poke(arp_pat_data, 0, 150, 0);
+    poke(arp_pat_data, 12, 151, 0);  // step 6: v3+v4 mid+transient (snare)
+    poke(arp_pat_data, 3, 152, 0);   // step 7: kick (syncopation)
+    poke(arp_pat_data, 0, 153, 0);
+    poke(arp_pat_data, 0, 154, 0);
+    poke(arp_pat_data, 3, 155, 0);   // step 10: kick
+    poke(arp_pat_data, 0, 156, 0);
+    poke(arp_pat_data, 0, 157, 0);
+    poke(arp_pat_data, 12, 158, 0);  // step 13: snare
+    poke(arp_pat_data, 3, 159, 0);   // step 14: kick (syncopation)
+    poke(arp_pat_data, 0, 160, 0);
+
+    // Pattern 10 — Semba (arp_mode 16, offset 176, length 16)
+    // Angolan: flowing, 2-bar feel, bass-heavy with clave accent
+    poke(arp_pat_data, 16, 176, 0);
+    poke(arp_pat_data, 1, 177, 0);   // step 0: v1 bass
+    poke(arp_pat_data, 0, 178, 0);
+    poke(arp_pat_data, 0, 179, 0);
+    poke(arp_pat_data, 6, 180, 0);   // step 3: v2+v3 body+metallic
+    poke(arp_pat_data, 0, 181, 0);
+    poke(arp_pat_data, 1, 182, 0);   // step 5: v1 bass
+    poke(arp_pat_data, 0, 183, 0);
+    poke(arp_pat_data, 48, 184, 0);  // step 7: v5+v6 shimmer
+    poke(arp_pat_data, 1, 185, 0);   // step 8: v1 bass
+    poke(arp_pat_data, 0, 186, 0);
+    poke(arp_pat_data, 8, 187, 0);   // step 10: v4 transient
+    poke(arp_pat_data, 0, 188, 0);
+    poke(arp_pat_data, 6, 189, 0);   // step 12: v2+v3 body+metallic
+    poke(arp_pat_data, 0, 190, 0);
+    poke(arp_pat_data, 1, 191, 0);   // step 14: v1 bass
+    poke(arp_pat_data, 0, 192, 0);
+
+    // Pattern 11 — Kizomba (arp_mode 17, offset 192, length 8)
+    // Angolan slow: intimate bass pulse, minimal percussion. 90 BPM.
+    poke(arp_pat_data, 8, 192, 0);
+    poke(arp_pat_data, 3, 193, 0);   // step 0: v1+v2 bass+body
+    poke(arp_pat_data, 0, 194, 0);
+    poke(arp_pat_data, 48, 195, 0);  // step 2: v5+v6 shimmer
+    poke(arp_pat_data, 0, 196, 0);
+    poke(arp_pat_data, 3, 197, 0);   // step 4: bass+body
+    poke(arp_pat_data, 0, 198, 0);
+    poke(arp_pat_data, 4, 199, 0);   // step 6: v3 metallic
+    poke(arp_pat_data, 0, 200, 0);
+
+    // Pattern 12 — Marrabenta (arp_mode 18, offset 208, length 12)
+    // Mozambican: 12/8 guitar-derived, bright and driving
+    poke(arp_pat_data, 12, 208, 0);
+    poke(arp_pat_data, 5, 209, 0);   // step 0: v1+v3 bass+metallic
+    poke(arp_pat_data, 0, 210, 0);
+    poke(arp_pat_data, 32, 211, 0);  // step 2: v6 crystal
+    poke(arp_pat_data, 2, 212, 0);   // step 3: v2 body
+    poke(arp_pat_data, 0, 213, 0);
+    poke(arp_pat_data, 16, 214, 0);  // step 5: v5 drone
+    poke(arp_pat_data, 5, 215, 0);   // step 6: v1+v3 bass+metallic
+    poke(arp_pat_data, 0, 216, 0);
+    poke(arp_pat_data, 8, 217, 0);   // step 8: v4 transient
+    poke(arp_pat_data, 2, 218, 0);   // step 9: v2 body
+    poke(arp_pat_data, 0, 219, 0);
+    poke(arp_pat_data, 48, 220, 0);  // step 11: v5+v6 shimmer
+
     init_done = 1;
 }
 
@@ -599,11 +672,13 @@ arp_trig_flag = (arp_ph_new >= 1.0);
 arp_phase = arp_ph_new - floor(arp_ph_new);
 
 // Pattern detection
-is_user_pat = (arp_mode > 14.5);
+is_user_pat = (arp_mode > 19.5);
+is_eucl = (arp_mode > 18.5 && arp_mode < 19.5);
 is_pattern = (arp_mode > 5.5);
-pat_idx = clamp(floor(arp_mode - 6), 0, 8);
+pat_idx = clamp(floor(arp_mode - 6), 0, 12);
 pat_base = pat_idx * 16;
-pat_len = is_user_pat ? max(user_pat_len, 1) : (is_pattern ? max(peek(arp_pat_data, pat_base, 0), 1) : 6);
+e_steps = clamp(floor(eucl_steps), 1, 16);
+pat_len = is_user_pat ? max(user_pat_len, 1) : (is_eucl ? e_steps : (is_pattern ? max(peek(arp_pat_data, pat_base, 0), 1) : 6));
 
 // Standard mode stepping
 up_s = mod(arp_step + 1, 6);
@@ -640,10 +715,17 @@ st4 = arp_active ? (abs(cur - 3) < 0.5 ? 1.0 : 0.0) : 1.0;
 st5 = arp_active ? (abs(cur - 4) < 0.5 ? 1.0 : 0.0) : 1.0;
 st6 = arp_active ? (abs(cur - 5) < 0.5 ? 1.0 : 0.0) : 1.0;
 
+// Euclidean rhythm (Bjorklund algorithm inline — threshold method)
+// A step fires if floor(k * (step+1) / n) > floor(k * step / n)
+e_pulses = clamp(floor(eucl_pulses), 0, e_steps);
+e_cur = clamp(cur, 0, e_steps - 1);
+e_hit = (floor(e_pulses * (e_cur + 1.0) / e_steps) - floor(e_pulses * e_cur / e_steps)) > 0.5;
+eucl_mask = e_hit ? 63 : 0;
+
 // Pattern voice activation (bitmask decode)
 ucur = clamp(cur, 0, 15);
 user_mask = (ucur<0.5)?us0:(ucur<1.5)?us1:(ucur<2.5)?us2:(ucur<3.5)?us3:(ucur<4.5)?us4:(ucur<5.5)?us5:(ucur<6.5)?us6:(ucur<7.5)?us7:(ucur<8.5)?us8:(ucur<9.5)?us9:(ucur<10.5)?us10:(ucur<11.5)?us11:(ucur<12.5)?us12:(ucur<13.5)?us13:(ucur<14.5)?us14:us15;
-mask = is_user_pat ? user_mask : peek(arp_pat_data, pat_base + 1 + clamp(cur, 0, 15), 0);
+mask = is_user_pat ? user_mask : (is_eucl ? eucl_mask : peek(arp_pat_data, pat_base + 1 + clamp(cur, 0, 15), 0));
 m = floor(mask);
 pt1 = mod(m, 2) > 0.5;
 pt2 = mod(floor(m / 2), 2) > 0.5;
@@ -740,7 +822,10 @@ sub_env_h = sub_env_h + (sub_tgt - sub_env_h) * sub_coeff;
 sub_freq = r1_freq * pow(2.0, sub_oct);
 sub_target = samplerate / max(sub_freq, 15);
 r_sub_sdl = (r_sub_sdl < 1) ? sub_target : r_sub_sdl + (sub_target - r_sub_sdl) * glide;
-exc_sub = cx * s_cg * sub_env_h * unmute * 1.5;
+// sub_chaos: 0=normal (voice1 excitation), 1=direct chaos (dirtier, for gqom)
+exc_sub_clean = cx * s_cg * sub_env_h * unmute * 1.5;
+exc_sub_chaos = (cx * cx + cy * cy + cz * cz) * s_cg * sub_env_h * unmute * 3.0;
+exc_sub = exc_sub_clean * (1.0 - sub_chaos) + exc_sub_chaos * sub_chaos;
 sub_del = r_sub.read(r_sub_sdl);
 sub_avg = (sub_del + r_sub_pd) * 0.5;
 r_sub_pd = sub_del;
@@ -1062,6 +1147,264 @@ boxes.append(comment("obj-bpm-disp-l", "BPM", [155.0, 591.0, 30.0, 20.0], fontfa
 lines.append(line("obj-midi", 0, "obj-bpm-disp", 0))
 
 # ==============================================================================
+# MIDI LEARN subpatcher (Zone A, below BPM display)
+# ==============================================================================
+# Learnable params: name, min, max
+learn_params = [
+    "chaos_gain 0. 0.1",
+    "rho 20. 200.",
+    "root_offset -24. 24.",
+    "flex 0. 1.",
+    "master_gain 0. 1.5",
+    "blend_mix 0. 1.",
+    "mod_depth 0. 2.",
+    "sub_amt 0. 1.5",
+    "arp_bpm 20. 300.",
+    "arp_rate 0.1 50.",
+    "brightness -1. 1.",
+    "sub_chaos 0. 1.",
+]
+param_names = [p.split()[0] for p in learn_params]
+
+# Build the coll default data as a list of "index, data" lines
+# Coll stores: CC# → param_name min max (set during learn)
+# We also need a reverse lookup: which param was selected in the menu
+
+ml_boxes = [
+    # Inlets: 0=CC value, 1=CC number, 2=learn toggle, 3=param menu index
+    {"box": {"id": "ml-in-val", "maxclass": "inlet", "numinlets": 0, "numoutlets": 1,
+             "outlettype": [""], "patching_rect": [30, 20, 30, 30], "comment": "CC value (0-127)"}},
+    {"box": {"id": "ml-in-cc", "maxclass": "inlet", "numinlets": 0, "numoutlets": 1,
+             "outlettype": [""], "patching_rect": [80, 20, 30, 30], "comment": "CC number"}},
+    {"box": {"id": "ml-in-learn", "maxclass": "inlet", "numinlets": 0, "numoutlets": 1,
+             "outlettype": [""], "patching_rect": [130, 20, 30, 30], "comment": "learn toggle"}},
+    {"box": {"id": "ml-in-param", "maxclass": "inlet", "numinlets": 0, "numoutlets": 1,
+             "outlettype": [""], "patching_rect": [200, 20, 30, 30], "comment": "param menu idx"}},
+    # Gate: when learn=1, CC number goes to store logic
+    {"box": {"id": "ml-gate", "maxclass": "newobj", "text": "gate",
+             "numinlets": 2, "numoutlets": 1, "outlettype": [""],
+             "patching_rect": [130, 70, 40, 22]}},
+    # Store selected param index
+    {"box": {"id": "ml-paramidx", "maxclass": "newobj", "text": "i 0",
+             "numinlets": 2, "numoutlets": 1, "outlettype": ["int"],
+             "patching_rect": [200, 70, 30, 22]}},
+    # When CC arrives during learn: pack CC# + param_idx
+    {"box": {"id": "ml-pack", "maxclass": "newobj", "text": "pack i i",
+             "numinlets": 2, "numoutlets": 1, "outlettype": [""],
+             "patching_rect": [130, 100, 60, 22]}},
+    # Coll stores: CC# → param_index (0-based into learn_params list)
+    {"box": {"id": "ml-coll", "maxclass": "newobj", "text": "coll midi_learn_map",
+             "numinlets": 1, "numoutlets": 4, "outlettype": ["", "", "", ""],
+             "patching_rect": [30, 160, 120, 22]}},
+    # Route CC value: CC# → coll lookup → get param index
+    {"box": {"id": "ml-lookup-msg", "maxclass": "newobj", "text": "prepend refer",
+             "numinlets": 1, "numoutlets": 1, "outlettype": [""],
+             "patching_rect": [80, 100, 80, 22]}},
+    # Use message box approach: CC# as key to coll
+    {"box": {"id": "ml-cc-lookup", "maxclass": "newobj", "text": "prepend",
+             "numinlets": 1, "numoutlets": 1, "outlettype": [""],
+             "patching_rect": [80, 130, 55, 22]}},
+    # The output message with param name
+    {"box": {"id": "ml-out", "maxclass": "outlet", "numinlets": 1, "numoutlets": 0,
+             "patching_rect": [30, 240, 30, 30], "comment": "param messages to toGen"}},
+    # JS for the mapping logic (simpler than pure Max objects)
+    {"box": {"id": "ml-js", "maxclass": "newobj", "text": "js midi_learn.js",
+             "numinlets": 4, "numoutlets": 1, "outlettype": [""],
+             "patching_rect": [30, 200, 100, 22]}},
+]
+ml_lines = [
+    {"patchline": {"source": ["ml-in-val", 0], "destination": ["ml-js", 0]}},
+    {"patchline": {"source": ["ml-in-cc", 0], "destination": ["ml-js", 1]}},
+    {"patchline": {"source": ["ml-in-learn", 0], "destination": ["ml-js", 2]}},
+    {"patchline": {"source": ["ml-in-param", 0], "destination": ["ml-js", 3]}},
+    {"patchline": {"source": ["ml-js", 0], "destination": ["ml-out", 0]}},
+]
+ml_patcher = {
+    "fileversion": 1, "appversion": {"major": 8, "minor": 6, "revision": 5},
+    "rect": [0, 0, 400, 300], "editing_bgcolor": [0.9, 0.9, 0.9, 1.0],
+    "boxes": ml_boxes, "lines": ml_lines
+}
+
+# Write midi_learn.js — handles mapping logic
+midi_learn_js = '''// midi_learn.js — CC-to-parameter mapping with learn mode
+inlets = 4;   // 0=CC value, 1=CC number, 2=learn toggle, 3=param menu index
+outlets = 1;  // messages like "chaos_gain 0.05"
+
+var learn_mode = 0;
+var selected_param = 0;
+var mappings = {};  // CC# -> {param: "name", min: 0, max: 1}
+
+var params = [
+''' + ',\n'.join([f'    {{ name: "{p.split()[0]}", min: {p.split()[1]}, max: {p.split()[2]} }}' for p in learn_params]) + '''
+];
+
+function msg_int(v) {
+    if (inlet == 0) {
+        // CC value received — look up mapping and output scaled message
+        // (CC number was already stored via inlet 1)
+    } else if (inlet == 1) {
+        // CC number
+        var cc = v;
+        if (learn_mode && selected_param >= 0 && selected_param < params.length) {
+            mappings[cc] = selected_param;
+            post("MIDI Learn: CC" + cc + " -> " + params[selected_param].name + "\\n");
+        }
+        // Store for value lookup
+        msg_int.last_cc = cc;
+    } else if (inlet == 2) {
+        learn_mode = v;
+    } else if (inlet == 3) {
+        selected_param = v;
+    }
+}
+
+function list(v) {
+    // ctlin sends cc_value cc_number channel as list
+    // But we split them to separate inlets, so this handles inlet 0
+}
+
+// Called when CC value arrives (inlet 0)
+function msg_float(v) {
+    handle_value(v);
+}
+
+function handle_value(val) {
+    var cc = msg_int.last_cc;
+    if (cc === undefined) return;
+    if (mappings[cc] !== undefined) {
+        var p = params[mappings[cc]];
+        var scaled = p.min + (val / 127.0) * (p.max - p.min);
+        outlet(0, p.name, scaled);
+    }
+}
+
+msg_int.last_cc = undefined;
+
+// Override msg_int for inlet 0 to handle values
+var _orig = msg_int;
+function anything() {
+    // Fallback
+}
+'''
+
+# Actually, simpler approach: use Max objects directly instead of JS
+# Let me use a different strategy: [ctlin] already gives CC val + CC num
+# We'll use a coll-based approach with a js that's simpler
+
+# Simplest practical approach: write a JS file that does everything
+midi_learn_js_clean = '''// midi_learn.js — MIDI CC learn system for Chaos Resonator
+// Inlet 0: list from [ctlin] (value, cc#, channel)
+// Inlet 1: learn toggle (0/1)
+// Inlet 2: param index from umenu
+// Outlet 0: messages like "chaos_gain 0.05" to [s toGen]
+inlets = 3;
+outlets = 1;
+
+var learn_mode = 0;
+var selected_param = 0;
+var mappings = {};
+
+var params = [
+''' + ',\n'.join([f'    {{ name: "{p.split()[0]}", min: {p.split()[1]}, max: {p.split()[2]} }}' for p in learn_params]) + '''
+];
+
+function list(val, cc, chan) {
+    if (inlet == 0) {
+        if (learn_mode && selected_param >= 0 && selected_param < params.length) {
+            mappings[cc] = selected_param;
+            post("MIDI Learn: CC" + cc + " -> " + params[selected_param].name + "\\n");
+            learn_mode = 0;  // auto-disable learn after mapping
+        }
+        if (mappings[cc] !== undefined) {
+            var p = params[mappings[cc]];
+            var scaled = p.min + (val / 127.0) * (p.max - p.min);
+            outlet(0, p.name, scaled);
+        }
+    }
+}
+
+function msg_int(v) {
+    if (inlet == 1) {
+        learn_mode = v;
+    } else if (inlet == 2) {
+        selected_param = v;
+    }
+}
+
+function bang() {
+    if (inlet == 1) {
+        // Clear all mappings
+        mappings = {};
+        post("MIDI Learn: all mappings cleared\\n");
+    }
+}
+'''
+
+js_path = "/home/sphinxy/Feedback/max/midi_learn.js"
+with open(js_path, 'w') as f:
+    f.write(midi_learn_js_clean)
+
+# Rebuild the subpatcher more simply: ctlin → js → outlet
+ml_patcher_simple = {
+    "fileversion": 1, "appversion": {"major": 8, "minor": 6, "revision": 5},
+    "rect": [0, 0, 400, 250], "editing_bgcolor": [0.9, 0.9, 0.9, 1.0],
+    "boxes": [
+        {"box": {"id": "ml-ctl", "maxclass": "newobj", "text": "ctlin",
+                 "numinlets": 1, "numoutlets": 3, "outlettype": ["int", "int", "int"],
+                 "patching_rect": [30, 30, 42, 22]}},
+        {"box": {"id": "ml-pack", "maxclass": "newobj", "text": "pack 0 0 0",
+                 "numinlets": 3, "numoutlets": 1, "outlettype": [""],
+                 "patching_rect": [30, 60, 65, 22]}},
+        {"box": {"id": "ml-in-learn", "maxclass": "inlet", "numinlets": 0, "numoutlets": 1,
+                 "outlettype": [""], "patching_rect": [130, 20, 30, 30], "comment": "learn toggle"}},
+        {"box": {"id": "ml-in-param", "maxclass": "inlet", "numinlets": 0, "numoutlets": 1,
+                 "outlettype": [""], "patching_rect": [200, 20, 30, 30], "comment": "param index"}},
+        {"box": {"id": "ml-js", "maxclass": "newobj", "text": "js midi_learn.js",
+                 "numinlets": 3, "numoutlets": 1, "outlettype": [""],
+                 "patching_rect": [30, 100, 100, 22]}},
+        {"box": {"id": "ml-out", "maxclass": "outlet", "numinlets": 1, "numoutlets": 0,
+                 "patching_rect": [30, 150, 30, 30], "comment": "param messages"}},
+    ],
+    "lines": [
+        {"patchline": {"source": ["ml-ctl", 0], "destination": ["ml-pack", 0]}},
+        {"patchline": {"source": ["ml-ctl", 1], "destination": ["ml-pack", 1]}},
+        {"patchline": {"source": ["ml-ctl", 2], "destination": ["ml-pack", 2]}},
+        {"patchline": {"source": ["ml-pack", 0], "destination": ["ml-js", 0]}},
+        {"patchline": {"source": ["ml-in-learn", 0], "destination": ["ml-js", 1]}},
+        {"patchline": {"source": ["ml-in-param", 0], "destination": ["ml-js", 2]}},
+        {"patchline": {"source": ["ml-js", 0], "destination": ["ml-out", 0]}},
+    ]
+}
+
+# Place MIDI learn UI in Zone A below BPM display
+ML_Y = 620.0
+boxes.append(comment("obj-ml-label", "\u2014\u2014 MIDI LEARN \u2014\u2014", [15.0, ML_Y, 160.0, 20.0], fontface=1))
+
+# Learn toggle
+boxes.append({"box": {"id": "obj-ml-tog", "maxclass": "toggle", "numinlets": 1, "numoutlets": 1,
+              "outlettype": ["int"], "parameter_enable": 0, "patching_rect": [15.0, ML_Y+25, 20.0, 20.0]}})
+boxes.append(comment("obj-ml-tog-l", "LEARN", [38.0, ML_Y+25, 45.0, 20.0], fontface=1))
+
+# Param selector umenu
+umenu_items = " ".join([f'"{n}"' for n in param_names])
+boxes.append({"box": {"id": "obj-ml-menu", "maxclass": "umenu", "numinlets": 1, "numoutlets": 3,
+              "outlettype": ["int", "", ""],
+              "items": param_names,
+              "patching_rect": [90.0, ML_Y+25, 120.0, 22.0]}})
+boxes.append(comment("obj-ml-hint", "1. Select param  2. Toggle LEARN  3. Move a CC", [15.0, ML_Y+50, 280.0, 14.0], fontsize=9.0))
+
+# Subpatcher
+boxes.append({"box": {"id": "obj-ml-p", "maxclass": "newobj", "text": "p midi_learn",
+              "numinlets": 2, "numoutlets": 1, "outlettype": [""],
+              "patching_rect": [15.0, ML_Y+70, 82.0, 22.0], "patcher": ml_patcher_simple}})
+boxes.append(newobj("obj-s-ml", "s toGen", [15.0, ML_Y+95, 52.0, 22.0], numinlets=1, numoutlets=0))
+
+# Wiring
+lines.append(line("obj-ml-tog", 0, "obj-ml-p", 0))
+lines.append(line("obj-ml-menu", 0, "obj-ml-p", 1))
+lines.append(line("obj-ml-p", 0, "obj-s-ml", 0))
+
+# ==============================================================================
 # ZONE B (x=381+): Lorenz, Attractor, Resonator, Sub-Bass, Tuning, Arp, ADSR
 # ==============================================================================
 BX = 381  # Zone B x_start (matches user's D: drive layout)
@@ -1164,13 +1507,30 @@ for name, x, mn, mx, mtxt, mw, label in att_char_row2:
     lines.append(line(f"obj-{name}-n", 0, f"obj-{name}-m", 0))
     att_msg_ids.append(f"obj-{name}-m")
 
+# Row 6: chaos_amount macro (single knob → rho + chaos_gain)
+boxes.append(comment("obj-camac-l", "chaos amount:", [BX, ATT_Y+420, 90.0, 20.0], fontface=1))
+boxes.append(flonum("obj-camac-n", [BX+95, ATT_Y+420, 55.0, 22.0], 0.0, 1.0))
+# 0→1 maps to rho 100→28 (inverted: more chaos_amount = more chaotic)
+boxes.append(newobj("obj-camac-srho", "scale 0. 1. 100. 28.", [BX+95, ATT_Y+445, 130.0, 22.0]))
+boxes.append(msg("obj-camac-rhom", "rho $1", [BX+95, ATT_Y+470, 52.0, 22.0]))
+# 0→1 maps to chaos_gain 0.002→0.01
+boxes.append(newobj("obj-camac-scg", "scale 0. 1. 0.002 0.01", [BX+240, ATT_Y+445, 130.0, 22.0]))
+boxes.append(msg("obj-camac-cgm", "chaos_gain $1", [BX+240, ATT_Y+470, 88.0, 22.0]))
+lines.append(line("obj-camac-n", 0, "obj-camac-srho", 0))
+lines.append(line("obj-camac-n", 0, "obj-camac-scg", 0))
+lines.append(line("obj-camac-srho", 0, "obj-camac-rhom", 0))
+lines.append(line("obj-camac-scg", 0, "obj-camac-cgm", 0))
+att_msg_ids.append("obj-camac-rhom")
+att_msg_ids.append("obj-camac-cgm")
+boxes.append(comment("obj-camac-hint", "0=ordered  1=full chaos", [BX+160, ATT_Y+420, 160.0, 16.0], fontsize=10.0))
+
 # Attractor section sender (offset right to avoid collision with resonators label)
-boxes.append(newobj("obj-s-att", "s toGen", [BX+200, ATT_Y+420, 52.0, 22.0], numinlets=1, numoutlets=0))
+boxes.append(newobj("obj-s-att", "s toGen", [BX+200, ATT_Y+500, 52.0, 22.0], numinlets=1, numoutlets=0))
 for mid in att_msg_ids:
     lines.append(line(mid, 0, "obj-s-att", 0))
 
 # --- RESONATORS (y=560) ---
-RES_Y = 560
+RES_Y = 650
 boxes.append(comment("obj-rc-label", "\u2014\u2014 RESONATORS \u2014\u2014", [BX, RES_Y, 150.0, 20.0], fontface=1))
 res_msg_ids = []
 res_params = [
@@ -1269,7 +1629,7 @@ for mid in res_msg_ids:
     lines.append(line(mid, 0, "obj-s-res", 0))
 
 # --- SUB-BASS CONTROLS (y=690) ---
-SUB_Y = 690
+SUB_Y = 790
 boxes.append(comment("obj-sub-label", "\u2014\u2014 SUB-BASS \u2014\u2014", [BX, SUB_Y, 120.0, 20.0], fontface=1))
 sub_msg_ids = []
 # Sub amount (mix level of sub waveguide)
@@ -1300,13 +1660,21 @@ boxes.append(comment("obj-soct-hint", "-1=oct below\n0=unison", [BX+332, SUB_Y+4
 lines.append(line("obj-soct-n", 0, "obj-soct-m", 0))
 sub_msg_ids.append("obj-soct-m")
 
+# Sub chaos (direct chaos excitation — dirtier for gqom)
+boxes.append(comment("obj-sch-l", "chaos", [BX+360, SUB_Y+22, 45.0, 20.0], fontface=1))
+boxes.append(flonum("obj-sch-n", [BX+360, SUB_Y+42, 50.0, 22.0], 0.0, 1.0))
+boxes.append(msg("obj-sch-m", "sub_chaos $1", [BX+360, SUB_Y+67, 85.0, 22.0]))
+boxes.append(comment("obj-sch-hint", "0=clean 1=dirty", [BX+360, SUB_Y+90, 90.0, 14.0], fontsize=9.0))
+lines.append(line("obj-sch-n", 0, "obj-sch-m", 0))
+sub_msg_ids.append("obj-sch-m")
+
 # Sub-bass section sender
-boxes.append(newobj("obj-s-sub", "s toGen", [BX, SUB_Y+94, 52.0, 22.0], numinlets=1, numoutlets=0))
+boxes.append(newobj("obj-s-sub", "s toGen", [BX, SUB_Y+110, 52.0, 22.0], numinlets=1, numoutlets=0))
 for mid in sub_msg_ids:
     lines.append(line(mid, 0, "obj-s-sub", 0))
 
 # --- TUNING + INVERSION + TRANSPOSE (y=810) ---
-TUN_Y = 810
+TUN_Y = 920
 tun_msg_ids = []
 boxes.append(comment("obj-ts-label", "\u2014\u2014 TUNING \u2014\u2014", [BX, TUN_Y, 120.0, 20.0], fontface=1))
 boxes.append(comment("obj-ts-l", "system (0-18)", [BX, TUN_Y+20, 90.0, 20.0]))
@@ -1415,38 +1783,61 @@ for i, (x, w) in enumerate(afr2_x_w):
     boxes.append(msg(f"obj-arp-{mode}", f"arp_mode {mode}", [x, ARP_Y+111, w, 22.0]))
     arp_msg_ids.append(f"obj-arp-{mode}")
 
-# Row 4: ARP RATE — division buttons
-boxes.append(comment("obj-div-label", "\u2014\u2014 ARP RATE \u2014\u2014", [BX, ARP_Y+141, 120.0, 20.0], fontface=1))
-boxes.append(comment("obj-div-hint", "0=free 1=1/4 2=1/8 3=trip 4=1/16", [BX+125, ARP_Y+141, 230.0, 20.0], fontsize=10.0))
+# Row 4: Lusophone / Diaspora patterns (15-18)
+boxes.append(comment("obj-luso-labels", "Kuduro   Semba    Kizomba  Marrabenta", [BX, ARP_Y+133, 350.0, 16.0], fontsize=10.0))
+luso_x_w = [(BX, 58), (BX+63, 55), (BX+123, 62), (BX+190, 72)]
+for i, (x, w) in enumerate(luso_x_w):
+    mode = i + 15
+    boxes.append(msg(f"obj-arp-{mode}", f"arp_mode {mode}", [x, ARP_Y+151, w, 22.0]))
+    arp_msg_ids.append(f"obj-arp-{mode}")
+
+# Row 5: Euclidean rhythm (mode 19) + controls
+boxes.append(msg("obj-arp-19", "arp_mode 19", [BX+270, ARP_Y+151, 72.0, 22.0]))
+boxes.append(comment("obj-eucl-hint", "Euclidean", [BX+270, ARP_Y+133, 70.0, 16.0], fontsize=10.0))
+arp_msg_ids.append("obj-arp-19")
+boxes.append(comment("obj-ep-l", "pulses", [BX+350, ARP_Y+133, 42.0, 16.0], fontsize=10.0))
+boxes.append(intnum("obj-ep-n", [BX+350, ARP_Y+151, 35.0, 22.0], 0, 16))
+boxes.append(msg("obj-ep-m", "eucl_pulses $1", [BX+270, ARP_Y+176, 85.0, 22.0]))
+lines.append(line("obj-ep-n", 0, "obj-ep-m", 0))
+arp_msg_ids.append("obj-ep-m")
+boxes.append(comment("obj-es-l", "steps", [BX+395, ARP_Y+133, 35.0, 16.0], fontsize=10.0))
+boxes.append(intnum("obj-es-n", [BX+395, ARP_Y+151, 35.0, 22.0], 1, 16))
+boxes.append(msg("obj-es-m", "eucl_steps $1", [BX+360, ARP_Y+176, 78.0, 22.0]))
+lines.append(line("obj-es-n", 0, "obj-es-m", 0))
+arp_msg_ids.append("obj-es-m")
+
+# Row 6: ARP RATE — division buttons
+boxes.append(comment("obj-div-label", "\u2014\u2014 ARP RATE \u2014\u2014", [BX, ARP_Y+201, 120.0, 20.0], fontface=1))
+boxes.append(comment("obj-div-hint", "0=free 1=1/4 2=1/8 3=trip 4=1/16", [BX+125, ARP_Y+201, 230.0, 20.0], fontsize=10.0))
 div_vals = [0, 1, 2, 3, 4, 1.333]
 div_x = [BX, BX+65, BX+130, BX+195, BX+260, BX+325]
 div_w = [60, 60, 60, 60, 60, 78]
 for i, (val, x, w) in enumerate(zip(div_vals, div_x, div_w)):
-    boxes.append(msg(f"obj-div-{i}", f"arp_div {val}", [x, ARP_Y+161, w, 22.0]))
+    boxes.append(msg(f"obj-div-{i}", f"arp_div {val}", [x, ARP_Y+221, w, 22.0]))
     arp_msg_ids.append(f"obj-div-{i}")
 
 # BPM flonum (manual override / no-MIDI mode)
-boxes.append(comment("obj-bpm-l", "bpm", [BX, ARP_Y+188, 30.0, 20.0], fontface=1))
-boxes.append(flonum("obj-bpm-n", [BX+35, ARP_Y+188, 50.0, 22.0], 20, 300))
-boxes.append(msg("obj-bpm-m", "arp_bpm $1", [BX+35, ARP_Y+213, 72.0, 22.0]))
+boxes.append(comment("obj-bpm-l", "bpm", [BX, ARP_Y+248, 30.0, 20.0], fontface=1))
+boxes.append(flonum("obj-bpm-n", [BX+35, ARP_Y+248, 50.0, 22.0], 20, 300))
+boxes.append(msg("obj-bpm-m", "arp_bpm $1", [BX+35, ARP_Y+273, 72.0, 22.0]))
 lines.append(line("obj-bpm-n", 0, "obj-bpm-m", 0))
 arp_msg_ids.append("obj-bpm-m")
 
 # Free Hz flonum
-boxes.append(comment("obj-arpr-l", "free Hz", [BX+130, ARP_Y+188, 50.0, 20.0], fontface=1))
-boxes.append(flonum("obj-arpr-n", [BX+185, ARP_Y+188, 50.0, 22.0], 0.1, 50.0))
-boxes.append(msg("obj-arpr-m", "arp_rate $1", [BX+185, ARP_Y+213, 68.0, 22.0]))
+boxes.append(comment("obj-arpr-l", "free Hz", [BX+130, ARP_Y+248, 50.0, 20.0], fontface=1))
+boxes.append(flonum("obj-arpr-n", [BX+185, ARP_Y+248, 50.0, 22.0], 0.1, 50.0))
+boxes.append(msg("obj-arpr-m", "arp_rate $1", [BX+185, ARP_Y+273, 68.0, 22.0]))
 lines.append(line("obj-arpr-n", 0, "obj-arpr-m", 0))
 arp_msg_ids.append("obj-arpr-m")
 
-# Arpeggiator section sender (offset right to avoid collision with ADSR label)
-boxes.append(newobj("obj-s-arp", "s toGen", [BX+200, ARP_Y+240, 52.0, 22.0], numinlets=1, numoutlets=0))
+# Arpeggiator section sender
+boxes.append(newobj("obj-s-arp", "s toGen", [BX+200, ARP_Y+300, 52.0, 22.0], numinlets=1, numoutlets=0))
 for mid in arp_msg_ids:
     lines.append(line(mid, 0, "obj-s-arp", 0))
 
 # --- USER PATTERN GRID (y=ARP_Y+270) ---
-GRID_Y = ARP_Y + 270
-boxes.append(comment("obj-ugrid-label", "\u2014\u2014 USER PATTERN (mode 15) \u2014\u2014", [BX, GRID_Y, 250.0, 20.0], fontface=1))
+GRID_Y = ARP_Y + 330
+boxes.append(comment("obj-ugrid-label", "\u2014\u2014 USER PATTERN (mode 20) \u2014\u2014", [BX, GRID_Y, 250.0, 20.0], fontface=1))
 boxes.append(comment("obj-ugrid-voices", "v1 v2 v3 v4 v5 v6", [BX+2, GRID_Y+20, 200.0, 14.0], fontsize=9.0))
 # matrixctrl: 16 columns (steps) × 6 rows (voices), each cell = toggle
 boxes.append({"box": {"id": "obj-ugrid", "maxclass": "matrixctrl", "numinlets": 1, "numoutlets": 2,
@@ -1499,7 +1890,7 @@ boxes.append({"box": {"id": "obj-grid-p", "maxclass": "newobj", "text": "p grid_
               "patching_rect": [BX, GRID_Y+160, 110.0, 22.0], "patcher": grid_patcher}})
 boxes.append(newobj("obj-s-grid", "s toGen", [BX, GRID_Y+185, 52.0, 22.0], numinlets=1, numoutlets=0))
 # Activate user pattern mode button
-boxes.append(msg("obj-ugrid-act", "arp_mode 15", [BX+135, GRID_Y+160, 75.0, 22.0]))
+boxes.append(msg("obj-ugrid-act", "arp_mode 20", [BX+135, GRID_Y+160, 75.0, 22.0]))
 boxes.append(comment("obj-ugrid-hint", "\u2190 activate", [BX+215, GRID_Y+162, 60.0, 16.0], fontsize=10.0))
 # Pattern length
 boxes.append(comment("obj-upl-l", "steps:", [BX+135, GRID_Y+185, 40.0, 16.0], fontsize=10.0))
@@ -1631,13 +2022,13 @@ lines.append(line("obj-gen", 4, "obj-chaos-sz", 0))
 # Subpatcher: toggle ON → date → sprintf filename → open → delay → start
 #             toggle OFF → stop
 rec_boxes = [
-    {"box": {"id": "r-in1", "maxclass": "newobj", "text": "in 1", "numinlets": 0, "numoutlets": 1,
-             "outlettype": ["signal"], "patching_rect": [30.0, 30.0, 30.0, 22.0],
+    {"box": {"id": "r-in1", "maxclass": "newobj", "text": "in~ 1", "numinlets": 0, "numoutlets": 1,
+             "outlettype": ["signal"], "patching_rect": [30.0, 30.0, 35.0, 22.0],
              "comment": "signal L"}},
-    {"box": {"id": "r-in2", "maxclass": "newobj", "text": "in 2", "numinlets": 0, "numoutlets": 1,
-             "outlettype": ["signal"], "patching_rect": [100.0, 30.0, 30.0, 22.0],
+    {"box": {"id": "r-in2", "maxclass": "newobj", "text": "in~ 2", "numinlets": 0, "numoutlets": 1,
+             "outlettype": ["signal"], "patching_rect": [100.0, 30.0, 35.0, 22.0],
              "comment": "signal R"}},
-    {"box": {"id": "r-in3", "maxclass": "newobj", "text": "in 3", "numinlets": 0, "numoutlets": 1,
+    {"box": {"id": "r-in3", "maxclass": "newobj", "text": "in 1", "numinlets": 0, "numoutlets": 1,
              "outlettype": [""], "patching_rect": [250.0, 30.0, 30.0, 22.0],
              "comment": "toggle 0/1"}},
     # Split on/off
@@ -1651,7 +2042,7 @@ rec_boxes = [
              "outlettype": ["int", "int", "int", "int", "int", "int"],
              "patching_rect": [310.0, 100.0, 80.0, 22.0]}},
     {"box": {"id": "r-sprintf", "maxclass": "newobj",
-             "text": "sprintf recordings/chaos_%04d%02d%02d_%02d%02d%02d.wav",
+             "text": "sprintf chaos_%04d%02d%02d_%02d%02d%02d.wav",
              "numinlets": 6, "numoutlets": 1, "outlettype": [""],
              "patching_rect": [310.0, 140.0, 260.0, 22.0]}},
     {"box": {"id": "r-prepend", "maxclass": "newobj", "text": "prepend open", "numinlets": 1, "numoutlets": 1,
@@ -1665,7 +2056,7 @@ rec_boxes = [
     {"box": {"id": "r-stop", "maxclass": "message", "text": "0", "numinlets": 2, "numoutlets": 1,
              "outlettype": [""], "patching_rect": [420.0, 65.0, 22.0, 22.0]}},
     # Recorder
-    {"box": {"id": "r-sf", "maxclass": "newobj", "text": "sfrecord~ 2", "numinlets": 3, "numoutlets": 1,
+    {"box": {"id": "r-sf", "maxclass": "newobj", "text": "sfrecord~ 2", "numinlets": 2, "numoutlets": 1,
              "outlettype": ["signal"], "patching_rect": [30.0, 220.0, 80.0, 22.0]}},
     # Output: filename for display
     {"box": {"id": "r-out1", "maxclass": "newobj", "text": "out 1", "numinlets": 1, "numoutlets": 0,
@@ -1676,9 +2067,9 @@ rec_boxes = [
 ]
 
 rec_lines = [
-    # Signal routing
-    line("r-in1", 0, "r-sf", 1),    # signal L
-    line("r-in2", 0, "r-sf", 2),    # signal R
+    # Signal routing (sfrecord~ 2: inlet 0 = messages + signal L, inlet 1 = signal R)
+    line("r-in1", 0, "r-sf", 0),    # signal L → inlet 0
+    line("r-in2", 0, "r-sf", 1),    # signal R → inlet 1
     # Control
     line("r-in3", 0, "r-sel", 0),
     line("r-sel", 0, "r-trig", 0),  # ON
@@ -1719,7 +2110,7 @@ boxes.append(comment("obj-rec-label", "\u2014\u2014 RECORD \u2014\u2014", [100.0
 boxes.append({"box": {"id": "obj-rec-tog", "maxclass": "toggle", "numinlets": 1, "numoutlets": 1,
               "outlettype": ["int"], "parameter_enable": 0, "patching_rect": [100.0, 695.0+GEN_SHIFT, 24.0, 24.0]}})
 boxes.append(comment("obj-rec-hint", "REC", [128.0, 698.0+GEN_SHIFT, 30.0, 20.0], fontface=1))
-boxes.append(comment("obj-rec-path", "saves to: recordings/ folder", [160.0, 698.0+GEN_SHIFT, 180.0, 20.0], fontsize=10.0))
+boxes.append(comment("obj-rec-path", "saves next to patch", [160.0, 698.0+GEN_SHIFT, 140.0, 20.0], fontsize=10.0))
 boxes.append({"box": {"id": "obj-recorder", "maxclass": "newobj", "text": "p recorder",
               "numinlets": 3, "numoutlets": 1, "outlettype": [""],
               "patching_rect": [100.0, 725.0+GEN_SHIFT, 72.0, 22.0], "patcher": rec_patcher}})
@@ -1728,6 +2119,69 @@ lines.append(line("obj-gain-l", 0, "obj-recorder", 0))
 lines.append(line("obj-gain-r", 0, "obj-recorder", 1))
 lines.append(line("obj-rec-tog", 0, "obj-recorder", 2))
 lines.append(line("obj-recorder", 0, "obj-rec-name", 0))
+
+# --- RENDER 8 BARS button ---
+# Subpatcher: bang → calc 8 bars ms from BPM → toggle on → delay → toggle off
+render_patcher = {
+    "fileversion": 1, "appversion": {"major": 8, "minor": 6, "revision": 5},
+    "rect": [0, 0, 400, 300], "editing_bgcolor": [0.9, 0.9, 0.9, 1.0],
+    "boxes": [
+        {"box": {"id": "rn-in1", "maxclass": "inlet", "numinlets": 0, "numoutlets": 1,
+                 "outlettype": ["bang"], "patching_rect": [30, 20, 30, 30], "comment": "bang to render"}},
+        {"box": {"id": "rn-in2", "maxclass": "inlet", "numinlets": 0, "numoutlets": 1,
+                 "outlettype": ["float"], "patching_rect": [130, 20, 30, 30], "comment": "BPM"}},
+        # Store BPM
+        {"box": {"id": "rn-f", "maxclass": "newobj", "text": "float 120",
+                 "numinlets": 2, "numoutlets": 1, "outlettype": ["float"],
+                 "patching_rect": [30, 60, 60, 22]}},
+        # Calculate ms: 8 bars * 4 beats / bpm * 60000
+        {"box": {"id": "rn-expr", "maxclass": "newobj", "text": "expr 8. * 4. * 60000. / max($f1\\, 20.)",
+                 "numinlets": 1, "numoutlets": 1, "outlettype": ["float"],
+                 "patching_rect": [30, 90, 230, 22]}},
+        # t b f: bang first (start rec), then float (delay time)
+        {"box": {"id": "rn-t", "maxclass": "newobj", "text": "t b f",
+                 "numinlets": 1, "numoutlets": 2, "outlettype": ["bang", "float"],
+                 "patching_rect": [30, 120, 60, 22]}},
+        # Start: send 1 to toggle
+        {"box": {"id": "rn-one", "maxclass": "newobj", "text": "i 1",
+                 "numinlets": 2, "numoutlets": 1, "outlettype": ["int"],
+                 "patching_rect": [30, 150, 30, 22]}},
+        # Delay for 8 bars
+        {"box": {"id": "rn-del", "maxclass": "newobj", "text": "delay 16000",
+                 "numinlets": 2, "numoutlets": 1, "outlettype": ["bang"],
+                 "patching_rect": [100, 150, 80, 22]}},
+        # Stop: send 0 to toggle
+        {"box": {"id": "rn-zero", "maxclass": "newobj", "text": "i 0",
+                 "numinlets": 2, "numoutlets": 1, "outlettype": ["int"],
+                 "patching_rect": [100, 180, 30, 22]}},
+        # Output: goes to toggle
+        {"box": {"id": "rn-out", "maxclass": "outlet", "numinlets": 1, "numoutlets": 0,
+                 "patching_rect": [60, 220, 30, 30], "comment": "to rec toggle"}}
+    ],
+    "lines": [
+        {"patchline": {"source": ["rn-in1", 0], "destination": ["rn-f", 0]}},
+        {"patchline": {"source": ["rn-in2", 0], "destination": ["rn-f", 1]}},
+        {"patchline": {"source": ["rn-f", 0], "destination": ["rn-expr", 0]}},
+        {"patchline": {"source": ["rn-expr", 0], "destination": ["rn-t", 0]}},
+        {"patchline": {"source": ["rn-t", 0], "destination": ["rn-one", 0]}},
+        {"patchline": {"source": ["rn-t", 1], "destination": ["rn-del", 0]}},
+        {"patchline": {"source": ["rn-del", 0], "destination": ["rn-zero", 0]}},
+        {"patchline": {"source": ["rn-one", 0], "destination": ["rn-out", 0]}},
+        {"patchline": {"source": ["rn-zero", 0], "destination": ["rn-out", 0]}}
+    ]
+}
+
+# Render button + BPM input
+boxes.append(box("obj-render-btn", "button", numinlets=1, numoutlets=1, patching_rect=[100.0, 755.0+GEN_SHIFT, 24.0, 24.0]))
+boxes.append(comment("obj-render-hint", "RENDER 8 BARS", [128.0, 758.0+GEN_SHIFT, 100.0, 20.0], fontface=1))
+boxes.append({"box": {"id": "obj-render-p", "maxclass": "newobj", "text": "p render_8bars",
+              "numinlets": 2, "numoutlets": 1, "outlettype": ["int"],
+              "patching_rect": [100.0, 785.0+GEN_SHIFT, 95.0, 22.0], "patcher": render_patcher}})
+# BPM flonum feeds render subpatcher inlet 2
+lines.append(line("obj-render-btn", 0, "obj-render-p", 0))
+lines.append(line("obj-bpm-n", 0, "obj-render-p", 1))
+# Output → rec toggle
+lines.append(line("obj-render-p", 0, "obj-rec-tog", 0))
 
 # ==============================================================================
 # ZONE C (x=700-1080): Presets
@@ -1833,7 +2287,7 @@ y = add_preset_group("\u2014\u2014 ROOT SPRING \u2014\u2014", [
     ("obj-rsp2", "root_offset 0, root_mode 0, root_return 0.5", "Elastic (default)"),
     ("obj-rsp3", "root_offset 0, root_mode 0, root_return 2.0", "Slow (glacial drift)"),
     ("obj-rsp4", "root_mode 1", "Latch (hold position)"),
-], y, "obj-rsp-label")
+], y, "obj-rsp-preset-label")
 
 # Tuning systems
 boxes.append(comment("obj-tsp-label", "\u2014\u2014 TUNING SYSTEMS \u2014\u2014", [RX, y, 200.0, 20.0], fontface=1))
@@ -1869,6 +2323,93 @@ for mid in all_tuning_msg_ids:
     lines.append(line(mid, 0, "obj-tsp-send", 0))
 
 # ==============================================================================
+# PRESENTATION MODE — 8 macro controls for performance
+# ==============================================================================
+# Helper: find a box by id and add presentation attributes
+def add_presentation(box_id, rect):
+    for b in boxes:
+        if b.get("box", {}).get("id") == box_id:
+            b["box"]["presentation"] = 1
+            b["box"]["presentation_rect"] = rect
+            return
+    # If not found, ignore silently
+
+# Presentation layout: 600 x 380 grid
+PW = 600  # presentation width
+# Row 0: Title + ezdac + STOP (y=10)
+# Add a presentation-mode title comment
+boxes.append(comment("obj-pres-title", "CHAOS RESONATOR", [0, 0, 200.0, 24.0], fontface=1, fontsize=16.0))
+for b in boxes:
+    if b.get("box", {}).get("id") == "obj-pres-title":
+        b["box"]["presentation"] = 1
+        b["box"]["presentation_rect"] = [10, 10, 200, 24]
+
+add_presentation("obj-ezdac", [10, 40, 45, 45])
+add_presentation("obj-mute-tog", [65, 48, 30, 30])
+add_presentation("obj-mute-label", [100, 53, 45, 20])
+add_presentation("obj-rec-tog", [160, 53, 20, 20])
+add_presentation("obj-rec-hint", [183, 53, 30, 20])
+
+# Row 1: Main controls (y=100)
+# chaos_amount
+add_presentation("obj-camac-l", [10, 100, 90, 20])
+add_presentation("obj-camac-n", [105, 100, 55, 22])
+# root_offset
+add_presentation("obj-roff-l", [170, 100, 70, 20])
+add_presentation("obj-roff-n", [245, 100, 55, 22])
+# tuning_system
+add_presentation("obj-ts-l", [310, 100, 90, 20])
+add_presentation("obj-ts-n", [405, 100, 45, 22])
+# master_gain
+add_presentation("obj-mg-l", [460, 100, 50, 20])
+add_presentation("obj-mg-n", [515, 100, 55, 22])
+
+# Row 2: Sound shaping (y=140)
+# blend_mix
+add_presentation("obj-bmix-l", [10, 140, 65, 20])
+add_presentation("obj-bmix-n", [80, 140, 48, 22])
+# sub_amt
+add_presentation("obj-sub-l", [140, 140, 55, 20])
+add_presentation("obj-sub-n", [200, 140, 55, 22])
+# brightness
+add_presentation("obj-brt-l", [270, 140, 50, 20])
+add_presentation("obj-brt-n", [325, 140, 55, 22])
+# sub_chaos
+add_presentation("obj-sch-l", [395, 140, 45, 20])
+add_presentation("obj-sch-n", [445, 140, 50, 22])
+
+# Row 3: Tempo/Arp (y=180)
+# arp_bpm
+add_presentation("obj-bpm-l", [10, 180, 30, 20])
+add_presentation("obj-bpm-n", [45, 180, 50, 22])
+# arp_rate (free Hz)
+add_presentation("obj-arpr-l", [110, 180, 50, 20])
+add_presentation("obj-arpr-n", [165, 180, 50, 22])
+# flex
+add_presentation("obj-flex-l", [230, 180, 40, 20])
+add_presentation("obj-flex-n", [275, 180, 55, 22])
+# mod_depth
+add_presentation("obj-mdep-l", [345, 180, 65, 20])
+add_presentation("obj-mdep-n", [415, 180, 48, 22])
+
+# Row 4: Spring root (y=220)
+add_presentation("obj-rsp-label", [10, 220, 160, 20])
+add_presentation("obj-rmod-l", [170, 220, 40, 20])
+boxes_dict = {b["box"]["id"]: b for b in boxes if "box" in b and "id" in b["box"]}
+if "obj-rmod-tog" in boxes_dict:
+    add_presentation("obj-rmod-tog", [215, 220, 20, 20])
+add_presentation("obj-rmod-hint", [240, 220, 110, 16])
+add_presentation("obj-rret-l", [360, 220, 70, 20])
+add_presentation("obj-rret-n", [435, 220, 55, 22])
+
+# Row 5: MIDI learn hint (y=260)
+add_presentation("obj-ml-label", [10, 260, 160, 20])
+add_presentation("obj-ml-tog", [10, 285, 20, 20])
+add_presentation("obj-ml-tog-l", [33, 285, 45, 20])
+add_presentation("obj-ml-menu", [85, 285, 120, 22])
+add_presentation("obj-ml-hint", [10, 310, 280, 14])
+
+# ==============================================================================
 # BUILD
 # ==============================================================================
 patch = {
@@ -1876,8 +2417,8 @@ patch = {
         "fileversion": 1,
         "appversion": {"major": 8, "minor": 6, "revision": 0, "architecture": "x64", "modernui": 1},
         "classnamespace": "box",
-        "rect": [34, 76, 1469, 2250],
-        "bglocked": 0, "openinpresentation": 0,
+        "rect": [34, 76, 1469, 2340],
+        "bglocked": 0, "openinpresentation": 1,
         "default_fontsize": 12.0, "default_fontface": 0, "default_fontname": "Arial",
         "gridonopen": 1, "gridsize": [15.0, 15.0],
         "gridsnaponopen": 1, "objectsnaponopen": 1,
@@ -1893,7 +2434,7 @@ with open("/home/sphinxy/Feedback/max/step6_chaos_resonator.maxpat", "w") as f:
     json.dump(patch, f, indent="\t", ensure_ascii=False)
 
 print(f"Done! {len(boxes)} boxes, {len(lines)} lines")
-print(f"Window: 1469x2250")
+print(f"Window: 1469x2340")
 print()
 print("=== CHAOS RESONATOR v4.1 — FIXED + CLEAN ===")
 print("FIXES:")
