@@ -56,7 +56,7 @@ Param brightness(0);
 Param register(0);
 Param bass_oct(0);
 Param treble_oct(0);
-Param smooth_speed(2);
+Param smooth_speed(1);
 Param sub_amt(0.5);
 Param sub_drive(0.0);
 Param sub_drone(1);
