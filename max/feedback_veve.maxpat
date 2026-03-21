@@ -3280,6 +3280,24 @@
       },
       {
         "box": {
+          "id": "obj-fb-osc-prep",
+          "maxclass": "newobj",
+          "text": "prepend feedback_amt",
+          "numinlets": 1,
+          "numoutlets": 1,
+          "outlettype": [
+            ""
+          ],
+          "patching_rect": [
+            490,
+            640,
+            148,
+            22
+          ]
+        }
+      },
+      {
+        "box": {
           "id": "obj-oct-osc-prep",
           "maxclass": "newobj",
           "text": "prepend octave_offset",
@@ -4971,6 +4989,30 @@
           ],
           "destination": [
             "obj-resonator",
+            0
+          ]
+        }
+      },
+      {
+        "patchline": {
+          "source": [
+            "obj-fb-amt",
+            0
+          ],
+          "destination": [
+            "obj-fb-osc-prep",
+            0
+          ]
+        }
+      },
+      {
+        "patchline": {
+          "source": [
+            "obj-fb-osc-prep",
+            0
+          ],
+          "destination": [
+            "obj-osc-node",
             0
           ]
         }

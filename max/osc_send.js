@@ -176,5 +176,13 @@ Max.addHandler('peri_level', function() {
     }
 });
 
+// --- Feedback amount (mic feedback loop) ---
+Max.addHandler('feedback_amt', function() {
+    var args = Array.prototype.slice.call(arguments);
+    if (args.length >= 1) {
+        send('/feedback/amount', args[0]);
+    }
+});
+
 Max.post('osc_send.js ready — target ' + HOST + ':' + PORT);
-Max.post('  Channels: lorenz, kuramoto_r, kuramoto_phases, veve_preset, resonator_decay, amplitude, root_freq, morph, octave_offset, excite_mode, peri_level');
+Max.post('  Channels: lorenz, kuramoto_r, kuramoto_phases, veve_preset, resonator_decay, amplitude, root_freq, morph, octave_offset, excite_mode, peri_level, feedback_amt');
