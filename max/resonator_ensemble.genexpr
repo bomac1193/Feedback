@@ -42,6 +42,10 @@ Param oct6(1);
 // --- Drive per resonator ---
 Param drive(0.5);
 
+// --- Decay control ---
+// 0 = very percussive (hear every hit), 1 = infinite sustain (drone)
+Param decay(0.3);
+
 // --- Tuning lookup table ---
 // 19 systems x 10 slots = 190 entries
 // Slot layout: [0]=scale_size, [1..7]=ratios, [8..9]=unused
@@ -67,6 +71,14 @@ History r5_pd(0);
 History r6_pt(0);
 History r6_ec(0);
 History r6_pd(0);
+
+// Velocity latches (capture trigger amplitude)
+History r1_vel(1);
+History r2_vel(1);
+History r3_vel(1);
+History r4_vel(1);
+History r5_vel(1);
+History r6_vel(1);
 
 // --- All Delay declarations ---
 Delay r1_d(48000);
@@ -264,6 +276,16 @@ ts_size = max(ts_size, 1);
 // Yoruba just-intonation ratios (for flex interpolation, system 0 only)
 j0 = 1.0; j1 = 1.111111; j2 = 1.25; j3 = 1.5; j4 = 1.666667;
 
+// Decay scaling: each resonator has a base (percussive) and max (drone) damping
+// decay=0 → short percussive hits, decay=1 → infinite sustain
+dc = clamp(decay, 0, 1);
+d1_damp = 0.5 + dc * 0.4995;     // r1: 0.50 — 0.9995 (sub bass)
+d2_damp = 0.4 + dc * 0.598;      // r2: 0.40 — 0.998
+d3_damp = 0.3 + dc * 0.696;      // r3: 0.30 — 0.996
+d4_damp = 0.2 + dc * 0.77;       // r4: 0.20 — 0.97 (transient, click)
+d5_damp = 0.4 + dc * 0.5998;     // r5: 0.40 — 0.9998
+d6_damp = 0.3 + dc * 0.694;      // r6: 0.30 — 0.994
+
 
 // =============================================
 // RESONATOR 1: Sub Bass (iya ilu) — bright=0.2
@@ -278,16 +300,17 @@ r1_rat = (ts < 0.5) ? (r1_rat * (1.0-flex) + r1_jrat * flex) : r1_rat;
 r1_freq = root * r1_rat * pow(2.0, oct1 + oct1_x);
 r1_dlen = samplerate / max(r1_freq, 20);
 
-r1_trig = (in1 > 0.5) * (r1_pt <= 0.5);
+r1_trig = (in1 > 0.05) * (r1_pt <= 0.05);
+r1_vel = r1_trig ? in1 : r1_vel;
 r1_pt = in1;
 r1_ec = r1_trig ? r1_dlen : max(r1_ec - 1, 0);
-r1_exc = (r1_ec > 0) ? noise() * drive : 0;
+r1_exc = (r1_ec > 0) ? noise() * drive * r1_vel : 0;
 
 r1_del = r1_d.read(r1_dlen);
 r1_avg = (r1_del + r1_pd) * 0.5;
 r1_pd = r1_del;
 r1_filt = r1_del * 0.2 + r1_avg * 0.8;    // brightness 0.2 = dark
-r1_out = r1_filt * 0.9995;                 // damping = very long
+r1_out = r1_filt * d1_damp;
 r1_d.write(r1_exc + r1_out);
 
 
@@ -303,16 +326,17 @@ r2_rat = (ts < 0.5) ? (r2_rat * (1.0-flex) + r2_jrat * flex) : r2_rat;
 r2_freq = root * r2_rat * pow(2.0, oct2 + oct2_x);
 r2_dlen = samplerate / max(r2_freq, 20);
 
-r2_trig = (in2 > 0.5) * (r2_pt <= 0.5);
+r2_trig = (in2 > 0.05) * (r2_pt <= 0.05);
+r2_vel = r2_trig ? in2 : r2_vel;
 r2_pt = in2;
 r2_ec = r2_trig ? r2_dlen : max(r2_ec - 1, 0);
-r2_exc = (r2_ec > 0) ? noise() * drive : 0;
+r2_exc = (r2_ec > 0) ? noise() * drive * r2_vel : 0;
 
 r2_del = r2_d.read(r2_dlen);
 r2_avg = (r2_del + r2_pd) * 0.5;
 r2_pd = r2_del;
 r2_filt = r2_del * 0.4 + r2_avg * 0.6;    // brightness 0.4 = warm
-r2_out = r2_filt * 0.998;                  // medium-long
+r2_out = r2_filt * d2_damp;
 r2_d.write(r2_exc + r2_out);
 
 
@@ -328,16 +352,17 @@ r3_rat = (ts < 0.5) ? (r3_rat * (1.0-flex) + r3_jrat * flex) : r3_rat;
 r3_freq = root * r3_rat * pow(2.0, oct3 + oct3_x);
 r3_dlen = samplerate / max(r3_freq, 20);
 
-r3_trig = (in3 > 0.5) * (r3_pt <= 0.5);
+r3_trig = (in3 > 0.05) * (r3_pt <= 0.05);
+r3_vel = r3_trig ? in3 : r3_vel;
 r3_pt = in3;
 r3_ec = r3_trig ? r3_dlen : max(r3_ec - 1, 0);
-r3_exc = (r3_ec > 0) ? noise() * drive : 0;
+r3_exc = (r3_ec > 0) ? noise() * drive * r3_vel : 0;
 
 r3_del = r3_d.read(r3_dlen);
 r3_avg = (r3_del + r3_pd) * 0.5;
 r3_pd = r3_del;
 r3_filt = r3_del * 0.85 + r3_avg * 0.15;  // brightness 0.85 = bright
-r3_out = r3_filt * 0.996;                  // medium ring
+r3_out = r3_filt * d3_damp;
 r3_d.write(r3_exc + r3_out);
 
 
@@ -353,16 +378,17 @@ r4_rat = (ts < 0.5) ? (r4_rat * (1.0-flex) + r4_jrat * flex) : r4_rat;
 r4_freq = root * r4_rat * pow(2.0, oct4 + oct4_x);
 r4_dlen = samplerate / max(r4_freq, 20);
 
-r4_trig = (in4 > 0.5) * (r4_pt <= 0.5);
+r4_trig = (in4 > 0.05) * (r4_pt <= 0.05);
+r4_vel = r4_trig ? in4 : r4_vel;
 r4_pt = in4;
 r4_ec = r4_trig ? r4_dlen : max(r4_ec - 1, 0);
-r4_exc = (r4_ec > 0) ? noise() * drive * 1.2 : 0;
+r4_exc = (r4_ec > 0) ? noise() * drive * 1.2 * r4_vel : 0;
 
 r4_del = r4_d.read(r4_dlen);
 r4_avg = (r4_del + r4_pd) * 0.5;
 r4_pd = r4_del;
 r4_filt = r4_del * 0.9 + r4_avg * 0.1;    // brightness 0.9 = very bright
-r4_out = r4_filt * 0.97;                   // short decay
+r4_out = r4_filt * d4_damp;
 r4_d.write(r4_exc + r4_out);
 
 
@@ -378,16 +404,17 @@ r5_rat = (ts < 0.5) ? (r5_rat * (1.0-flex) + r5_jrat * flex) : r5_rat;
 r5_freq = root * r5_rat * pow(2.0, oct5 + oct5_x);
 r5_dlen = samplerate / max(r5_freq, 20);
 
-r5_trig = (in5 > 0.5) * (r5_pt <= 0.5);
+r5_trig = (in5 > 0.05) * (r5_pt <= 0.05);
+r5_vel = r5_trig ? in5 : r5_vel;
 r5_pt = in5;
 r5_ec = r5_trig ? r5_dlen : max(r5_ec - 1, 0);
-r5_exc = (r5_ec > 0) ? noise() * drive * 0.7 : 0;
+r5_exc = (r5_ec > 0) ? noise() * drive * 0.7 * r5_vel : 0;
 
 r5_del = r5_d.read(r5_dlen);
 r5_avg = (r5_del + r5_pd) * 0.5;
 r5_pd = r5_del;
 r5_filt = r5_del * 0.3 + r5_avg * 0.7;    // brightness 0.3 = dark
-r5_out = r5_filt * 0.9998;                 // very long ring
+r5_out = r5_filt * d5_damp;
 r5_d.write(r5_exc + r5_out);
 
 
@@ -403,16 +430,17 @@ r6_rat = (ts < 0.5) ? (r6_rat * (1.0-flex) + r6_jrat * flex) : r6_rat;
 r6_freq = root * r6_rat * pow(2.0, oct6 + oct6_x);
 r6_dlen = samplerate / max(r6_freq, 20);
 
-r6_trig = (in6 > 0.5) * (r6_pt <= 0.5);
+r6_trig = (in6 > 0.05) * (r6_pt <= 0.05);
+r6_vel = r6_trig ? in6 : r6_vel;
 r6_pt = in6;
 r6_ec = r6_trig ? r6_dlen : max(r6_ec - 1, 0);
-r6_exc = (r6_ec > 0) ? noise() * drive : 0;
+r6_exc = (r6_ec > 0) ? noise() * drive * r6_vel : 0;
 
 r6_del = r6_d.read(r6_dlen);
 r6_avg = (r6_del + r6_pd) * 0.5;
 r6_pd = r6_del;
 r6_filt = r6_del * 0.95 + r6_avg * 0.05;  // brightness 0.95 = crystalline
-r6_out = r6_filt * 0.994;                  // medium ring
+r6_out = r6_filt * d6_damp;
 r6_d.write(r6_exc + r6_out);
 
 
@@ -420,11 +448,11 @@ r6_d.write(r6_exc + r6_out);
 // STEREO MIX
 // =============================================
 
-left  = r1_out * 0.7 + r2_out * 0.5 + r3_out * 0.2
-      + r4_out * 0.4 + r5_out * 0.6 + r6_out * 0.3;
+left  = r1_out * 0.6 + r2_out * 0.35 + r3_out * 0.65
+      + r4_out * 0.4 + r5_out * 0.55 + r6_out * 0.45;
 
-right = r1_out * 0.3 + r2_out * 0.5 + r3_out * 0.8
-      + r4_out * 0.6 + r5_out * 0.4 + r6_out * 0.7;
+right = r1_out * 0.4 + r2_out * 0.65 + r3_out * 0.35
+      + r4_out * 0.6 + r5_out * 0.45 + r6_out * 0.55;
 
 out1 = left * master_gain;
 out2 = right * master_gain;

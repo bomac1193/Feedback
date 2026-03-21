@@ -1,0 +1,290 @@
+{
+	"patcher": {
+		"fileversion": 1,
+		"appversion": {
+			"major": 8,
+			"minor": 6,
+			"revision": 0,
+			"architecture": "x64",
+			"modernui": 1
+		},
+		"classnamespace": "dsp.gen",
+		"rect": [
+			0,
+			0,
+			900,
+			700
+		],
+		"bglocked": 0,
+		"openinpresentation": 0,
+		"default_fontsize": 12.0,
+		"default_fontface": 0,
+		"default_fontname": "Arial",
+		"gridonopen": 1,
+		"gridsize": [
+			15.0,
+			15.0
+		],
+		"gridsnaponopen": 1,
+		"objectsnaponopen": 1,
+		"statusbarvisible": 2,
+		"toolbarvisible": 1,
+		"boxes": [
+			{
+				"box": {
+					"id": "obj-codebox",
+					"maxclass": "codebox",
+					"numinlets": 6,
+					"numoutlets": 2,
+					"outlettype": [
+						"",
+						""
+					],
+					"patching_rect": [
+						150.0,
+						150.0,
+						600.0,
+						400.0
+					],
+					"code": "Param root(110);\nParam flex(0.5);\nParam tuning_system(0);\nParam master_gain(0.7);\nParam deg1(0);\nParam deg2(1);\nParam deg3(3);\nParam deg4(4);\nParam deg5(0);\nParam deg6(2);\nParam oct1(-1);\nParam oct2(0);\nParam oct3(0);\nParam oct4(1);\nParam oct5(-1);\nParam oct6(1);\nParam drive(0.5);\nData tuning_table(190);\nHistory init_done(0);\nHistory r1_pt(0);\nHistory r1_ec(0);\nHistory r1_pd(0);\nHistory r2_pt(0);\nHistory r2_ec(0);\nHistory r2_pd(0);\nHistory r3_pt(0);\nHistory r3_ec(0);\nHistory r3_pd(0);\nHistory r4_pt(0);\nHistory r4_ec(0);\nHistory r4_pd(0);\nHistory r5_pt(0);\nHistory r5_ec(0);\nHistory r5_pd(0);\nHistory r6_pt(0);\nHistory r6_ec(0);\nHistory r6_pd(0);\nDelay r1_d(48000);\nDelay r2_d(48000);\nDelay r3_d(48000);\nDelay r4_d(48000);\nDelay r5_d(48000);\nDelay r6_d(48000);\nif (init_done < 0.5) {\n    poke(tuning_table, 5, 0, 0);\n    poke(tuning_table, 1.0, 1, 0);\n    poke(tuning_table, 1.125, 2, 0);\n    poke(tuning_table, 1.265625, 3, 0);\n    poke(tuning_table, 1.5, 4, 0);\n    poke(tuning_table, 1.6875, 5, 0);\n    poke(tuning_table, 3, 10, 0);\n    poke(tuning_table, 1.0, 11, 0);\n    poke(tuning_table, 1.12246, 12, 0);\n    poke(tuning_table, 1.25992, 13, 0);\n    poke(tuning_table, 5, 20, 0);\n    poke(tuning_table, 1.0, 21, 0);\n    poke(tuning_table, 1.13534, 22, 0);\n    poke(tuning_table, 1.30486, 23, 0);\n    poke(tuning_table, 1.49180, 24, 0);\n    poke(tuning_table, 1.71002, 25, 0);\n    poke(tuning_table, 7, 30, 0);\n    poke(tuning_table, 1.0, 31, 0);\n    poke(tuning_table, 1.10409, 32, 0);\n    poke(tuning_table, 1.21901, 33, 0);\n    poke(tuning_table, 1.34590, 34, 0);\n    poke(tuning_table, 1.48599, 35, 0);\n    poke(tuning_table, 1.64059, 36, 0);\n    poke(tuning_table, 1.81145, 37, 0);\n    poke(tuning_table, 5, 40, 0);\n    poke(tuning_table, 1.0, 41, 0);\n    poke(tuning_table, 1.14870, 42, 0);\n    poke(tuning_table, 1.31951, 43, 0);\n    poke(tuning_table, 1.51572, 44, 0);\n    poke(tuning_table, 1.74110, 45, 0);\n    poke(tuning_table, 7, 50, 0);\n    poke(tuning_table, 1.0, 51, 0);\n    poke(tuning_table, 1.10957, 52, 0);\n    poke(tuning_table, 1.24574, 53, 0);\n    poke(tuning_table, 1.33484, 54, 0);\n    poke(tuning_table, 1.49831, 55, 0);\n    poke(tuning_table, 1.65948, 56, 0);\n    poke(tuning_table, 1.86121, 57, 0);\n    poke(tuning_table, 7, 60, 0);\n    poke(tuning_table, 1.0, 61, 0);\n    poke(tuning_table, 1.05946, 62, 0);\n    poke(tuning_table, 1.18921, 63, 0);\n    poke(tuning_table, 1.33484, 64, 0);\n    poke(tuning_table, 1.49831, 65, 0);\n    poke(tuning_table, 1.58740, 66, 0);\n    poke(tuning_table, 1.78180, 67, 0);\n    poke(tuning_table, 7, 70, 0);\n    poke(tuning_table, 1.0, 71, 0);\n    poke(tuning_table, 1.12246, 72, 0);\n    poke(tuning_table, 1.24915, 73, 0);\n    poke(tuning_table, 1.33484, 74, 0);\n    poke(tuning_table, 1.49831, 75, 0);\n    poke(tuning_table, 1.68179, 76, 0);\n    poke(tuning_table, 1.86459, 77, 0);\n    poke(tuning_table, 7, 80, 0);\n    poke(tuning_table, 1.0, 81, 0);\n    poke(tuning_table, 1.11278, 82, 0);\n    poke(tuning_table, 1.26330, 83, 0);\n    poke(tuning_table, 1.41747, 84, 0);\n    poke(tuning_table, 1.49831, 85, 0);\n    poke(tuning_table, 1.66230, 86, 0);\n    poke(tuning_table, 1.88800, 87, 0);\n    poke(tuning_table, 5, 90, 0);\n    poke(tuning_table, 1.0, 91, 0);\n    poke(tuning_table, 1.12246, 92, 0);\n    poke(tuning_table, 1.25992, 93, 0);\n    poke(tuning_table, 1.49831, 94, 0);\n    poke(tuning_table, 1.68179, 95, 0);\n    poke(tuning_table, 5, 100, 0);\n    poke(tuning_table, 1.0, 101, 0);\n    poke(tuning_table, 1.12246, 102, 0);\n    poke(tuning_table, 1.18921, 103, 0);\n    poke(tuning_table, 1.49831, 104, 0);\n    poke(tuning_table, 1.58740, 105, 0);\n    poke(tuning_table, 5, 110, 0);\n    poke(tuning_table, 1.0, 111, 0);\n    poke(tuning_table, 1.12246, 112, 0);\n    poke(tuning_table, 1.33484, 113, 0);\n    poke(tuning_table, 1.49831, 114, 0);\n    poke(tuning_table, 1.68179, 115, 0);\n    poke(tuning_table, 5, 120, 0);\n    poke(tuning_table, 1.0, 121, 0);\n    poke(tuning_table, 1.12246, 122, 0);\n    poke(tuning_table, 1.25992, 123, 0);\n    poke(tuning_table, 1.49831, 124, 0);\n    poke(tuning_table, 1.58740, 125, 0);\n    poke(tuning_table, 5, 130, 0);\n    poke(tuning_table, 1.0, 131, 0);\n    poke(tuning_table, 1.05946, 132, 0);\n    poke(tuning_table, 1.33484, 133, 0);\n    poke(tuning_table, 1.41421, 134, 0);\n    poke(tuning_table, 1.68179, 135, 0);\n    poke(tuning_table, 5, 140, 0);\n    poke(tuning_table, 1.0, 141, 0);\n    poke(tuning_table, 1.14870, 142, 0);\n    poke(tuning_table, 1.31951, 143, 0);\n    poke(tuning_table, 1.51572, 144, 0);\n    poke(tuning_table, 1.74110, 145, 0);\n    poke(tuning_table, 7, 150, 0);\n    poke(tuning_table, 1.0, 151, 0);\n    poke(tuning_table, 1.10653, 152, 0);\n    poke(tuning_table, 1.22082, 153, 0);\n    poke(tuning_table, 1.34890, 154, 0);\n    poke(tuning_table, 1.48160, 155, 0);\n    poke(tuning_table, 1.63720, 156, 0);\n    poke(tuning_table, 1.80699, 157, 0);\n    poke(tuning_table, 6, 160, 0);\n    poke(tuning_table, 1.0, 161, 0);\n    poke(tuning_table, 1.12246, 162, 0);\n    poke(tuning_table, 1.24984, 163, 0);\n    poke(tuning_table, 1.33322, 164, 0);\n    poke(tuning_table, 1.50000, 165, 0);\n    poke(tuning_table, 1.66212, 166, 0);\n    poke(tuning_table, 6, 170, 0);\n    poke(tuning_table, 1.0, 171, 0);\n    poke(tuning_table, 1.25, 172, 0);\n    poke(tuning_table, 1.5, 173, 0);\n    poke(tuning_table, 1.75, 174, 0);\n    poke(tuning_table, 2.0, 175, 0);\n    poke(tuning_table, 2.25, 176, 0);\n    poke(tuning_table, 5, 180, 0);\n    poke(tuning_table, 1.0, 181, 0);\n    poke(tuning_table, 1.12246, 182, 0);\n    poke(tuning_table, 1.24984, 183, 0);\n    poke(tuning_table, 1.50000, 184, 0);\n    poke(tuning_table, 1.66212, 185, 0);\n    init_done = 1;\n}\nts = clamp(floor(tuning_system), 0, 18);\nts_base = ts * 10;\nts_size = peek(tuning_table, ts_base, 0);\nts_size = max(ts_size, 1);\nj0 = 1.0; j1 = 1.111111; j2 = 1.25; j3 = 1.5; j4 = 1.666667;\ndeg1_w = mod(floor(deg1), ts_size);\noct1_x = floor(deg1 / ts_size);\nr1_rat = peek(tuning_table, ts_base + 1 + deg1_w, 0);\nr1_jrat = (deg1_w<0.5)?j0:(deg1_w<1.5)?j1:(deg1_w<2.5)?j2:(deg1_w<3.5)?j3:j4;\nr1_rat = (ts < 0.5) ? (r1_rat * (1.0-flex) + r1_jrat * flex) : r1_rat;\nr1_freq = root * r1_rat * pow(2.0, oct1 + oct1_x);\nr1_dlen = samplerate / max(r1_freq, 20);\nr1_trig = (in1 > 0.5) * (r1_pt <= 0.5);\nr1_pt = in1;\nr1_ec = r1_trig ? r1_dlen : max(r1_ec - 1, 0);\nr1_exc = (r1_ec > 0) ? noise() * drive : 0;\nr1_del = r1_d.read(r1_dlen);\nr1_avg = (r1_del + r1_pd) * 0.5;\nr1_pd = r1_del;\nr1_filt = r1_del * 0.2 + r1_avg * 0.8;\nr1_out = r1_filt * 0.9995;\nr1_d.write(r1_exc + r1_out);\ndeg2_w = mod(floor(deg2), ts_size);\noct2_x = floor(deg2 / ts_size);\nr2_rat = peek(tuning_table, ts_base + 1 + deg2_w, 0);\nr2_jrat = (deg2_w<0.5)?j0:(deg2_w<1.5)?j1:(deg2_w<2.5)?j2:(deg2_w<3.5)?j3:j4;\nr2_rat = (ts < 0.5) ? (r2_rat * (1.0-flex) + r2_jrat * flex) : r2_rat;\nr2_freq = root * r2_rat * pow(2.0, oct2 + oct2_x);\nr2_dlen = samplerate / max(r2_freq, 20);\nr2_trig = (in2 > 0.5) * (r2_pt <= 0.5);\nr2_pt = in2;\nr2_ec = r2_trig ? r2_dlen : max(r2_ec - 1, 0);\nr2_exc = (r2_ec > 0) ? noise() * drive : 0;\nr2_del = r2_d.read(r2_dlen);\nr2_avg = (r2_del + r2_pd) * 0.5;\nr2_pd = r2_del;\nr2_filt = r2_del * 0.4 + r2_avg * 0.6;\nr2_out = r2_filt * 0.998;\nr2_d.write(r2_exc + r2_out);\ndeg3_w = mod(floor(deg3), ts_size);\noct3_x = floor(deg3 / ts_size);\nr3_rat = peek(tuning_table, ts_base + 1 + deg3_w, 0);\nr3_jrat = (deg3_w<0.5)?j0:(deg3_w<1.5)?j1:(deg3_w<2.5)?j2:(deg3_w<3.5)?j3:j4;\nr3_rat = (ts < 0.5) ? (r3_rat * (1.0-flex) + r3_jrat * flex) : r3_rat;\nr3_freq = root * r3_rat * pow(2.0, oct3 + oct3_x);\nr3_dlen = samplerate / max(r3_freq, 20);\nr3_trig = (in3 > 0.5) * (r3_pt <= 0.5);\nr3_pt = in3;\nr3_ec = r3_trig ? r3_dlen : max(r3_ec - 1, 0);\nr3_exc = (r3_ec > 0) ? noise() * drive : 0;\nr3_del = r3_d.read(r3_dlen);\nr3_avg = (r3_del + r3_pd) * 0.5;\nr3_pd = r3_del;\nr3_filt = r3_del * 0.85 + r3_avg * 0.15;\nr3_out = r3_filt * 0.996;\nr3_d.write(r3_exc + r3_out);\ndeg4_w = mod(floor(deg4), ts_size);\noct4_x = floor(deg4 / ts_size);\nr4_rat = peek(tuning_table, ts_base + 1 + deg4_w, 0);\nr4_jrat = (deg4_w<0.5)?j0:(deg4_w<1.5)?j1:(deg4_w<2.5)?j2:(deg4_w<3.5)?j3:j4;\nr4_rat = (ts < 0.5) ? (r4_rat * (1.0-flex) + r4_jrat * flex) : r4_rat;\nr4_freq = root * r4_rat * pow(2.0, oct4 + oct4_x);\nr4_dlen = samplerate / max(r4_freq, 20);\nr4_trig = (in4 > 0.5) * (r4_pt <= 0.5);\nr4_pt = in4;\nr4_ec = r4_trig ? r4_dlen : max(r4_ec - 1, 0);\nr4_exc = (r4_ec > 0) ? noise() * drive * 1.2 : 0;\nr4_del = r4_d.read(r4_dlen);\nr4_avg = (r4_del + r4_pd) * 0.5;\nr4_pd = r4_del;\nr4_filt = r4_del * 0.9 + r4_avg * 0.1;\nr4_out = r4_filt * 0.97;\nr4_d.write(r4_exc + r4_out);\ndeg5_w = mod(floor(deg5), ts_size);\noct5_x = floor(deg5 / ts_size);\nr5_rat = peek(tuning_table, ts_base + 1 + deg5_w, 0);\nr5_jrat = (deg5_w<0.5)?j0:(deg5_w<1.5)?j1:(deg5_w<2.5)?j2:(deg5_w<3.5)?j3:j4;\nr5_rat = (ts < 0.5) ? (r5_rat * (1.0-flex) + r5_jrat * flex) : r5_rat;\nr5_freq = root * r5_rat * pow(2.0, oct5 + oct5_x);\nr5_dlen = samplerate / max(r5_freq, 20);\nr5_trig = (in5 > 0.5) * (r5_pt <= 0.5);\nr5_pt = in5;\nr5_ec = r5_trig ? r5_dlen : max(r5_ec - 1, 0);\nr5_exc = (r5_ec > 0) ? noise() * drive * 0.7 : 0;\nr5_del = r5_d.read(r5_dlen);\nr5_avg = (r5_del + r5_pd) * 0.5;\nr5_pd = r5_del;\nr5_filt = r5_del * 0.3 + r5_avg * 0.7;\nr5_out = r5_filt * 0.9998;\nr5_d.write(r5_exc + r5_out);\ndeg6_w = mod(floor(deg6), ts_size);\noct6_x = floor(deg6 / ts_size);\nr6_rat = peek(tuning_table, ts_base + 1 + deg6_w, 0);\nr6_jrat = (deg6_w<0.5)?j0:(deg6_w<1.5)?j1:(deg6_w<2.5)?j2:(deg6_w<3.5)?j3:j4;\nr6_rat = (ts < 0.5) ? (r6_rat * (1.0-flex) + r6_jrat * flex) : r6_rat;\nr6_freq = root * r6_rat * pow(2.0, oct6 + oct6_x);\nr6_dlen = samplerate / max(r6_freq, 20);\nr6_trig = (in6 > 0.5) * (r6_pt <= 0.5);\nr6_pt = in6;\nr6_ec = r6_trig ? r6_dlen : max(r6_ec - 1, 0);\nr6_exc = (r6_ec > 0) ? noise() * drive : 0;\nr6_del = r6_d.read(r6_dlen);\nr6_avg = (r6_del + r6_pd) * 0.5;\nr6_pd = r6_del;\nr6_filt = r6_del * 0.95 + r6_avg * 0.05;\nr6_out = r6_filt * 0.994;\nr6_d.write(r6_exc + r6_out);\nleft  = r1_out * 0.7 + r2_out * 0.5 + r3_out * 0.2 + r4_out * 0.4 + r5_out * 0.6 + r6_out * 0.3;\nright = r1_out * 0.3 + r2_out * 0.5 + r3_out * 0.8 + r4_out * 0.6 + r5_out * 0.4 + r6_out * 0.7;\nout1 = left * master_gain;\nout2 = right * master_gain;"
+				}
+			},
+			{
+				"box": {
+					"id": "obj-in1",
+					"maxclass": "newobj",
+					"numinlets": 0,
+					"numoutlets": 1,
+					"outlettype": [
+						""
+					],
+					"text": "in 1",
+					"patching_rect": [
+						150.0,
+						50.0,
+						30.0,
+						22.0
+					]
+				}
+			},
+			{
+				"box": {
+					"id": "obj-in2",
+					"maxclass": "newobj",
+					"numinlets": 0,
+					"numoutlets": 1,
+					"outlettype": [
+						""
+					],
+					"text": "in 2",
+					"patching_rect": [
+						230.0,
+						50.0,
+						30.0,
+						22.0
+					]
+				}
+			},
+			{
+				"box": {
+					"id": "obj-in3",
+					"maxclass": "newobj",
+					"numinlets": 0,
+					"numoutlets": 1,
+					"outlettype": [
+						""
+					],
+					"text": "in 3",
+					"patching_rect": [
+						310.0,
+						50.0,
+						30.0,
+						22.0
+					]
+				}
+			},
+			{
+				"box": {
+					"id": "obj-in4",
+					"maxclass": "newobj",
+					"numinlets": 0,
+					"numoutlets": 1,
+					"outlettype": [
+						""
+					],
+					"text": "in 4",
+					"patching_rect": [
+						390.0,
+						50.0,
+						30.0,
+						22.0
+					]
+				}
+			},
+			{
+				"box": {
+					"id": "obj-in5",
+					"maxclass": "newobj",
+					"numinlets": 0,
+					"numoutlets": 1,
+					"outlettype": [
+						""
+					],
+					"text": "in 5",
+					"patching_rect": [
+						470.0,
+						50.0,
+						30.0,
+						22.0
+					]
+				}
+			},
+			{
+				"box": {
+					"id": "obj-in6",
+					"maxclass": "newobj",
+					"numinlets": 0,
+					"numoutlets": 1,
+					"outlettype": [
+						""
+					],
+					"text": "in 6",
+					"patching_rect": [
+						550.0,
+						50.0,
+						30.0,
+						22.0
+					]
+				}
+			},
+			{
+				"box": {
+					"id": "obj-out1",
+					"maxclass": "newobj",
+					"numinlets": 1,
+					"numoutlets": 0,
+					"text": "out 1",
+					"patching_rect": [
+						150.0,
+						600.0,
+						35.0,
+						22.0
+					]
+				}
+			},
+			{
+				"box": {
+					"id": "obj-out2",
+					"maxclass": "newobj",
+					"numinlets": 1,
+					"numoutlets": 0,
+					"text": "out 2",
+					"patching_rect": [
+						200.0,
+						600.0,
+						35.0,
+						22.0
+					]
+				}
+			}
+		],
+		"lines": [
+			{
+				"patchline": {
+					"source": [
+						"obj-in1",
+						0
+					],
+					"destination": [
+						"obj-codebox",
+						0
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-in2",
+						0
+					],
+					"destination": [
+						"obj-codebox",
+						1
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-in3",
+						0
+					],
+					"destination": [
+						"obj-codebox",
+						2
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-in4",
+						0
+					],
+					"destination": [
+						"obj-codebox",
+						3
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-in5",
+						0
+					],
+					"destination": [
+						"obj-codebox",
+						4
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-in6",
+						0
+					],
+					"destination": [
+						"obj-codebox",
+						5
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-codebox",
+						0
+					],
+					"destination": [
+						"obj-out1",
+						0
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-codebox",
+						1
+					],
+					"destination": [
+						"obj-out2",
+						0
+					]
+				}
+			}
+		]
+	}
+}

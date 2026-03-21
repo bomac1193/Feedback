@@ -1,0 +1,384 @@
+// ============================================
+// KURAMOTO COUPLED OSCILLATOR ENGINE — VEVE TOPOLOGY
+// Project 3 + Engine E: Veve-as-Topology
+// ============================================
+//
+// Modified Kuramoto engine that reads coupling from
+// an external buffer~ (adjacency matrix) instead of
+// hardcoded all-to-all coupling.
+//
+// VEVE TOPOLOGY:
+//   Different veve geometric forms produce different
+//   groove physics. The adjacency matrix defines WHICH
+//   oscillators pull on each other. Switch veve live →
+//   rhythm reorganizes → sound transforms.
+//
+//   The groove character is DISCOVERED from the ancestral
+//   form, not designed. The veve contains mathematical
+//   information that produces musical behavior you
+//   couldn't predict in advance.
+//
+// ADJACENCY VIA PARAMS (bitmask encoding):
+//   Each row of the 6x6 matrix is packed as a single integer:
+//   bitmask = col0*1 + col1*2 + col2*4 + col3*8 + col4*16 + col5*32
+//   gen~ decodes with floor(row/2^col) % 2
+//   Sent as Param messages from veve_loader.js
+//
+// PRESETS (loaded via veve_loader.js):
+//   0: All-to-all (default, backward compatible)
+//   1: Legba Carrefour (hub/cross — leader-follower)
+//   2: Carrefour (diamond mesh — dense groove lock)
+//   3: Ferraille (V-graph — 3 coupled + 3 free)
+//   4: Ogou Bhathalah (zigzag chain — wave propagation)
+//   5: Legba co-sou (ring — traveling wave)
+//
+// OUTPUTS (same as original + preset index):
+//   out1-out6:   trigger impulses (excite resonators)
+//   out7:        order parameter r (0-1, groove meter)
+//   out8-out13:  phases normalized 0-1 (for TD/dundun)
+//   out14:       veve preset index (for TD graph viz)
+//
+// SOURCE: Milo Rigaud, Ve-Ve: Diagrammes Rituels du
+//         Voudou (1974). Plates referenced by PDF page.
+//
+// ============================================
+
+
+// ====================
+// DECLARATIONS
+// ====================
+
+Param K(0.5);              // Coupling strength — YOUR MAIN KNOB
+                           // 0 = free, 0.3-0.7 = groove, 1+ = locked
+
+Param tempo(120);          // Base tempo in BPM
+
+// Natural frequency RATIOS — these encode the polyrhythm
+// Default: West African bell pattern relationships
+Param ratio1(1.0);         // Base pulse (the timeline)
+Param ratio2(1.8);         // Wide cross-rhythm
+Param ratio3(1.333);       // 4:3 relationship
+Param ratio4(0.4);         // Very slow — needs strong coupling to lock
+Param ratio5(2.5);         // Fast — 5:2 against base
+Param ratio6(0.333);       // Very slow cycle (1:3 against base)
+
+// Trigger shape
+Param trig_width(0.001);   // Trigger pulse width in seconds
+
+// Veve preset index (for passing to TD via out14)
+Param veve_preset(0);
+
+// Phase reset — set to 1 to scatter phases, auto-gates via History
+Param phase_reset(0);
+Param reset_attack(200);      // Attack time in ms (K fade-out before scatter)
+Param reset_release(1000);    // Release time in ms (K ramp-back after scatter)
+History did_reset(0);
+History reset_env(1);          // Coupling envelope: 0=scattered, 1=normal
+History reset_state(0);        // 0=normal, 1=attacking, 2=releasing
+
+// Adjacency matrix rows — bitmask encoded
+// Default = all-to-all: every osc coupled to every other
+// bitmask = col0*1 + col1*2 + col2*4 + col3*8 + col4*16 + col5*32
+Param row0(62);   // [0,1,1,1,1,1] = 62
+Param row1(61);   // [1,0,1,1,1,1] = 61
+Param row2(59);   // [1,1,0,1,1,1] = 59
+Param row3(55);   // [1,1,1,0,1,1] = 55
+Param row4(47);   // [1,1,1,1,0,1] = 47
+Param row5(31);   // [1,1,1,1,1,0] = 31
+
+// Phase state
+// Initial phases spread evenly so they don't all start synced
+History t1(0.0);
+History t2(1.047);       // 2π/6 apart
+History t3(2.094);
+History t4(3.142);
+History t5(4.189);
+History t6(5.236);
+
+// Trigger pulse counters
+History trig_count1(0);
+History trig_count2(0);
+History trig_count3(0);
+History trig_count4(0);
+History trig_count5(0);
+History trig_count6(0);
+
+
+// ====================
+// CONSTANTS
+// ====================
+
+twopi = 6.28318530718;
+N = 6;
+dt_step = 1.0 / samplerate;
+
+
+// ====================
+// NATURAL FREQUENCIES
+// ====================
+
+base_freq = tempo / 60.0;
+
+w1 = base_freq * ratio1 * twopi;
+w2 = base_freq * ratio2 * twopi;
+w3 = base_freq * ratio3 * twopi;
+w4 = base_freq * ratio4 * twopi;
+w5 = base_freq * ratio5 * twopi;
+w6 = base_freq * ratio6 * twopi;
+
+
+// ====================
+// ADJACENCY MATRIX DECODE (bitmask)
+// ====================
+// Each row param encodes 6 binary coupling values:
+//   floor(rowN / 2^col) % 2 → 0 or 1
+//
+// Row i, column j: does oscillator j pull on oscillator i?
+// Self-coupling (diagonal) is always 0.
+
+// Row 0: what pulls on oscillator 1
+a01 = floor(row0 / 2) % 2;    // col 1: osc 2 → osc 1
+a02 = floor(row0 / 4) % 2;    // col 2: osc 3 → osc 1
+a03 = floor(row0 / 8) % 2;    // col 3: osc 4 → osc 1
+a04 = floor(row0 / 16) % 2;   // col 4: osc 5 → osc 1
+a05 = floor(row0 / 32) % 2;   // col 5: osc 6 → osc 1
+
+// Row 1: what pulls on oscillator 2
+a10 = floor(row1 / 1) % 2;    // col 0: osc 1 → osc 2
+a12 = floor(row1 / 4) % 2;    // col 2: osc 3 → osc 2
+a13 = floor(row1 / 8) % 2;    // col 3: osc 4 → osc 2
+a14 = floor(row1 / 16) % 2;   // col 4: osc 5 → osc 2
+a15 = floor(row1 / 32) % 2;   // col 5: osc 6 → osc 2
+
+// Row 2: what pulls on oscillator 3
+a20 = floor(row2 / 1) % 2;    // col 0: osc 1 → osc 3
+a21 = floor(row2 / 2) % 2;    // col 1: osc 2 → osc 3
+a23 = floor(row2 / 8) % 2;    // col 3: osc 4 → osc 3
+a24 = floor(row2 / 16) % 2;   // col 4: osc 5 → osc 3
+a25 = floor(row2 / 32) % 2;   // col 5: osc 6 → osc 3
+
+// Row 3: what pulls on oscillator 4
+a30 = floor(row3 / 1) % 2;    // col 0: osc 1 → osc 4
+a31 = floor(row3 / 2) % 2;    // col 1: osc 2 → osc 4
+a32 = floor(row3 / 4) % 2;    // col 2: osc 3 → osc 4
+a34 = floor(row3 / 16) % 2;   // col 4: osc 5 → osc 4
+a35 = floor(row3 / 32) % 2;   // col 5: osc 6 → osc 4
+
+// Row 4: what pulls on oscillator 5
+a40 = floor(row4 / 1) % 2;    // col 0: osc 1 → osc 5
+a41 = floor(row4 / 2) % 2;    // col 1: osc 2 → osc 5
+a42 = floor(row4 / 4) % 2;    // col 2: osc 3 → osc 5
+a43 = floor(row4 / 8) % 2;    // col 3: osc 4 → osc 5
+a45 = floor(row4 / 32) % 2;   // col 5: osc 6 → osc 5
+
+// Row 5: what pulls on oscillator 6
+a50 = floor(row5 / 1) % 2;    // col 0: osc 1 → osc 6
+a51 = floor(row5 / 2) % 2;    // col 1: osc 2 → osc 6
+a52 = floor(row5 / 4) % 2;    // col 2: osc 3 → osc 6
+a53 = floor(row5 / 8) % 2;    // col 3: osc 4 → osc 6
+a54 = floor(row5 / 16) % 2;   // col 4: osc 5 → osc 6
+
+
+// ====================
+// KURAMOTO COUPLING (VEVE TOPOLOGY)
+// ====================
+// dθi/dt = ωi + (K/N) * Σ adj[i][j] * sin(θj - θi)
+//
+// Each sin(θj - θi) term is weighted by the adjacency value.
+// When adj[i][j] = 0, oscillator j has no pull on oscillator i.
+// The topology of the veve determines the groove character.
+
+coupling = K * reset_env;
+
+sum1 = a01*sin(t2-t1) + a02*sin(t3-t1) + a03*sin(t4-t1) + a04*sin(t5-t1) + a05*sin(t6-t1);
+sum2 = a10*sin(t1-t2) + a12*sin(t3-t2) + a13*sin(t4-t2) + a14*sin(t5-t2) + a15*sin(t6-t2);
+sum3 = a20*sin(t1-t3) + a21*sin(t2-t3) + a23*sin(t4-t3) + a24*sin(t5-t3) + a25*sin(t6-t3);
+sum4 = a30*sin(t1-t4) + a31*sin(t2-t4) + a32*sin(t3-t4) + a34*sin(t5-t4) + a35*sin(t6-t4);
+sum5 = a40*sin(t1-t5) + a41*sin(t2-t5) + a42*sin(t3-t5) + a43*sin(t4-t5) + a45*sin(t6-t5);
+sum6 = a50*sin(t1-t6) + a51*sin(t2-t6) + a52*sin(t3-t6) + a53*sin(t4-t6) + a54*sin(t5-t6);
+
+// Phase derivatives (angular velocity + topology-weighted coupling)
+d1 = w1 + coupling * sum1;
+d2 = w2 + coupling * sum2;
+d3 = w3 + coupling * sum3;
+d4 = w4 + coupling * sum4;
+d5 = w5 + coupling * sum5;
+d6 = w6 + coupling * sum6;
+
+
+// ====================
+// PHASE INTEGRATION
+// ====================
+
+t1_new = t1 + d1 * dt_step;
+t2_new = t2 + d2 * dt_step;
+t3_new = t3 + d3 * dt_step;
+t4_new = t4 + d4 * dt_step;
+t5_new = t5 + d5 * dt_step;
+t6_new = t6 + d6 * dt_step;
+
+// Phase reset state machine: 0=normal, 1=attacking (K fading out), 2=releasing (K ramping back)
+attack_samples = max(reset_attack * 0.001 * samplerate, 1);
+release_samples = max(reset_release * 0.001 * samplerate, 1);
+
+// Trigger: start attack phase
+if (phase_reset > 0.5 && did_reset < 0.5) {
+	reset_state = 1;
+	did_reset = 1;
+}
+if (phase_reset < 0.5) {
+	did_reset = 0;
+}
+
+// State 1: attacking — ramp envelope down
+if (reset_state > 0.5 && reset_state < 1.5) {
+	reset_env = max(reset_env - 1.0 / attack_samples, 0);
+	if (reset_env <= 0) {
+		t1_new = 0.0;
+		t2_new = 1.047;
+		t3_new = 2.094;
+		t4_new = 3.142;
+		t5_new = 4.189;
+		t6_new = 5.236;
+		reset_state = 2;
+	}
+}
+
+// State 2: releasing — ramp envelope back up
+if (reset_state > 1.5) {
+	reset_env = min(reset_env + 1.0 / release_samples, 1);
+	if (reset_env >= 1) {
+		reset_state = 0;
+	}
+}
+
+
+// ====================
+// TRIGGER DETECTION
+// ====================
+
+wrap1 = (t1_new >= twopi) ? 1 : 0;
+wrap2 = (t2_new >= twopi) ? 1 : 0;
+wrap3 = (t3_new >= twopi) ? 1 : 0;
+wrap4 = (t4_new >= twopi) ? 1 : 0;
+wrap5 = (t5_new >= twopi) ? 1 : 0;
+wrap6 = (t6_new >= twopi) ? 1 : 0;
+
+
+// ====================
+// PHASE WRAP (modulo 2π)
+// ====================
+
+t1 = t1_new - twopi * floor(t1_new / twopi);
+t2 = t2_new - twopi * floor(t2_new / twopi);
+t3 = t3_new - twopi * floor(t3_new / twopi);
+t4 = t4_new - twopi * floor(t4_new / twopi);
+t5 = t5_new - twopi * floor(t5_new / twopi);
+t6 = t6_new - twopi * floor(t6_new / twopi);
+
+
+// ====================
+// TRIGGER PULSE SHAPING
+// ====================
+
+trig_samples = max(trig_width * samplerate, 1);
+
+trig_count1 = (wrap1 > 0) ? trig_samples : max(trig_count1 - 1, 0);
+trig_count2 = (wrap2 > 0) ? trig_samples : max(trig_count2 - 1, 0);
+trig_count3 = (wrap3 > 0) ? trig_samples : max(trig_count3 - 1, 0);
+trig_count4 = (wrap4 > 0) ? trig_samples : max(trig_count4 - 1, 0);
+trig_count5 = (wrap5 > 0) ? trig_samples : max(trig_count5 - 1, 0);
+trig_count6 = (wrap6 > 0) ? trig_samples : max(trig_count6 - 1, 0);
+
+pulse1 = (trig_count1 > 0) ? 1 : 0;
+pulse2 = (trig_count2 > 0) ? 1 : 0;
+pulse3 = (trig_count3 > 0) ? 1 : 0;
+pulse4 = (trig_count4 > 0) ? 1 : 0;
+pulse5 = (trig_count5 > 0) ? 1 : 0;
+pulse6 = (trig_count6 > 0) ? 1 : 0;
+
+
+// ====================
+// LOCAL PHASE COHERENCE → VELOCITY
+// ====================
+// Each oscillator's velocity = how aligned it is with its coupled neighbors
+// Aligned → loud, scattered → quiet. Topology becomes dynamics.
+
+conn1 = a01 + a02 + a03 + a04 + a05;
+n1 = max(conn1, 1);
+coh1 = (a01*cos(t2-t1) + a02*cos(t3-t1) + a03*cos(t4-t1) + a04*cos(t5-t1) + a05*cos(t6-t1)) / n1;
+vel1 = (conn1 > 0) ? (0.05 + 0.95 * pow(clamp((coh1 + 1) * 0.5, 0, 1), 2)) : 0.05;
+
+conn2 = a10 + a12 + a13 + a14 + a15;
+n2 = max(conn2, 1);
+coh2 = (a10*cos(t1-t2) + a12*cos(t3-t2) + a13*cos(t4-t2) + a14*cos(t5-t2) + a15*cos(t6-t2)) / n2;
+vel2 = (conn2 > 0) ? (0.05 + 0.95 * pow(clamp((coh2 + 1) * 0.5, 0, 1), 2)) : 0.05;
+
+conn3 = a20 + a21 + a23 + a24 + a25;
+n3 = max(conn3, 1);
+coh3 = (a20*cos(t1-t3) + a21*cos(t2-t3) + a23*cos(t4-t3) + a24*cos(t5-t3) + a25*cos(t6-t3)) / n3;
+vel3 = (conn3 > 0) ? (0.05 + 0.95 * pow(clamp((coh3 + 1) * 0.5, 0, 1), 2)) : 0.05;
+
+conn4 = a30 + a31 + a32 + a34 + a35;
+n4 = max(conn4, 1);
+coh4 = (a30*cos(t1-t4) + a31*cos(t2-t4) + a32*cos(t3-t4) + a34*cos(t5-t4) + a35*cos(t6-t4)) / n4;
+vel4 = (conn4 > 0) ? (0.05 + 0.95 * pow(clamp((coh4 + 1) * 0.5, 0, 1), 2)) : 0.05;
+
+conn5 = a40 + a41 + a42 + a43 + a45;
+n5 = max(conn5, 1);
+coh5 = (a40*cos(t1-t5) + a41*cos(t2-t5) + a42*cos(t3-t5) + a43*cos(t4-t5) + a45*cos(t6-t5)) / n5;
+vel5 = (conn5 > 0) ? (0.05 + 0.95 * pow(clamp((coh5 + 1) * 0.5, 0, 1), 2)) : 0.05;
+
+conn6 = a50 + a51 + a52 + a53 + a54;
+n6 = max(conn6, 1);
+coh6 = (a50*cos(t1-t6) + a51*cos(t2-t6) + a52*cos(t3-t6) + a53*cos(t4-t6) + a54*cos(t5-t6)) / n6;
+vel6 = (conn6 > 0) ? (0.05 + 0.95 * pow(clamp((coh6 + 1) * 0.5, 0, 1), 2)) : 0.05;
+
+
+// ====================
+// ORDER PARAMETER (groove meter)
+// ====================
+
+cos_sum = cos(t1) + cos(t2) + cos(t3) + cos(t4) + cos(t5) + cos(t6);
+sin_sum = sin(t1) + sin(t2) + sin(t3) + sin(t4) + sin(t5) + sin(t6);
+
+r = sqrt(cos_sum * cos_sum + sin_sum * sin_sum) / N;
+
+
+// ====================
+// NORMALIZED PHASES (for TD visualization)
+// ====================
+
+phase1 = t1 / twopi;
+phase2 = t2 / twopi;
+phase3 = t3 / twopi;
+phase4 = t4 / twopi;
+phase5 = t5 / twopi;
+phase6 = t6 / twopi;
+
+
+// ====================
+// OUTPUTS
+// ====================
+
+// Triggers with velocity encoded in amplitude
+out1 = pulse1 * vel1;
+out2 = pulse2 * vel2;
+out3 = pulse3 * vel3;
+out4 = pulse4 * vel4;
+out5 = pulse5 * vel5;
+out6 = pulse6 * vel6;
+
+// Order parameter → TD groove meter
+out7 = r;
+
+// Phases 0-1 → TD visualization / dundun pitch mapping
+out8  = phase1;
+out9  = phase2;
+out10 = phase3;
+out11 = phase4;
+out12 = phase5;
+out13 = phase6;
+
+// Veve preset index → TD graph visualization
+out14 = veve_preset;

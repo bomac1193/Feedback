@@ -1,0 +1,125 @@
+{
+  "_comment": "Veve adjacency matrices for Kuramoto coupled oscillator engine. Each preset defines WHICH oscillators pull on each other. The topology is derived from actual veve geometric forms (Rigaud, 1974). Row i, column j: does oscillator j pull on oscillator i? adj is row-major flattened (36 values for 6x6).",
+  "presets": [
+    {
+      "index": 0,
+      "name": "All-to-all",
+      "source": "Default (standard Kuramoto)",
+      "description": "Every oscillator couples to every other. Maximum synchronization potential. Backward compatible with original engine.",
+      "predicted_behavior": "Classic Kuramoto: smooth transition from free to locked as K increases. All voices participate equally in groove.",
+      "adj": [
+        0,1,1,1,1,1,
+        1,0,1,1,1,1,
+        1,1,0,1,1,1,
+        1,1,1,0,1,1,
+        1,1,1,1,0,1,
+        1,1,1,1,1,0
+      ],
+      "node_positions": [
+        [6, 0], [3, 5.196], [-3, 5.196],
+        [-6, 0], [-3, -5.196], [3, -5.196]
+      ],
+      "node_labels": ["iya_ilu", "omele_1", "ogene", "gudugudu", "omele_2", "shekere"]
+    },
+    {
+      "index": 1,
+      "name": "Legba Carrefour",
+      "source": "Rigaud Ve-Ve p.168 — Crossroads hub with 4 cardinal arms + staff",
+      "description": "Center hub (osc 0) connects to all 5. Arms (osc 1-5) connect only to center. Pure star/hub topology. The veve of the crossroads guardian.",
+      "predicted_behavior": "Strong leader-follower. Center oscillator (iya ilu) entrains all 5 arms. Arms don't influence each other — they only respond to the leader. K controls how tightly the ensemble follows.",
+      "adj": [
+        0,1,1,1,1,1,
+        1,0,0,0,0,0,
+        1,0,0,0,0,0,
+        1,0,0,0,0,0,
+        1,0,0,0,0,0,
+        1,0,0,0,0,0
+      ],
+      "node_positions": [
+        [0, 0], [0, 8], [8, 0],
+        [0, -8], [-8, 0], [10, 4]
+      ],
+      "node_labels": ["center_hub", "north_arm", "east_arm", "south_arm", "west_arm", "staff"]
+    },
+    {
+      "index": 2,
+      "name": "Carrefour Diamond",
+      "source": "Rigaud Ve-Ve p.185 — Diamond mesh with 5 star-cross symbols",
+      "description": "5 nodes fully connected in a diamond lattice. 6th node (spiral element) peripheral, connects only through node 4. Dense partial mesh.",
+      "predicted_behavior": "Near-all-to-all groove lock for the 5 core voices. One outsider (shekere) drifts against the locked group — creates rhythmic tension between locked majority and free voice.",
+      "adj": [
+        0,1,1,1,1,0,
+        1,0,1,1,1,0,
+        1,1,0,1,1,0,
+        1,1,1,0,1,0,
+        1,1,1,1,0,1,
+        0,0,0,0,1,0
+      ],
+      "node_positions": [
+        [0, 0], [0, 6], [6, 0],
+        [0, -6], [-6, 0], [-7, -4]
+      ],
+      "node_labels": ["center_cross", "north_star", "east_star", "south_star", "west_star", "spiral"]
+    },
+    {
+      "index": 3,
+      "name": "Ferraille",
+      "source": "Rigaud Ve-Ve p.240 — V-shape sabre with junction and 2 flagged tips",
+      "description": "V-graph: junction (osc 0) connects to 2 tips (osc 1, 2). Oscillators 3-5 are completely free — no coupling at all. Sparse topology.",
+      "predicted_behavior": "Two-against-one phase lock in the V subgraph + 3 completely free voices. Tension between the small locked cluster and the free chaos. At low K, sounds like 6 independent voices. At high K, 3 lock while 3 drift — the groove is fractured.",
+      "adj": [
+        0,1,1,0,0,0,
+        1,0,0,0,0,0,
+        1,0,0,0,0,0,
+        0,0,0,0,0,0,
+        0,0,0,0,0,0,
+        0,0,0,0,0,0
+      ],
+      "node_positions": [
+        [0, -4], [-6, 4], [6, 4],
+        [-3, 0], [3, 0], [0, 6]
+      ],
+      "node_labels": ["junction", "left_tip", "right_tip", "free_1", "free_2", "free_3"]
+    },
+    {
+      "index": 4,
+      "name": "Ogou Bhathalah",
+      "source": "Rigaud Ve-Ve p.230 — W/M zigzag of 3 cross-hatched diamonds with star vertices",
+      "description": "3 diamond centers in a chain (L-M-R). Star endpoints at vertices. L connects to M (not R). Wave must propagate through M. Zigzag topology.",
+      "predicted_behavior": "Wave propagation L-to-M-to-R with star resonances. Sync cascades along the chain — left group locks first, pulls middle, middle pulls right. Phase patterns move like a wave. At moderate K, you get a rolling groove.",
+      "adj": [
+        0,1,0,1,1,0,
+        1,0,1,0,1,0,
+        0,1,0,0,1,1,
+        1,0,0,0,0,0,
+        1,1,1,0,0,0,
+        0,0,1,0,0,0
+      ],
+      "node_positions": [
+        [-6, 0], [0, 0], [6, 0],
+        [-6, 6], [0, -6], [6, 6]
+      ],
+      "node_labels": ["L_diamond", "M_diamond", "R_diamond", "TL_star", "B_star", "TR_star"]
+    },
+    {
+      "index": 5,
+      "name": "Legba co-sou",
+      "source": "Rigaud Ve-Ve p.170 — Circle with dots around perimeter",
+      "description": "Nearest-neighbor ring. Each oscillator connects only to its 2 immediate neighbors. The simplest non-trivial topology. Classic ring coupling.",
+      "predicted_behavior": "Traveling wave. Sync propagates around the ring. Phase patterns rotate instead of converging to a point. At moderate K, you get a rotating groove — each voice triggers slightly after its neighbor, creating a circular rhythm cascade.",
+      "adj": [
+        0,1,0,0,0,1,
+        1,0,1,0,0,0,
+        0,1,0,1,0,0,
+        0,0,1,0,1,0,
+        0,0,0,1,0,1,
+        1,0,0,0,1,0
+      ],
+      "node_positions": [
+        [6, 0], [3, 5.196], [-3, 5.196],
+        [-6, 0], [-3, -5.196], [3, -5.196]
+      ],
+      "node_labels": ["ring_0", "ring_1", "ring_2", "ring_3", "ring_4", "ring_5"]
+    }
+  ]
+}

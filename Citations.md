@@ -99,6 +99,16 @@
 
 ---
 
+## Diaspora Visual Art Precedent
+
+- **Lam, Wilfredo.** (1943). *The Jungle* [painting]. Museum of Modern Art, New York. — Afro-Cuban painter who formalized Vodou/Santería cosmological forms into geometric visual composition. The most direct visual art precedent for the Feedback instrument's approach: diaspora artist using African-Caribbean spiritual geometry as structural foundation for new work, not as decoration. Lam studied with Breton and Picasso but rejected their primitivist framing — he returned to Cuba and worked FROM the tradition, not about it.
+
+- **Lam, Wilfredo.** (1944). *The Eternal Present* [painting]. Rhode Island School of Design Museum. — Lwa/orisha hybrid figures as architectural composition. Veve-adjacent geometry rendered as painting.
+
+- **Lowery Stokes Sims.** (2002). *Wifredo Lam and the International Avant-Garde, 1923-1982.* Austin: University of Texas Press. — Definitive monograph situating Lam's Afro-Cuban cosmological formalism within (and against) European modernism.
+
+---
+
 ## Related Instruments & Prior Art
 
 - **Mutable Instruments (Émilie Gillet).** Rings, Elements, Plaits. Open-source modal/physical-modeling synthesis. — Resonator design influence (this instrument uses chaos excitation instead of pitched oscillators).
