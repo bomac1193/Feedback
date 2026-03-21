@@ -1,0 +1,100 @@
+{
+  "_comment": "FLUX.1 Schnell — img2img for temporal coherence. Each frame evolves from the previous. The bridge controls prompt + denoise + seed based on audio features.",
+
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "flux1-schnell-fp8-e4m3fn.safetensors",
+      "weight_dtype": "fp8_e4m3fn"
+    },
+    "_meta": { "title": "FLUX.1 Schnell UNET (fp8)" }
+  },
+
+  "2": {
+    "class_type": "DualCLIPLoader",
+    "inputs": {
+      "clip_name1": "clip_l.safetensors",
+      "clip_name2": "t5xxl_fp8_e4m3fn.safetensors",
+      "type": "flux"
+    },
+    "_meta": { "title": "FLUX text encoders" }
+  },
+
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "_meta": { "title": "FLUX VAE" }
+  },
+
+  "10": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": ["2", 0],
+      "text": "abstract mathematical beauty, luminous particles, dark background, album cover artwork"
+    },
+    "_meta": { "title": "Positive prompt (overridden by bridge)" }
+  },
+
+  "11": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": ["2", 0],
+      "text": ""
+    },
+    "_meta": { "title": "Negative (empty for FLUX)" }
+  },
+
+  "20": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "feedback_frame_prev.png"
+    },
+    "_meta": { "title": "Previous frame (temporal coherence)" }
+  },
+
+  "30": {
+    "class_type": "VAEEncode",
+    "inputs": {
+      "pixels": ["20", 0],
+      "vae": ["3", 0]
+    },
+    "_meta": { "title": "Encode previous frame to latent" }
+  },
+
+  "50": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["1", 0],
+      "positive": ["10", 0],
+      "negative": ["11", 0],
+      "latent_image": ["30", 0],
+      "seed": 42,
+      "steps": 4,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 0.45
+    },
+    "_meta": { "title": "KSampler — denoise from bridge (0.3-0.7)" }
+  },
+
+  "60": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["50", 0],
+      "vae": ["3", 0]
+    },
+    "_meta": { "title": "Decode to image" }
+  },
+
+  "70": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": ["60", 0],
+      "filename_prefix": "feedback_frame"
+    },
+    "_meta": { "title": "Save frame" }
+  }
+}

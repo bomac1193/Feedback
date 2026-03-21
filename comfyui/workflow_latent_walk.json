@@ -1,0 +1,116 @@
+{
+  "_comment": "Chaos Latent Navigator — Lorenz attractor walks through SDXL latent space. No text prompts drive content. 3 anchor latents interpolated by chaos position, blended with previous frame for temporal coherence.",
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "sdxl_lightning_4step.safetensors"
+    },
+    "_meta": { "title": "SDXL Lightning" }
+  },
+  "10": {
+    "class_type": "LoadImage",
+    "inputs": { "image": "anchor_a_wide.png" },
+    "_meta": { "title": "Anchor A — warm/amber (lobe 1)" }
+  },
+  "11": {
+    "class_type": "LoadImage",
+    "inputs": { "image": "anchor_b_wide.png" },
+    "_meta": { "title": "Anchor B — cool/blue (lobe 2)" }
+  },
+  "12": {
+    "class_type": "LoadImage",
+    "inputs": { "image": "anchor_c_wide.png" },
+    "_meta": { "title": "Anchor C — prismatic (saddle)" }
+  },
+  "13": {
+    "class_type": "LoadImage",
+    "inputs": { "image": "feedback_frame_prev.png" },
+    "_meta": { "title": "Previous frame (feedback loop)" }
+  },
+  "20": {
+    "class_type": "VAEEncode",
+    "inputs": { "pixels": ["10", 0], "vae": ["1", 2] },
+    "_meta": { "title": "Encode anchor A" }
+  },
+  "21": {
+    "class_type": "VAEEncode",
+    "inputs": { "pixels": ["11", 0], "vae": ["1", 2] },
+    "_meta": { "title": "Encode anchor B" }
+  },
+  "22": {
+    "class_type": "VAEEncode",
+    "inputs": { "pixels": ["12", 0], "vae": ["1", 2] },
+    "_meta": { "title": "Encode anchor C" }
+  },
+  "23": {
+    "class_type": "VAEEncode",
+    "inputs": { "pixels": ["13", 0], "vae": ["1", 2] },
+    "_meta": { "title": "Encode previous frame" }
+  },
+  "30": {
+    "class_type": "LatentInterpolate",
+    "inputs": {
+      "samples1": ["20", 0],
+      "samples2": ["21", 0],
+      "ratio": 0.5
+    },
+    "_meta": { "title": "Interpolate A↔B (chaos lobe position)" }
+  },
+  "31": {
+    "class_type": "LatentInterpolate",
+    "inputs": {
+      "samples1": ["30", 0],
+      "samples2": ["22", 0],
+      "ratio": 0.2
+    },
+    "_meta": { "title": "Blend with C (saddle weight)" }
+  },
+  "32": {
+    "class_type": "LatentInterpolate",
+    "inputs": {
+      "samples1": ["23", 0],
+      "samples2": ["31", 0],
+      "ratio": 0.3
+    },
+    "_meta": { "title": "Evolve from previous frame (feedback)" }
+  },
+  "3": {
+    "class_type": "CLIPTextEncode",
+    "inputs": { "clip": ["1", 1], "text": "art" },
+    "_meta": { "title": "Minimal prompt — content from latent walk, not text" }
+  },
+  "4": {
+    "class_type": "CLIPTextEncode",
+    "inputs": { "clip": ["1", 1], "text": "text, watermark, blurry, low quality" },
+    "_meta": { "title": "Negative" }
+  },
+  "6": {
+    "class_type": "KSamplerAdvanced",
+    "inputs": {
+      "model": ["1", 0],
+      "add_noise": "disable",
+      "noise_seed": 0,
+      "steps": 4,
+      "cfg": 2.0,
+      "sampler_name": "euler",
+      "scheduler": "sgm_uniform",
+      "positive": ["3", 0],
+      "negative": ["4", 0],
+      "latent_image": ["32", 0],
+      "start_at_step": 0,
+      "end_at_step": 4,
+      "return_with_leftover_noise": "disable"
+    },
+    "_meta": { "title": "KSampler — no noise injection, latent walk IS the direction" }
+  },
+  "7": {
+    "class_type": "VAEDecode",
+    "inputs": { "samples": ["6", 0], "vae": ["1", 2] },
+    "_meta": { "title": "Decode to image" }
+  },
+  "8": {
+    "class_type": "SaveImage",
+    "inputs": { "images": ["7", 0], "filename_prefix": "feedback_frame" },
+    "_meta": { "title": "Save frame" }
+  }
+}

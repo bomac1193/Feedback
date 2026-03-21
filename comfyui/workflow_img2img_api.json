@@ -1,0 +1,74 @@
+{
+  "_comment": "img2img workflow for temporal coherence with SDXL Lightning. Uses previous frame as input with low denoise so visuals evolve smoothly.",
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "sdxl_lightning_4step.safetensors"
+    },
+    "_meta": { "title": "SDXL Lightning 4-step" }
+  },
+  "3": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": ["1", 1],
+      "text": "abstract generative art, dark background, luminous particles, chaotic trajectories, amber and cyan light, mathematical beauty, organic impossible geometry"
+    },
+    "_meta": { "title": "Positive Prompt (overridden by bridge)" }
+  },
+  "4": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": ["1", 1],
+      "text": "text, watermark, logo, signature, blurry, low quality, photograph, realistic face, human, person"
+    },
+    "_meta": { "title": "Negative Prompt" }
+  },
+  "10": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "feedback_frame_prev.png",
+      "upload": "image"
+    },
+    "_meta": { "title": "Previous Frame" }
+  },
+  "11": {
+    "class_type": "VAEEncode",
+    "inputs": {
+      "pixels": ["10", 0],
+      "vae": ["1", 2]
+    },
+    "_meta": { "title": "Encode Previous Frame" }
+  },
+  "6": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["1", 0],
+      "positive": ["3", 0],
+      "negative": ["4", 0],
+      "latent_image": ["11", 0],
+      "seed": 42,
+      "steps": 4,
+      "cfg": 2.0,
+      "sampler_name": "euler",
+      "scheduler": "sgm_uniform",
+      "denoise": 0.45
+    },
+    "_meta": { "title": "KSampler (denoise overridden by bridge)" }
+  },
+  "7": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["6", 0],
+      "vae": ["1", 2]
+    },
+    "_meta": { "title": "VAE Decode" }
+  },
+  "8": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": ["7", 0],
+      "filename_prefix": "feedback_frame"
+    },
+    "_meta": { "title": "Save Frame" }
+  }
+}
