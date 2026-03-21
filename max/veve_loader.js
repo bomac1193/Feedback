@@ -1,20 +1,23 @@
 // ============================================
-// VEVE PRESET LOADER
+// VEVE PRESET LOADER v2
 // ============================================
-// Sends veve adjacency matrices as bitmask Param
-// messages to gen~ kuramoto_veve engine.
+// Sends veve adjacency matrices as weighted values
+// to buffer~ veve_adj and bitmask Params to gen~.
+// Supports morphing between presets.
 //
 // USAGE IN MAX PATCHER:
 //   [js veve_loader.js]
 //   |
 //   Outlet 0: status messages
 //   Outlet 1: preset index (int)
-//   Outlet 2: row param messages → gen~ inlet 0
+//   Outlet 2: row param messages + veve_preset → gen~ inlet 0
 //
 // MESSAGES:
-//   load <index>    — load preset by index (0-5)
+//   load <index>    — load preset by index (0-12)
 //   load <name>     — load preset by name
 //   init            — initialize and load default (0)
+//   morph_target <index> — set morph target preset
+//   morph <amount>  — interpolate 0-1 between current and target
 //   dump            — print current adjacency matrix
 //   info            — print all available presets
 //   <integer>       — load preset by index
@@ -25,15 +28,18 @@ inlets = 1;
 outlets = 3;  // 0: status, 1: preset index, 2: row param messages → gen~
 
 var current_preset = -1;
+var target_preset = -1;
+var current_morph = 0;
 
 // ============================================
-// EMBEDDED PRESETS (no external JSON needed)
+// EMBEDDED PRESETS
 // ============================================
 // Source: Milo Rigaud, Ve-Ve: Diagrammes Rituels
 //         du Voudou (1974)
 //
-// adj = row-major flattened 6x6 adjacency matrix
-// Row i, col j: does oscillator j pull on oscillator i?
+// adj = row-major flattened 6x6 weighted adjacency matrix
+// Values 0.0-1.0: connection strength
+// Row i, col j: how strongly oscillator j pulls on oscillator i
 // ============================================
 
 var presets = [
@@ -137,7 +143,7 @@ var presets = [
 		index: 6,
 		name: "Marassa",
 		source: "Rigaud p.118 — Divine Twins",
-		description: "Two disconnected triangles. Group A (1-2-3) and Group B (4-5-6) sync internally but never connect.",
+		description: "Two disconnected triangles. Group A (0-1-2) and Group B (3-4-5) sync internally but never connect.",
 		predicted_behavior: "Two independent rhythmic worlds. Each triangle locks internally, groups drift against each other — polyrhythmic phasing.",
 		adj: [
 			0,1,1,0,0,0,
@@ -148,12 +154,108 @@ var presets = [
 			0,0,0,1,1,0
 		],
 		node_labels: ["twin_A1", "twin_A2", "twin_A3", "twin_B1", "twin_B2", "twin_B3"]
+	},
+	{
+		index: 7,
+		name: "Damballah Wedo",
+		source: "Rigaud p.91 — Serpent path",
+		description: "Linear chain 0-1-2-3-4-5. Sync propagates like a wave from head to tail.",
+		predicted_behavior: "Phase wave — each oscillator entrains its neighbor. Ripple effect. Delay-line groove.",
+		adj: [
+			0,1,0,0,0,0,
+			1,0,1,0,0,0,
+			0,1,0,1,0,0,
+			0,0,1,0,1,0,
+			0,0,0,1,0,1,
+			0,0,0,0,1,0
+		],
+		node_labels: ["head", "neck", "body_1", "body_2", "body_3", "tail"]
+	},
+	{
+		index: 8,
+		name: "Erzulie Freda",
+		source: "Rigaud p.147 — Heart / two lobes",
+		description: "Two triangles sharing apex (node 0). Bridge node 5 connects lobe tips. Weighted: bridge at 0.5.",
+		predicted_behavior: "Two lobes lock internally. Bridge creates weak cross-talk — lobes drift then re-sync.",
+		adj: [
+			0,  1,  1,  1,  1,  0,
+			1,  0,  1,  0,  0,  0.5,
+			1,  1,  0,  0,  0,  0,
+			1,  0,  0,  0,  1,  0,
+			1,  0,  0,  1,  0,  0.5,
+			0,  0.5,0,  0,  0.5,0
+		],
+		node_labels: ["apex", "lobe_A1", "lobe_A2", "lobe_B1", "lobe_B2", "bridge"]
+	},
+	{
+		index: 9,
+		name: "Baron Samedi",
+		source: "Rigaud p.260 — Cross of the dead",
+		description: "Center hub (0) with 4 arms. Cross-bracing: 1-3 and 2-4 diagonal. Node 5 weak to center.",
+		predicted_behavior: "Hub dominates. Diagonals create secondary sync paths at 40% strength — ghost rhythms.",
+		adj: [
+			0,  1,  1,  1,  1,  0.4,
+			1,  0,  0,  0.4,0,  0,
+			1,  0,  0,  0,  0.4,0,
+			1,  0.4,0,  0,  0,  0,
+			1,  0,  0.4,0,  0,  0,
+			0.4,0,  0,  0,  0,  0
+		],
+		node_labels: ["center_cross", "north", "east", "south", "west", "grave"]
+	},
+	{
+		index: 10,
+		name: "Simbi",
+		source: "Rigaud p.202 — Water snake / parallel streams",
+		description: "Two parallel chains (0-1-2 and 3-4-5) with cross-link 1-4 at 0.6 strength.",
+		predicted_behavior: "Two independent streams with weak coupling. Polyrhythmic — streams sync internally, cross-talk creates beating.",
+		adj: [
+			0,  1,  0,  0,  0,  0,
+			1,  0,  1,  0,  0.6,0,
+			0,  1,  0,  0,  0,  0,
+			0,  0,  0,  0,  1,  0,
+			0,  0.6,0,  1,  0,  1,
+			0,  0,  0,  0,  1,  0
+		],
+		node_labels: ["stream_A0", "stream_A1", "stream_A2", "stream_B0", "stream_B1", "stream_B2"]
+	},
+	{
+		index: 11,
+		name: "Ayizan",
+		source: "Rigaud p.135 — Palm frond / spine with branches",
+		description: "Central spine 0-1-2-3. Branches: 1-4 and 2-5. Spine at full strength, branches at 0.7.",
+		predicted_behavior: "Spine locks first. Branches follow with slight lag — palm-frond sway.",
+		adj: [
+			0,  1,  0,  0,  0,  0,
+			1,  0,  1,  0,  0.7,0,
+			0,  1,  0,  1,  0,  0.7,
+			0,  0,  1,  0,  0,  0,
+			0,  0.7,0,  0,  0,  0,
+			0,  0,  0.7,0,  0,  0
+		],
+		node_labels: ["spine_root", "spine_1", "spine_2", "spine_tip", "branch_L", "branch_R"]
+	},
+	{
+		index: 12,
+		name: "Gran Bwa",
+		source: "Rigaud p.178 — Great tree",
+		description: "Root (0) splits to trunk (1,2). Left trunk branches to 3,4. Right trunk branches to 5.",
+		predicted_behavior: "Hierarchical sync — root drives trunk, trunk drives branches. Top-down entrainment.",
+		adj: [
+			0,1,1,0,0,0,
+			1,0,0,1,1,0,
+			1,0,0,0,0,1,
+			0,1,0,0,0,0,
+			0,1,0,0,0,0,
+			0,0,1,0,0,0
+		],
+		node_labels: ["root", "trunk_L", "trunk_R", "branch_L1", "branch_L2", "branch_R1"]
 	}
 ];
 
 
 // ============================================
-// INIT — just load default preset (0)
+// INIT — load default preset, write to buffer
 // ============================================
 
 function init() {
@@ -166,7 +268,21 @@ function init() {
 
 
 // ============================================
-// LOAD — compute bitmasks, send to gen~
+// WRITE WEIGHTS TO BUFFER
+// ============================================
+
+function writeWeightsToBuffer(weights) {
+	var buf = new Buffer("veve_adj");
+	for (var row = 0; row < 6; row++) {
+		for (var col = 0; col < 6; col++) {
+			buf.poke(row + 1, col, weights[row * 6 + col]);
+		}
+	}
+}
+
+
+// ============================================
+// LOAD — compute bitmasks, write to buffer, send to gen~
 // ============================================
 
 function load(arg) {
@@ -192,8 +308,10 @@ function load(arg) {
 		return;
 	}
 
-	// Send adjacency matrix rows as bitmask Param messages to gen~
-	// bitmask = col0*1 + col1*2 + col2*4 + col3*8 + col4*16 + col5*32
+	// Write weighted adjacency to buffer~ veve_adj
+	writeWeightsToBuffer(preset.adj);
+
+	// Send adjacency matrix rows as bitmask Param messages to gen~ (backward compat)
 	for (var row = 0; row < 6; row++) {
 		var bitmask = 0;
 		for (var col = 0; col < 6; col++) {
@@ -204,10 +322,11 @@ function load(arg) {
 		outlet(2, "row" + row, bitmask);
 	}
 
-	// Also send veve_preset index so gen~ can pass it to TD
+	// Send veve_preset index
 	outlet(2, "veve_preset", preset.index);
 
 	current_preset = preset.index;
+	current_morph = 0;
 
 	// Output status
 	outlet(0, "loaded", preset.index, preset.name);
@@ -216,6 +335,65 @@ function load(arg) {
 	post("veve_loader: Loaded [" + preset.index + "] " + preset.name + "\n");
 	post("  " + preset.description + "\n");
 	post("  " + preset.predicted_behavior + "\n");
+}
+
+
+// ============================================
+// MORPH TARGET — set which preset to morph toward
+// ============================================
+
+function morph_target(idx) {
+	idx = Math.floor(idx);
+	if (idx >= 0 && idx < presets.length) {
+		target_preset = idx;
+		post("veve_loader: Morph target set to [" + idx + "] " + presets[idx].name + "\n");
+	} else {
+		error("veve_loader: Invalid morph target: " + idx + "\n");
+	}
+}
+
+
+// ============================================
+// MORPH — interpolate between current and target
+// ============================================
+
+function morph(amount) {
+	if (current_preset < 0) {
+		error("veve_loader: No preset loaded\n");
+		return;
+	}
+	if (target_preset < 0) {
+		target_preset = (current_preset + 1) % presets.length;
+	}
+
+	amount = Math.max(0, Math.min(1, amount));
+	current_morph = amount;
+
+	var src = presets[current_preset].adj;
+	var dst = presets[target_preset].adj;
+	var morphed = [];
+
+	for (var i = 0; i < 36; i++) {
+		morphed[i] = src[i] * (1 - amount) + dst[i] * amount;
+	}
+
+	// Write interpolated weights to buffer
+	writeWeightsToBuffer(morphed);
+
+	// Send interpolated veve_preset (for shader interpolation)
+	var morphedPreset = current_preset * (1 - amount) + target_preset * amount;
+	outlet(2, "veve_preset", morphedPreset);
+
+	// Update bitmasks (threshold at 0.1 for binary connection)
+	for (var row = 0; row < 6; row++) {
+		var bitmask = 0;
+		for (var col = 0; col < 6; col++) {
+			if (morphed[row * 6 + col] > 0.1) {
+				bitmask += (1 << col);
+			}
+		}
+		outlet(2, "row" + row, bitmask);
+	}
 }
 
 
@@ -231,12 +409,16 @@ function dump() {
 
 	var p = presets[current_preset];
 	post("veve_loader: Current preset [" + p.index + "] " + p.name + "\n");
-	post("  Adjacency matrix (row = pulled, col = puller):\n");
+	if (current_morph > 0 && target_preset >= 0) {
+		post("  Morphing " + (current_morph * 100).toFixed(0) + "% toward [" + target_preset + "] " + presets[target_preset].name + "\n");
+	}
+	post("  Weighted adjacency matrix (row = pulled, col = puller):\n");
 
 	for (var row = 0; row < 6; row++) {
 		var line = "  [";
 		for (var col = 0; col < 6; col++) {
-			line += p.adj[row * 6 + col];
+			var w = p.adj[row * 6 + col];
+			line += (w === Math.floor(w)) ? w : w.toFixed(1);
 			if (col < 5) line += ", ";
 		}
 		line += "]  <- osc " + (row + 1) + " (" + p.node_labels[row] + ")";
@@ -282,8 +464,11 @@ function anything() {
 		dump();
 	} else if (msg === "info") {
 		info();
+	} else if (msg === "morph" && arguments.length > 0) {
+		morph(arguments[0]);
+	} else if (msg === "morph_target" && arguments.length > 0) {
+		morph_target(arguments[0]);
 	} else {
-		// Try as preset name
 		load(msg);
 	}
 }

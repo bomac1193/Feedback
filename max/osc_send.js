@@ -140,5 +140,13 @@ Max.addHandler('root_freq', function() {
     }
 });
 
+// --- Morph amount ---
+Max.addHandler('morph', function() {
+    var args = Array.prototype.slice.call(arguments);
+    if (args.length >= 1) {
+        send('/morph/amount', args[0]);
+    }
+});
+
 Max.post('osc_send.js ready — target ' + HOST + ':' + PORT);
-Max.post('  Channels: lorenz, kuramoto_r, kuramoto_phases, veve_preset, resonator_decay, amplitude, root_freq');
+Max.post('  Channels: lorenz, kuramoto_r, kuramoto_phases, veve_preset, resonator_decay, amplitude, root_freq, morph');

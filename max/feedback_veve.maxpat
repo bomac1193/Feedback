@@ -36,7 +36,7 @@
 					"maxclass": "comment",
 					"numinlets": 1,
 					"numoutlets": 0,
-					"text": "FEEDBACK \u2014 VEVE TOPOLOGY INSTRUMENT\n\nKuramoto coupled oscillators with veve adjacency matrices\ndrive 6 heterogeneous Karplus-Strong resonators.\n19 African tuning systems. OSC \u2192 TouchDesigner (port 7000).\n\n1. Turn on ezdac~\n2. Select veve preset (topology)\n3. Adjust K (coupling) \u2014 sweet spot 0.3-0.7\n4. Adjust Root, Tuning, Drive",
+					"text": "FEEDBACK — VEVE TOPOLOGY INSTRUMENT\n\nKuramoto coupled oscillators with veve adjacency matrices\ndrive 6 heterogeneous Karplus-Strong resonators.\n19 African tuning systems. OSC → TouchDesigner (port 7000).\n\n1. Turn on ezdac~\n2. Select veve preset (topology)\n3. Adjust K (coupling) — sweet spot 0.3-0.7\n4. Adjust Root, Tuning, Drive",
 					"patching_rect": [
 						15,
 						15,
@@ -130,7 +130,7 @@
 					"maxclass": "comment",
 					"numinlets": 1,
 					"numoutlets": 0,
-					"text": "\u2500\u2500 VEVE TOPOLOGY (adjacency matrix) \u2500\u2500",
+					"text": "── VEVE TOPOLOGY (adjacency matrix) ──",
 					"patching_rect": [
 						15,
 						275,
@@ -213,7 +213,19 @@
 						",",
 						"Legba co-sou",
 						",",
-						"Marassa"
+						"Marassa",
+						",",
+						"Damballah Wedo",
+						",",
+						"Erzulie Freda",
+						",",
+						"Baron Samedi",
+						",",
+						"Simbi",
+						",",
+						"Ayizan",
+						",",
+						"Gran Bwa"
 					],
 					"presentation": 1,
 					"presentation_rect": [
@@ -286,7 +298,7 @@
 					"maxclass": "comment",
 					"numinlets": 1,
 					"numoutlets": 0,
-					"text": "\u2500\u2500 KURAMOTO COUPLED RHYTHM ENGINE \u2500\u2500",
+					"text": "── KURAMOTO COUPLED RHYTHM ENGINE ──",
 					"patching_rect": [
 						15,
 						370,
@@ -321,7 +333,7 @@
 							"parameter_shortname": "K",
 							"parameter_type": 0,
 							"parameter_mmin": 0.0,
-							"parameter_mmax": 1.0,
+							"parameter_mmax": 5.0,
 							"parameter_initial": [
 								0.5
 							],
@@ -336,7 +348,13 @@
 						50,
 						48
 					],
-					"varname": "obj-K"
+					"varname": "obj-K",
+					"parameter_mmin": 0.0,
+					"parameter_mmax": 5.0,
+					"parameter_initial": 0.5,
+					"parameter_longname": "K",
+					"parameter_shortname": "K",
+					"parameter_type": 0
 				}
 			},
 			{
@@ -382,47 +400,6 @@
 			},
 			{
 				"box": {
-					"id": "obj-trigwidth",
-					"maxclass": "live.dial",
-					"numinlets": 1,
-					"numoutlets": 2,
-					"outlettype": [
-						"",
-						"float"
-					],
-					"parameter_enable": 1,
-					"patching_rect": [
-						145,
-						400,
-						50.0,
-						48.0
-					],
-					"saved_attribute_attributes": {
-						"valueof": {
-							"parameter_longname": "TrigWidth",
-							"parameter_shortname": "Trig",
-							"parameter_type": 0,
-							"parameter_mmin": 0.0001,
-							"parameter_mmax": 0.05,
-							"parameter_initial": [
-								0.001
-							],
-							"parameter_initial_enable": 1,
-							"parameter_unitstyle": 1
-						}
-					},
-					"presentation": 1,
-					"presentation_rect": [
-						130,
-						50,
-						50,
-						48
-					],
-					"varname": "obj-trigwidth"
-				}
-			},
-			{
-				"box": {
 					"id": "obj-K-prep",
 					"maxclass": "newobj",
 					"numinlets": 1,
@@ -461,25 +438,6 @@
 			},
 			{
 				"box": {
-					"id": "obj-trig-prep",
-					"maxclass": "newobj",
-					"numinlets": 1,
-					"numoutlets": 1,
-					"outlettype": [
-						""
-					],
-					"text": "prepend trig_width",
-					"patching_rect": [
-						145,
-						455,
-						126,
-						22
-					],
-					"varname": "obj-trig-prep"
-				}
-			},
-			{
-				"box": {
 					"id": "obj-kuramoto",
 					"maxclass": "newobj",
 					"numinlets": 1,
@@ -500,14 +458,458 @@
 						"signal",
 						"signal"
 					],
-					"text": "gen~ @gen kuramoto_veve",
+					"text": "gen~",
 					"patching_rect": [
 						15,
 						490,
 						560,
 						22
 					],
-					"varname": "obj-kuramoto"
+					"varname": "obj-kuramoto",
+					"patcher": {
+						"fileversion": 1,
+						"appversion": {
+							"major": 8,
+							"minor": 6,
+							"revision": 0,
+							"architecture": "x64",
+							"modernui": 1
+						},
+						"classnamespace": "dsp.gen",
+						"rect": [
+							0,
+							0,
+							900,
+							700
+						],
+						"bglocked": 0,
+						"openinpresentation": 0,
+						"default_fontsize": 12.0,
+						"default_fontface": 0,
+						"default_fontname": "Arial",
+						"gridonopen": 1,
+						"gridsize": [
+							15.0,
+							15.0
+						],
+						"gridsnaponopen": 1,
+						"objectsnaponopen": 1,
+						"statusbarvisible": 2,
+						"toolbarvisible": 1,
+						"boxes": [
+							{
+								"box": {
+									"id": "obj-codebox",
+									"maxclass": "codebox",
+									"numinlets": 0,
+									"numoutlets": 14,
+									"outlettype": [
+										"",
+										"",
+										"",
+										"",
+										"",
+										"",
+										"",
+										"",
+										"",
+										"",
+										"",
+										"",
+										"",
+										""
+									],
+									"patching_rect": [
+										150.0,
+										150.0,
+										600.0,
+										400.0
+									],
+									"code": "Param K(0.5);\nParam tempo(120);\nParam ratio1(1.0);\nParam ratio2(1.8);\nParam ratio3(1.333);\nParam ratio4(0.4);\nParam ratio5(2.5);\nParam ratio6(0.333);\nParam trig_width(0.001);\nParam veve_preset(0);\nParam phase_reset(0);\nParam reset_attack(200);\nParam reset_release(1000);\nBuffer adj(veve_adj);\nHistory did_reset(0);\nHistory reset_env(1);\nHistory reset_state(0);\nHistory t1(0.0);\nHistory t2(1.047);\nHistory t3(2.094);\nHistory t4(3.142);\nHistory t5(4.189);\nHistory t6(5.236);\nHistory trig_count1(0);\nHistory trig_count2(0);\nHistory trig_count3(0);\nHistory trig_count4(0);\nHistory trig_count5(0);\nHistory trig_count6(0);\ntwopi = 6.28318530718;\nN = 6;\ndt_step = 1.0 / samplerate;\nbase_freq = tempo / 60.0;\nw1 = base_freq * ratio1 * twopi;\nw2 = base_freq * ratio2 * twopi;\nw3 = base_freq * ratio3 * twopi;\nw4 = base_freq * ratio4 * twopi;\nw5 = base_freq * ratio5 * twopi;\nw6 = base_freq * ratio6 * twopi;\ncw01 = peek(adj, 1, 0); cw02 = peek(adj, 2, 0); cw03 = peek(adj, 3, 0); cw04 = peek(adj, 4, 0); cw05 = peek(adj, 5, 0);\ncw10 = peek(adj, 0, 1); cw12 = peek(adj, 2, 1); cw13 = peek(adj, 3, 1); cw14 = peek(adj, 4, 1); cw15 = peek(adj, 5, 1);\ncw20 = peek(adj, 0, 2); cw21 = peek(adj, 1, 2); cw23 = peek(adj, 3, 2); cw24 = peek(adj, 4, 2); cw25 = peek(adj, 5, 2);\ncw30 = peek(adj, 0, 3); cw31 = peek(adj, 1, 3); cw32 = peek(adj, 2, 3); cw34 = peek(adj, 4, 3); cw35 = peek(adj, 5, 3);\ncw40 = peek(adj, 0, 4); cw41 = peek(adj, 1, 4); cw42 = peek(adj, 2, 4); cw43 = peek(adj, 3, 4); cw45 = peek(adj, 5, 4);\ncw50 = peek(adj, 0, 5); cw51 = peek(adj, 1, 5); cw52 = peek(adj, 2, 5); cw53 = peek(adj, 3, 5); cw54 = peek(adj, 4, 5);\ncoupling = K * reset_env;\nsum1 = cw01*sin(t2-t1) + cw02*sin(t3-t1) + cw03*sin(t4-t1) + cw04*sin(t5-t1) + cw05*sin(t6-t1);\nsum2 = cw10*sin(t1-t2) + cw12*sin(t3-t2) + cw13*sin(t4-t2) + cw14*sin(t5-t2) + cw15*sin(t6-t2);\nsum3 = cw20*sin(t1-t3) + cw21*sin(t2-t3) + cw23*sin(t4-t3) + cw24*sin(t5-t3) + cw25*sin(t6-t3);\nsum4 = cw30*sin(t1-t4) + cw31*sin(t2-t4) + cw32*sin(t3-t4) + cw34*sin(t5-t4) + cw35*sin(t6-t4);\nsum5 = cw40*sin(t1-t5) + cw41*sin(t2-t5) + cw42*sin(t3-t5) + cw43*sin(t4-t5) + cw45*sin(t6-t5);\nsum6 = cw50*sin(t1-t6) + cw51*sin(t2-t6) + cw52*sin(t3-t6) + cw53*sin(t4-t6) + cw54*sin(t5-t6);\nd1 = w1 + coupling * sum1;\nd2 = w2 + coupling * sum2;\nd3 = w3 + coupling * sum3;\nd4 = w4 + coupling * sum4;\nd5 = w5 + coupling * sum5;\nd6 = w6 + coupling * sum6;\nt1_new = t1 + d1 * dt_step;\nt2_new = t2 + d2 * dt_step;\nt3_new = t3 + d3 * dt_step;\nt4_new = t4 + d4 * dt_step;\nt5_new = t5 + d5 * dt_step;\nt6_new = t6 + d6 * dt_step;\nattack_samples = max(reset_attack * 0.001 * samplerate, 1);\nrelease_samples = max(reset_release * 0.001 * samplerate, 1);\nif (phase_reset > 0.5 && did_reset < 0.5) {\n\treset_state = 1;\n\tdid_reset = 1;\n}\nif (phase_reset < 0.5) {\n\tdid_reset = 0;\n}\nif (reset_state > 0.5 && reset_state < 1.5) {\n\treset_env = max(reset_env - 1.0 / attack_samples, 0);\n\tif (reset_env <= 0) {\n\t\tt1_new = 0.0;\n\t\tt2_new = 1.047;\n\t\tt3_new = 2.094;\n\t\tt4_new = 3.142;\n\t\tt5_new = 4.189;\n\t\tt6_new = 5.236;\n\t\treset_state = 2;\n\t}\n}\nif (reset_state > 1.5) {\n\treset_env = min(reset_env + 1.0 / release_samples, 1);\n\tif (reset_env >= 1) {\n\t\treset_state = 0;\n\t}\n}\nwrap1 = (t1_new >= twopi) ? 1 : 0;\nwrap2 = (t2_new >= twopi) ? 1 : 0;\nwrap3 = (t3_new >= twopi) ? 1 : 0;\nwrap4 = (t4_new >= twopi) ? 1 : 0;\nwrap5 = (t5_new >= twopi) ? 1 : 0;\nwrap6 = (t6_new >= twopi) ? 1 : 0;\nt1 = t1_new - twopi * floor(t1_new / twopi);\nt2 = t2_new - twopi * floor(t2_new / twopi);\nt3 = t3_new - twopi * floor(t3_new / twopi);\nt4 = t4_new - twopi * floor(t4_new / twopi);\nt5 = t5_new - twopi * floor(t5_new / twopi);\nt6 = t6_new - twopi * floor(t6_new / twopi);\ntrig_samples = max(trig_width * samplerate, 1);\ntrig_count1 = (wrap1 > 0) ? trig_samples : max(trig_count1 - 1, 0);\ntrig_count2 = (wrap2 > 0) ? trig_samples : max(trig_count2 - 1, 0);\ntrig_count3 = (wrap3 > 0) ? trig_samples : max(trig_count3 - 1, 0);\ntrig_count4 = (wrap4 > 0) ? trig_samples : max(trig_count4 - 1, 0);\ntrig_count5 = (wrap5 > 0) ? trig_samples : max(trig_count5 - 1, 0);\ntrig_count6 = (wrap6 > 0) ? trig_samples : max(trig_count6 - 1, 0);\npulse1 = (trig_count1 > 0) ? 1 : 0;\npulse2 = (trig_count2 > 0) ? 1 : 0;\npulse3 = (trig_count3 > 0) ? 1 : 0;\npulse4 = (trig_count4 > 0) ? 1 : 0;\npulse5 = (trig_count5 > 0) ? 1 : 0;\npulse6 = (trig_count6 > 0) ? 1 : 0;\nconn1 = cw01 + cw02 + cw03 + cw04 + cw05;\nn1 = max(conn1, 0.01);\ncoh1 = (cw01*cos(t2-t1) + cw02*cos(t3-t1) + cw03*cos(t4-t1) + cw04*cos(t5-t1) + cw05*cos(t6-t1)) / n1;\nvel1 = (conn1 > 0.01) ? (0.05 + 0.95 * pow(clamp((coh1 + 1) * 0.5, 0, 1), 2)) : 0.05;\nconn2 = cw10 + cw12 + cw13 + cw14 + cw15;\nn2 = max(conn2, 0.01);\ncoh2 = (cw10*cos(t1-t2) + cw12*cos(t3-t2) + cw13*cos(t4-t2) + cw14*cos(t5-t2) + cw15*cos(t6-t2)) / n2;\nvel2 = (conn2 > 0.01) ? (0.05 + 0.95 * pow(clamp((coh2 + 1) * 0.5, 0, 1), 2)) : 0.05;\nconn3 = cw20 + cw21 + cw23 + cw24 + cw25;\nn3 = max(conn3, 0.01);\ncoh3 = (cw20*cos(t1-t3) + cw21*cos(t2-t3) + cw23*cos(t4-t3) + cw24*cos(t5-t3) + cw25*cos(t6-t3)) / n3;\nvel3 = (conn3 > 0.01) ? (0.05 + 0.95 * pow(clamp((coh3 + 1) * 0.5, 0, 1), 2)) : 0.05;\nconn4 = cw30 + cw31 + cw32 + cw34 + cw35;\nn4 = max(conn4, 0.01);\ncoh4 = (cw30*cos(t1-t4) + cw31*cos(t2-t4) + cw32*cos(t3-t4) + cw34*cos(t5-t4) + cw35*cos(t6-t4)) / n4;\nvel4 = (conn4 > 0.01) ? (0.05 + 0.95 * pow(clamp((coh4 + 1) * 0.5, 0, 1), 2)) : 0.05;\nconn5 = cw40 + cw41 + cw42 + cw43 + cw45;\nn5 = max(conn5, 0.01);\ncoh5 = (cw40*cos(t1-t5) + cw41*cos(t2-t5) + cw42*cos(t3-t5) + cw43*cos(t4-t5) + cw45*cos(t6-t5)) / n5;\nvel5 = (conn5 > 0.01) ? (0.05 + 0.95 * pow(clamp((coh5 + 1) * 0.5, 0, 1), 2)) : 0.05;\nconn6 = cw50 + cw51 + cw52 + cw53 + cw54;\nn6 = max(conn6, 0.01);\ncoh6 = (cw50*cos(t1-t6) + cw51*cos(t2-t6) + cw52*cos(t3-t6) + cw53*cos(t4-t6) + cw54*cos(t5-t6)) / n6;\nvel6 = (conn6 > 0.01) ? (0.05 + 0.95 * pow(clamp((coh6 + 1) * 0.5, 0, 1), 2)) : 0.05;\ncos_sum = cos(t1) + cos(t2) + cos(t3) + cos(t4) + cos(t5) + cos(t6);\nsin_sum = sin(t1) + sin(t2) + sin(t3) + sin(t4) + sin(t5) + sin(t6);\nr = sqrt(cos_sum * cos_sum + sin_sum * sin_sum) / N;\nphase1 = t1 / twopi;\nphase2 = t2 / twopi;\nphase3 = t3 / twopi;\nphase4 = t4 / twopi;\nphase5 = t5 / twopi;\nphase6 = t6 / twopi;\nout1 = pulse1 * vel1;\nout2 = pulse2 * vel2;\nout3 = pulse3 * vel3;\nout4 = pulse4 * vel4;\nout5 = pulse5 * vel5;\nout6 = pulse6 * vel6;\nout7 = r;\nout8  = phase1;\nout9  = phase2;\nout10 = phase3;\nout11 = phase4;\nout12 = phase5;\nout13 = phase6;\nout14 = veve_preset;"
+								}
+							},
+							{
+								"box": {
+									"id": "obj-out1",
+									"maxclass": "newobj",
+									"numinlets": 1,
+									"numoutlets": 0,
+									"text": "out 1",
+									"patching_rect": [
+										150.0,
+										600.0,
+										35.0,
+										22.0
+									]
+								}
+							},
+							{
+								"box": {
+									"id": "obj-out2",
+									"maxclass": "newobj",
+									"numinlets": 1,
+									"numoutlets": 0,
+									"text": "out 2",
+									"patching_rect": [
+										200.0,
+										600.0,
+										35.0,
+										22.0
+									]
+								}
+							},
+							{
+								"box": {
+									"id": "obj-out3",
+									"maxclass": "newobj",
+									"numinlets": 1,
+									"numoutlets": 0,
+									"text": "out 3",
+									"patching_rect": [
+										250.0,
+										600.0,
+										35.0,
+										22.0
+									]
+								}
+							},
+							{
+								"box": {
+									"id": "obj-out4",
+									"maxclass": "newobj",
+									"numinlets": 1,
+									"numoutlets": 0,
+									"text": "out 4",
+									"patching_rect": [
+										300.0,
+										600.0,
+										35.0,
+										22.0
+									]
+								}
+							},
+							{
+								"box": {
+									"id": "obj-out5",
+									"maxclass": "newobj",
+									"numinlets": 1,
+									"numoutlets": 0,
+									"text": "out 5",
+									"patching_rect": [
+										350.0,
+										600.0,
+										35.0,
+										22.0
+									]
+								}
+							},
+							{
+								"box": {
+									"id": "obj-out6",
+									"maxclass": "newobj",
+									"numinlets": 1,
+									"numoutlets": 0,
+									"text": "out 6",
+									"patching_rect": [
+										400.0,
+										600.0,
+										35.0,
+										22.0
+									]
+								}
+							},
+							{
+								"box": {
+									"id": "obj-out7",
+									"maxclass": "newobj",
+									"numinlets": 1,
+									"numoutlets": 0,
+									"text": "out 7",
+									"patching_rect": [
+										450.0,
+										600.0,
+										35.0,
+										22.0
+									]
+								}
+							},
+							{
+								"box": {
+									"id": "obj-out8",
+									"maxclass": "newobj",
+									"numinlets": 1,
+									"numoutlets": 0,
+									"text": "out 8",
+									"patching_rect": [
+										500.0,
+										600.0,
+										35.0,
+										22.0
+									]
+								}
+							},
+							{
+								"box": {
+									"id": "obj-out9",
+									"maxclass": "newobj",
+									"numinlets": 1,
+									"numoutlets": 0,
+									"text": "out 9",
+									"patching_rect": [
+										550.0,
+										600.0,
+										35.0,
+										22.0
+									]
+								}
+							},
+							{
+								"box": {
+									"id": "obj-out10",
+									"maxclass": "newobj",
+									"numinlets": 1,
+									"numoutlets": 0,
+									"text": "out 10",
+									"patching_rect": [
+										600.0,
+										600.0,
+										35.0,
+										22.0
+									]
+								}
+							},
+							{
+								"box": {
+									"id": "obj-out11",
+									"maxclass": "newobj",
+									"numinlets": 1,
+									"numoutlets": 0,
+									"text": "out 11",
+									"patching_rect": [
+										650.0,
+										600.0,
+										35.0,
+										22.0
+									]
+								}
+							},
+							{
+								"box": {
+									"id": "obj-out12",
+									"maxclass": "newobj",
+									"numinlets": 1,
+									"numoutlets": 0,
+									"text": "out 12",
+									"patching_rect": [
+										700.0,
+										600.0,
+										35.0,
+										22.0
+									]
+								}
+							},
+							{
+								"box": {
+									"id": "obj-out13",
+									"maxclass": "newobj",
+									"numinlets": 1,
+									"numoutlets": 0,
+									"text": "out 13",
+									"patching_rect": [
+										750.0,
+										600.0,
+										35.0,
+										22.0
+									]
+								}
+							},
+							{
+								"box": {
+									"id": "obj-out14",
+									"maxclass": "newobj",
+									"numinlets": 1,
+									"numoutlets": 0,
+									"text": "out 14",
+									"patching_rect": [
+										800.0,
+										600.0,
+										35.0,
+										22.0
+									]
+								}
+							}
+						],
+						"lines": [
+							{
+								"patchline": {
+									"source": [
+										"obj-codebox",
+										0
+									],
+									"destination": [
+										"obj-out1",
+										0
+									]
+								}
+							},
+							{
+								"patchline": {
+									"source": [
+										"obj-codebox",
+										1
+									],
+									"destination": [
+										"obj-out2",
+										0
+									]
+								}
+							},
+							{
+								"patchline": {
+									"source": [
+										"obj-codebox",
+										2
+									],
+									"destination": [
+										"obj-out3",
+										0
+									]
+								}
+							},
+							{
+								"patchline": {
+									"source": [
+										"obj-codebox",
+										3
+									],
+									"destination": [
+										"obj-out4",
+										0
+									]
+								}
+							},
+							{
+								"patchline": {
+									"source": [
+										"obj-codebox",
+										4
+									],
+									"destination": [
+										"obj-out5",
+										0
+									]
+								}
+							},
+							{
+								"patchline": {
+									"source": [
+										"obj-codebox",
+										5
+									],
+									"destination": [
+										"obj-out6",
+										0
+									]
+								}
+							},
+							{
+								"patchline": {
+									"source": [
+										"obj-codebox",
+										6
+									],
+									"destination": [
+										"obj-out7",
+										0
+									]
+								}
+							},
+							{
+								"patchline": {
+									"source": [
+										"obj-codebox",
+										7
+									],
+									"destination": [
+										"obj-out8",
+										0
+									]
+								}
+							},
+							{
+								"patchline": {
+									"source": [
+										"obj-codebox",
+										8
+									],
+									"destination": [
+										"obj-out9",
+										0
+									]
+								}
+							},
+							{
+								"patchline": {
+									"source": [
+										"obj-codebox",
+										9
+									],
+									"destination": [
+										"obj-out10",
+										0
+									]
+								}
+							},
+							{
+								"patchline": {
+									"source": [
+										"obj-codebox",
+										10
+									],
+									"destination": [
+										"obj-out11",
+										0
+									]
+								}
+							},
+							{
+								"patchline": {
+									"source": [
+										"obj-codebox",
+										11
+									],
+									"destination": [
+										"obj-out12",
+										0
+									]
+								}
+							},
+							{
+								"patchline": {
+									"source": [
+										"obj-codebox",
+										12
+									],
+									"destination": [
+										"obj-out13",
+										0
+									]
+								}
+							},
+							{
+								"patchline": {
+									"source": [
+										"obj-codebox",
+										13
+									],
+									"destination": [
+										"obj-out14",
+										0
+									]
+								}
+							}
+						]
+					}
 				}
 			},
 			{
@@ -516,7 +918,7 @@
 					"maxclass": "comment",
 					"numinlets": 1,
 					"numoutlets": 0,
-					"text": "\u2500\u2500 RESONATOR ENSEMBLE (6 voices, 19 tuning systems) \u2500\u2500",
+					"text": "── RESONATOR ENSEMBLE (6 voices, 19 tuning systems) ──",
 					"patching_rect": [
 						15,
 						525,
@@ -567,47 +969,6 @@
 						48
 					],
 					"varname": "obj-root"
-				}
-			},
-			{
-				"box": {
-					"id": "obj-flex",
-					"maxclass": "live.dial",
-					"numinlets": 1,
-					"numoutlets": 2,
-					"outlettype": [
-						"",
-						"float"
-					],
-					"parameter_enable": 1,
-					"patching_rect": [
-						80,
-						555,
-						50.0,
-						48.0
-					],
-					"saved_attribute_attributes": {
-						"valueof": {
-							"parameter_longname": "Flex",
-							"parameter_shortname": "Flex",
-							"parameter_type": 0,
-							"parameter_mmin": 0.0,
-							"parameter_mmax": 1.0,
-							"parameter_initial": [
-								0.5
-							],
-							"parameter_initial_enable": 1,
-							"parameter_unitstyle": 1
-						}
-					},
-					"presentation": 1,
-					"presentation_rect": [
-						70,
-						110,
-						50,
-						48
-					],
-					"varname": "obj-flex"
 				}
 			},
 			{
@@ -709,25 +1070,6 @@
 						22
 					],
 					"varname": "obj-root-prep"
-				}
-			},
-			{
-				"box": {
-					"id": "obj-flex-prep",
-					"maxclass": "newobj",
-					"numinlets": 1,
-					"numoutlets": 1,
-					"outlettype": [
-						""
-					],
-					"text": "prepend flex",
-					"patching_rect": [
-						80,
-						610,
-						84,
-						22
-					],
-					"varname": "obj-flex-prep"
 				}
 			},
 			{
@@ -1082,7 +1424,7 @@
 					"maxclass": "comment",
 					"numinlets": 1,
 					"numoutlets": 0,
-					"text": "\u2500\u2500 OUTPUT \u2500\u2500",
+					"text": "── OUTPUT ──",
 					"patching_rect": [
 						15,
 						680,
@@ -1245,7 +1587,7 @@
 					"maxclass": "comment",
 					"numinlets": 1,
 					"numoutlets": 0,
-					"text": "\u2500\u2500 OSC \u2192 TOUCHDESIGNER (port 7000) \u2500\u2500",
+					"text": "── OSC → TOUCHDESIGNER (port 7000) ──",
 					"patching_rect": [
 						700,
 						370,
@@ -1583,7 +1925,7 @@
 					"outlettype": [
 						"bang"
 					],
-					"text": "delay 1000",
+					"text": "delay 3000",
 					"patching_rect": [
 						700,
 						385,
@@ -1599,7 +1941,7 @@
 					"maxclass": "comment",
 					"numinlets": 1,
 					"numoutlets": 0,
-					"text": "\u2500\u2500 MCP BRIDGE (Claude \u2194 Max) \u2500\u2500",
+					"text": "── MCP BRIDGE (Claude ↔ Max) ──",
 					"patching_rect": [
 						1000,
 						15,
@@ -2103,6 +2445,148 @@
 					],
 					"varname": "obj-osc-start"
 				}
+			},
+			{
+				"box": {
+					"id": "obj-morph",
+					"maxclass": "live.dial",
+					"numinlets": 1,
+					"numoutlets": 2,
+					"outlettype": [
+						"",
+						"float"
+					],
+					"parameter_enable": 1,
+					"patching_rect": [
+						450,
+						305,
+						50.0,
+						48.0
+					],
+					"saved_attribute_attributes": {
+						"valueof": {
+							"parameter_longname": "Morph",
+							"parameter_shortname": "Morph",
+							"parameter_type": 0,
+							"parameter_mmin": 0.0,
+							"parameter_mmax": 1.0,
+							"parameter_initial": [
+								0.0
+							],
+							"parameter_initial_enable": 1,
+							"parameter_unitstyle": 1
+						}
+					},
+					"presentation": 1,
+					"presentation_rect": [
+						220,
+						10,
+						50,
+						48
+					],
+					"varname": "obj-morph",
+					"parameter_mmin": 0.0,
+					"parameter_mmax": 1.0,
+					"parameter_initial": 0.0,
+					"parameter_longname": "Morph",
+					"parameter_shortname": "Morph",
+					"parameter_type": 0
+				}
+			},
+			{
+				"box": {
+					"id": "obj-morph-prep",
+					"maxclass": "newobj",
+					"numinlets": 1,
+					"numoutlets": 1,
+					"outlettype": [
+						""
+					],
+					"text": "prepend morph",
+					"patching_rect": [
+						450,
+						360,
+						85,
+						22
+					],
+					"varname": "obj-morph-prep"
+				}
+			},
+			{
+				"box": {
+					"id": "obj-morph-osc-prep",
+					"maxclass": "newobj",
+					"numinlets": 1,
+					"numoutlets": 1,
+					"outlettype": [
+						""
+					],
+					"text": "prepend morph",
+					"patching_rect": [
+						520,
+						360,
+						85,
+						22
+					],
+					"varname": "obj-morph-osc-prep"
+				}
+			},
+			{
+				"box": {
+					"id": "obj-amp-abs",
+					"maxclass": "newobj",
+					"numinlets": 1,
+					"numoutlets": 1,
+					"outlettype": [
+						"signal"
+					],
+					"text": "abs~",
+					"patching_rect": [
+						1050,
+						630,
+						35,
+						22
+					],
+					"varname": "obj-amp-abs"
+				}
+			},
+			{
+				"box": {
+					"id": "obj-amp-snap",
+					"maxclass": "newobj",
+					"numinlets": 2,
+					"numoutlets": 1,
+					"outlettype": [
+						"float"
+					],
+					"text": "snapshot~ 50",
+					"patching_rect": [
+						1050,
+						660,
+						72,
+						22
+					],
+					"varname": "obj-amp-snap"
+				}
+			},
+			{
+				"box": {
+					"id": "obj-amp-prep",
+					"maxclass": "newobj",
+					"numinlets": 1,
+					"numoutlets": 1,
+					"outlettype": [
+						""
+					],
+					"text": "prepend amplitude",
+					"patching_rect": [
+						1050,
+						690,
+						110,
+						22
+					],
+					"varname": "obj-amp-prep"
+				}
 			}
 		],
 		"lines": [
@@ -2205,18 +2689,6 @@
 			{
 				"patchline": {
 					"source": [
-						"obj-trigwidth",
-						0
-					],
-					"destination": [
-						"obj-trig-prep",
-						0
-					]
-				}
-			},
-			{
-				"patchline": {
-					"source": [
 						"obj-K-prep",
 						0
 					],
@@ -2241,35 +2713,11 @@
 			{
 				"patchline": {
 					"source": [
-						"obj-trig-prep",
-						0
-					],
-					"destination": [
-						"obj-kuramoto",
-						0
-					]
-				}
-			},
-			{
-				"patchline": {
-					"source": [
 						"obj-root",
 						0
 					],
 					"destination": [
 						"obj-root-prep",
-						0
-					]
-				}
-			},
-			{
-				"patchline": {
-					"source": [
-						"obj-flex",
-						0
-					],
-					"destination": [
-						"obj-flex-prep",
 						0
 					]
 				}
@@ -2374,18 +2822,6 @@
 				"patchline": {
 					"source": [
 						"obj-root-prep",
-						0
-					],
-					"destination": [
-						"obj-resonator",
-						0
-					]
-				}
-			},
-			{
-				"patchline": {
-					"source": [
-						"obj-flex-prep",
 						0
 					],
 					"destination": [
@@ -3242,6 +3678,114 @@
 					],
 					"destination": [
 						"obj-mcp-node",
+						0
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-morph",
+						0
+					],
+					"destination": [
+						"obj-morph-prep",
+						0
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-morph-prep",
+						0
+					],
+					"destination": [
+						"obj-veve-loader",
+						0
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-morph",
+						0
+					],
+					"destination": [
+						"obj-morph-osc-prep",
+						0
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-morph-osc-prep",
+						0
+					],
+					"destination": [
+						"obj-osc-node",
+						0
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-resonator",
+						0
+					],
+					"destination": [
+						"obj-amp-abs",
+						0
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-amp-abs",
+						0
+					],
+					"destination": [
+						"obj-amp-snap",
+						0
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-osc-metro",
+						0
+					],
+					"destination": [
+						"obj-amp-snap",
+						0
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-amp-snap",
+						0
+					],
+					"destination": [
+						"obj-amp-prep",
+						0
+					]
+				}
+			},
+			{
+				"patchline": {
+					"source": [
+						"obj-amp-prep",
+						0
+					],
+					"destination": [
+						"obj-osc-node",
 						0
 					]
 				}
