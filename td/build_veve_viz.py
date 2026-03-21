@@ -224,14 +224,14 @@ PRESETS = [
     {
         "name": "Gran Bwa",
         "adj": [
-            0,1,1,0,0,0,
-            1,0,0,1,1,0,
-            1,0,0,0,0,1,
+            0,1,0,0,0,0,
+            1,0,1,1,1,1,
             0,1,0,0,0,0,
             0,1,0,0,0,0,
-            0,0,1,0,0,0
+            0,1,0,0,0,0.5,
+            0,1,0,0,0.5,0
         ],
-        "pos": [[0,-6],[-4,-1],[4,-1],[-7,4],[-1,4],[5,4]]
+        "pos": [[0,8],[0,1],[-7,3],[7,3],[-4,-7],[4,-7]]
     }
 ]
 '''
@@ -652,7 +652,7 @@ def build_veve_standalone():
     print("  9: Baron Samedi (cross + diagonals)")
     print("  10: Simbi (3 branches from root)")
     print("  11: Ayizan (spine + branches)")
-    print("  12: Gran Bwa (hierarchical tree)")
+    print("  12: Gran Bwa (anthropomorphic tree)")
     print("=" * 50)
 
 

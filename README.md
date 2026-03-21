@@ -56,10 +56,10 @@ node.script (osc_send.js)        Output
 | 6 | Marassa | Rigaud p.409 | Bridged twin triangles (0.5 bridge) | Polyrhythmic phasing with convergence |
 | 7 | Damballah Wedo | Rigaud p.169 | Linear chain | Delay-line ripple |
 | 8 | Erzulie Freda | Rigaud p.215 | Heart (two lobes + weak bridge) | Lobes drift then re-sync |
-| 9 | Baron Samedi | Rigaud p.286+ | Cross + weak diagonals | Ghost rhythms at 40% |
+| 9 | Baron Samedi | Rigaud p.579 | Cross + weak diagonals | Ghost rhythms at 40% |
 | 10 | Simbi | Rigaud p.404 | Three branches from root (fan/tree) | Rivulet divergence from source |
-| 11 | Ayizan | Rigaud p.135 | Spine + branches (weighted 0.7) | Palm-frond sway |
-| 12 | Gran Bwa | Rigaud p.178 | Tree (root → trunk → branches) | Hierarchical entrainment |
+| 11 | Ayizan | Rigaud p.471 | Spine + branches (weighted 0.7) | Palm-frond sway |
+| 12 | Gran Bwa | Rigaud p.585 | Anthropomorphic tree (body hub + root intertwining) | Body dominates, roots pulse |
 
 Presets 6-12 use **weighted adjacency** — connections have strength 0.0-1.0 instead of binary on/off. Weak connections (0.4-0.7) create secondary sync paths that produce ghost rhythms and delayed entrainment.
 

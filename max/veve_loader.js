@@ -190,8 +190,8 @@ var presets = [
 	{
 		index: 9,
 		name: "Baron Samedi",
-		source: "Rigaud p.286+ — Cross of the dead (plate not located)",
-		description: "Center hub (0) with 4 arms. Cross-bracing: 1-3 and 2-4 diagonal. Node 5 weak to center.",
+		source: "Rigaud p.579 — Guédèh (latticed cross with coffin)",
+		description: "Latticed cross with 4 corner crosses and coffin. Center hub (0) with 4 arms. Cross-bracing: 1-3 and 2-4 diagonal at 0.4. Node 5 (grave) weak to center.",
 		predicted_behavior: "Hub dominates. Diagonals create secondary sync paths at 40% strength — ghost rhythms.",
 		adj: [
 			0,  1,  1,  1,  1,  0.4,
@@ -222,7 +222,7 @@ var presets = [
 	{
 		index: 11,
 		name: "Ayizan",
-		source: "Rigaud p.135 — Palm frond / spine with branches",
+		source: "Rigaud p.471 — Ayizan (palm frond with spine and branches)",
 		description: "Central spine 0-1-2-3. Branches: 1-4 and 2-5. Spine at full strength, branches at 0.7.",
 		predicted_behavior: "Spine locks first. Branches follow with slight lag — palm-frond sway.",
 		adj: [
@@ -238,18 +238,18 @@ var presets = [
 	{
 		index: 12,
 		name: "Gran Bwa",
-		source: "Rigaud p.178 — Great tree",
-		description: "Root (0) splits to trunk (1,2). Left trunk branches to 3,4. Right trunk branches to 5.",
-		predicted_behavior: "Hierarchical sync — root drives trunk, trunk drives branches. Top-down entrainment.",
+		source: "Rigaud p.585 — Grand Bois d'Ileh (anthropomorphic tree figure)",
+		description: "Anthropomorphic tree: body/trunk hub (1) connects head (0), arms (2,3), root-feet (4,5). Roots intertwine at 0.5.",
+		predicted_behavior: "Body/trunk dominates as hub. Head and arms follow independently. Root-feet develop sub-rhythm through 0.5 intertwining — underground pulse.",
 		adj: [
-			0,1,1,0,0,0,
-			1,0,0,1,1,0,
-			1,0,0,0,0,1,
+			0,1,0,0,0,0,
+			1,0,1,1,1,1,
 			0,1,0,0,0,0,
 			0,1,0,0,0,0,
-			0,0,1,0,0,0
+			0,1,0,0,0,0.5,
+			0,1,0,0,0.5,0
 		],
-		node_labels: ["root", "trunk_L", "trunk_R", "branch_L1", "branch_L2", "branch_R1"]
+		node_labels: ["head", "body", "left_arm", "right_arm", "left_root", "right_root"]
 	}
 ];
 
