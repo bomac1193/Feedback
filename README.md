@@ -4,11 +4,11 @@ Six Kuramoto coupled oscillators driven by Vodou veve adjacency matrices, exciti
 
 ## Thesis
 
-Veve are cosmograms. They encode topology — which forces connect to which — not pictures. This instrument uses that topology as its core musical parameter: the adjacency matrix of a veve determines which oscillators couple, and coupling determines synchronization, which determines what you hear.
+Veve are cosmograms. They encode topology which forces connect to which not pictures. This instrument uses that topology as its core musical parameter: the adjacency matrix of a veve determines which oscillators couple, and coupling determines synchronization, which determines what you hear.
 
 When oscillators lock phase, energy flows through the connection and the resonator rings. When they drift apart, the connection vibrates at the beat frequency and the string decays. The tuning system sets the intervals. The topology sets the relationships. The performer controls coupling strength, root frequency, decay, and drive.
 
-Nothing is mapped symbolically. The visualization shows what the system is doing: phase alignment as line brightness, phase difference as vibration rate, connection weight as thickness, root frequency as circle size and line weight. White on black. The veve's structure operates directly — it is not illustrated.
+Nothing is mapped symbolically. The visualization shows what the system is doing: phase alignment as line brightness, phase difference as vibration rate, connection weight as thickness, root frequency as circle size and line weight. White on black. The veve's structure operates directly it is not illustrated.
 
 ## Architecture
 
