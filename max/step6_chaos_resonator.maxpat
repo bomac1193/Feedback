@@ -4258,6 +4258,253 @@
             },
             {
                 "box": {
+                    "fontface": 1,
+                    "fontsize": 11.0,
+                    "id": "obj-dly-label",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "patching_rect": [ 820.0, 2475.0, 50.0, 19.0 ],
+                    "text": "DELAY",
+                    "varname": "obj-dly-label"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-dly-mix-l",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 820.0, 2502.0, 50.0, 22.0 ],
+                    "text": "+~",
+                    "varname": "obj-dly-mix-l"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-dly-tapin-l",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "" ],
+                    "patching_rect": [ 820.0, 2530.0, 100.0, 22.0 ],
+                    "text": "tapin~ 4000",
+                    "varname": "obj-dly-tapin-l"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-dly-tapout-l",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 820.0, 2557.0, 100.0, 22.0 ],
+                    "text": "tapout~ 250",
+                    "varname": "obj-dly-tapout-l"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-dly-fb-l",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 820.0, 2584.0, 60.0, 22.0 ],
+                    "text": "*~ 0.5",
+                    "varname": "obj-dly-fb-l"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-dly-wet-l",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 895.0, 2584.0, 60.0, 22.0 ],
+                    "text": "*~ 0.25",
+                    "varname": "obj-dly-wet-l"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-dly-mix-r",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 1000.0, 2502.0, 50.0, 22.0 ],
+                    "text": "+~",
+                    "varname": "obj-dly-mix-r"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-dly-tapin-r",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "" ],
+                    "patching_rect": [ 1000.0, 2530.0, 100.0, 22.0 ],
+                    "text": "tapin~ 4000",
+                    "varname": "obj-dly-tapin-r"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-dly-tapout-r",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 1000.0, 2557.0, 100.0, 22.0 ],
+                    "text": "tapout~ 333",
+                    "varname": "obj-dly-tapout-r"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-dly-fb-r",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 1000.0, 2584.0, 60.0, 22.0 ],
+                    "text": "*~ 0.5",
+                    "varname": "obj-dly-fb-r"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-dly-wet-r",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 1075.0, 2584.0, 60.0, 22.0 ],
+                    "text": "*~ 0.25",
+                    "varname": "obj-dly-wet-r"
+                }
+            },
+            {
+                "box": {
+                    "fontface": 1,
+                    "fontsize": 11.0,
+                    "id": "obj-flt-label",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "patching_rect": [ 480.0, 2640.0, 60.0, 19.0 ],
+                    "text": "FILTER LP",
+                    "varname": "obj-flt-label"
+                }
+            },
+            {
+                "box": {
+                    "format": 6,
+                    "id": "obj-flt-cutoff",
+                    "maxclass": "flonum",
+                    "maximum": 18000.0,
+                    "minimum": 50.0,
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [ "", "bang" ],
+                    "parameter_enable": 0,
+                    "patching_rect": [ 555.0, 2640.0, 60.0, 22.0 ],
+                    "value": 6000.0,
+                    "varname": "obj-flt-cutoff"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-flt-l",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 480.0, 2667.0, 90.0, 22.0 ],
+                    "text": "onepole~ 6000",
+                    "varname": "obj-flt-l"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-flt-r",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 600.0, 2667.0, 90.0, 22.0 ],
+                    "text": "onepole~ 6000",
+                    "varname": "obj-flt-r"
+                }
+            },
+            {
+                "box": {
+                    "fontface": 1,
+                    "fontsize": 11.0,
+                    "id": "obj-tap-label",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "patching_rect": [ 770.0, 1700.0, 60.0, 19.0 ],
+                    "text": "TAP",
+                    "varname": "obj-tap-label"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-tap-btn",
+                    "maxclass": "button",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "bang" ],
+                    "parameter_enable": 0,
+                    "patching_rect": [ 770.0, 1722.0, 22.0, 22.0 ],
+                    "varname": "obj-tap-btn"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-tap-t",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [ "bang", "bang" ],
+                    "patching_rect": [ 770.0, 1747.0, 50.0, 22.0 ],
+                    "text": "t b b",
+                    "varname": "obj-tap-t"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-tap-timer",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "int" ],
+                    "patching_rect": [ 770.0, 1772.0, 50.0, 22.0 ],
+                    "text": "timer",
+                    "varname": "obj-tap-timer"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-tap-expr",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "float" ],
+                    "patching_rect": [ 770.0, 1797.0, 130.0, 22.0 ],
+                    "text": "expr 60000./max($f1, 1)",
+                    "varname": "obj-tap-expr"
+                }
+            },
+            {
+                "box": {
                     "id": "obj-adc-clk",
                     "maxclass": "newobj",
                     "numinlets": 1,
@@ -7771,8 +8018,14 @@
             },
             {
                 "patchline": {
-                    "destination": [ "obj-dac", 0 ],
+                    "destination": [ "obj-flt-l", 0 ],
                     "source": [ "obj-fx-tanh-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dac", 0 ],
+                    "source": [ "obj-flt-l", 0 ]
                 }
             },
             {
@@ -7797,8 +8050,14 @@
             },
             {
                 "patchline": {
-                    "destination": [ "obj-dac", 1 ],
+                    "destination": [ "obj-flt-r", 0 ],
                     "source": [ "obj-fx-tanh-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dac", 1 ],
+                    "source": [ "obj-flt-r", 0 ]
                 }
             },
             {
@@ -7920,6 +8179,132 @@
                 "patchline": {
                     "destination": [ "obj-dac", 1 ],
                     "source": [ "obj-rev-wet-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dly-mix-l", 0 ],
+                    "source": [ "obj-fx-tanh-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dly-tapin-l", 0 ],
+                    "source": [ "obj-dly-mix-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dly-tapout-l", 0 ],
+                    "source": [ "obj-dly-tapin-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dly-fb-l", 0 ],
+                    "source": [ "obj-dly-tapout-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dly-mix-l", 1 ],
+                    "source": [ "obj-dly-fb-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dly-wet-l", 0 ],
+                    "source": [ "obj-dly-tapout-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dac", 0 ],
+                    "source": [ "obj-dly-wet-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dly-mix-r", 0 ],
+                    "source": [ "obj-fx-tanh-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dly-tapin-r", 0 ],
+                    "source": [ "obj-dly-mix-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dly-tapout-r", 0 ],
+                    "source": [ "obj-dly-tapin-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dly-fb-r", 0 ],
+                    "source": [ "obj-dly-tapout-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dly-mix-r", 1 ],
+                    "source": [ "obj-dly-fb-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dly-wet-r", 0 ],
+                    "source": [ "obj-dly-tapout-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dac", 1 ],
+                    "source": [ "obj-dly-wet-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-flt-l", 1 ],
+                    "source": [ "obj-flt-cutoff", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-flt-r", 1 ],
+                    "source": [ "obj-flt-cutoff", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-tap-t", 0 ],
+                    "source": [ "obj-tap-btn", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-tap-timer", 1 ],
+                    "source": [ "obj-tap-t", 1 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-tap-timer", 0 ],
+                    "source": [ "obj-tap-t", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-tap-expr", 0 ],
+                    "source": [ "obj-tap-timer", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-grid-bpm-n", 0 ],
+                    "source": [ "obj-tap-expr", 0 ]
                 }
             },
             {
