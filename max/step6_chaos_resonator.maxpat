@@ -4125,6 +4125,139 @@
             },
             {
                 "box": {
+                    "fontface": 1,
+                    "fontsize": 11.0,
+                    "id": "obj-rev-l-label",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "patching_rect": [ 480.0, 2475.0, 50.0, 19.0 ],
+                    "text": "REVERB",
+                    "varname": "obj-rev-l-label"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-rev-mix-l",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 480.0, 2502.0, 50.0, 22.0 ],
+                    "text": "+~",
+                    "varname": "obj-rev-mix-l"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-rev-tapin-l",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "" ],
+                    "patching_rect": [ 480.0, 2530.0, 100.0, 22.0 ],
+                    "text": "tapin~ 4000",
+                    "varname": "obj-rev-tapin-l"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-rev-tapout-l",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 480.0, 2557.0, 100.0, 22.0 ],
+                    "text": "tapout~ 137",
+                    "varname": "obj-rev-tapout-l"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-rev-fb-l",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 480.0, 2584.0, 60.0, 22.0 ],
+                    "text": "*~ 0.45",
+                    "varname": "obj-rev-fb-l"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-rev-wet-l",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 555.0, 2584.0, 60.0, 22.0 ],
+                    "text": "*~ 0.3",
+                    "varname": "obj-rev-wet-l"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-rev-mix-r",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 660.0, 2502.0, 50.0, 22.0 ],
+                    "text": "+~",
+                    "varname": "obj-rev-mix-r"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-rev-tapin-r",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "" ],
+                    "patching_rect": [ 660.0, 2530.0, 100.0, 22.0 ],
+                    "text": "tapin~ 4000",
+                    "varname": "obj-rev-tapin-r"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-rev-tapout-r",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 660.0, 2557.0, 100.0, 22.0 ],
+                    "text": "tapout~ 211",
+                    "varname": "obj-rev-tapout-r"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-rev-fb-r",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 660.0, 2584.0, 60.0, 22.0 ],
+                    "text": "*~ 0.45",
+                    "varname": "obj-rev-fb-r"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-rev-wet-r",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 735.0, 2584.0, 60.0, 22.0 ],
+                    "text": "*~ 0.3",
+                    "varname": "obj-rev-wet-r"
+                }
+            },
+            {
+                "box": {
                     "id": "obj-adc-clk",
                     "maxclass": "newobj",
                     "numinlets": 1,
@@ -7703,6 +7836,90 @@
                 "patchline": {
                     "destination": [ "obj-rec", 0 ],
                     "source": [ "obj-rec-open-msg", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rev-mix-l", 0 ],
+                    "source": [ "obj-fx-tanh-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rev-tapin-l", 0 ],
+                    "source": [ "obj-rev-mix-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rev-tapout-l", 0 ],
+                    "source": [ "obj-rev-tapin-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rev-fb-l", 0 ],
+                    "source": [ "obj-rev-tapout-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rev-wet-l", 0 ],
+                    "source": [ "obj-rev-tapout-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rev-mix-r", 1 ],
+                    "source": [ "obj-rev-fb-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dac", 0 ],
+                    "source": [ "obj-rev-wet-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rev-mix-r", 0 ],
+                    "source": [ "obj-fx-tanh-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rev-tapin-r", 0 ],
+                    "source": [ "obj-rev-mix-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rev-tapout-r", 0 ],
+                    "source": [ "obj-rev-tapin-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rev-fb-r", 0 ],
+                    "source": [ "obj-rev-tapout-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rev-wet-r", 0 ],
+                    "source": [ "obj-rev-tapout-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rev-mix-l", 1 ],
+                    "source": [ "obj-rev-fb-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dac", 1 ],
+                    "source": [ "obj-rev-wet-r", 0 ]
                 }
             },
             {
