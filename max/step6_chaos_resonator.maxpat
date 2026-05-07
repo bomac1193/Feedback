@@ -4017,6 +4017,114 @@
             },
             {
                 "box": {
+                    "id": "obj-fx-boost-l",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 102.0, 2475.0, 60.0, 22.0 ],
+                    "text": "*~ 2.",
+                    "varname": "obj-fx-boost-l"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-fx-tanh-l",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 102.0, 2502.0, 60.0, 22.0 ],
+                    "text": "tanh~",
+                    "varname": "obj-fx-tanh-l"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-fx-boost-r",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 182.0, 2475.0, 60.0, 22.0 ],
+                    "text": "*~ 2.",
+                    "varname": "obj-fx-boost-r"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-fx-tanh-r",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "signal" ],
+                    "patching_rect": [ 182.0, 2502.0, 60.0, 22.0 ],
+                    "text": "tanh~",
+                    "varname": "obj-fx-tanh-r"
+                }
+            },
+            {
+                "box": {
+                    "fontface": 1,
+                    "fontsize": 11.0,
+                    "id": "obj-rec-l",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "patching_rect": [ 320.0, 2475.0, 50.0, 19.0 ],
+                    "text": "RECORD",
+                    "varname": "obj-rec-l"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-rec-tog",
+                    "maxclass": "toggle",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "int" ],
+                    "parameter_enable": 0,
+                    "patching_rect": [ 320.0, 2502.0, 22.0, 22.0 ],
+                    "varname": "obj-rec-tog"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-rec-open-btn",
+                    "maxclass": "button",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "bang" ],
+                    "parameter_enable": 0,
+                    "patching_rect": [ 350.0, 2502.0, 22.0, 22.0 ],
+                    "varname": "obj-rec-open-btn"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-rec-open-msg",
+                    "maxclass": "message",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "" ],
+                    "patching_rect": [ 380.0, 2502.0, 45.0, 22.0 ],
+                    "text": "open",
+                    "varname": "obj-rec-open-msg"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-rec",
+                    "maxclass": "newobj",
+                    "numinlets": 3,
+                    "numoutlets": 0,
+                    "patching_rect": [ 320.0, 2530.0, 130.0, 22.0 ],
+                    "text": "sfrecord~ 2",
+                    "varname": "obj-rec"
+                }
+            },
+            {
+                "box": {
                     "id": "obj-adc-clk",
                     "maxclass": "newobj",
                     "numinlets": 1,
@@ -7517,9 +7625,21 @@
             },
             {
                 "patchline": {
-                    "destination": [ "obj-dac", 0 ],
+                    "destination": [ "obj-fx-boost-l", 0 ],
                     "order": 1,
                     "source": [ "obj-gain-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-fx-tanh-l", 0 ],
+                    "source": [ "obj-fx-boost-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dac", 0 ],
+                    "source": [ "obj-fx-tanh-l", 0 ]
                 }
             },
             {
@@ -7531,9 +7651,21 @@
             },
             {
                 "patchline": {
-                    "destination": [ "obj-dac", 1 ],
+                    "destination": [ "obj-fx-boost-r", 0 ],
                     "order": 1,
                     "source": [ "obj-gain-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-fx-tanh-r", 0 ],
+                    "source": [ "obj-fx-boost-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-dac", 1 ],
+                    "source": [ "obj-fx-tanh-r", 0 ]
                 }
             },
             {
@@ -7541,6 +7673,36 @@
                     "destination": [ "obj-meter-r", 0 ],
                     "order": 0,
                     "source": [ "obj-gain-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rec", 1 ],
+                    "source": [ "obj-fx-tanh-l", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rec", 2 ],
+                    "source": [ "obj-fx-tanh-r", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rec", 0 ],
+                    "source": [ "obj-rec-tog", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rec-open-msg", 0 ],
+                    "source": [ "obj-rec-open-btn", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-rec", 0 ],
+                    "source": [ "obj-rec-open-msg", 0 ]
                 }
             },
             {
