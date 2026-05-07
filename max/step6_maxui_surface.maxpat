@@ -13,7 +13,7 @@
             60,
             60,
             1160,
-            1390
+            1500
         ],
         "openinpresentation": 1,
         "default_fontsize": 11.0,
@@ -43,7 +43,7 @@
         "boxes": [
             {
                 "box": {
-                    "id": "obj-fbbb8f91",
+                    "id": "obj-197c5f09",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -76,7 +76,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e2dee5c1",
+                    "id": "obj-a1b866c9",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -108,7 +108,7 @@
             },
             {
                 "box": {
-                    "id": "obj-119546f0",
+                    "id": "obj-7d4a2080",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -140,7 +140,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0f38c245",
+                    "id": "obj-32fb3c68",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -172,7 +172,7 @@
             },
             {
                 "box": {
-                    "id": "obj-37f722e2",
+                    "id": "obj-0d7764fc",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -205,7 +205,7 @@
             },
             {
                 "box": {
-                    "id": "obj-37005523",
+                    "id": "obj-328c5e5a",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -232,7 +232,7 @@
             },
             {
                 "box": {
-                    "id": "obj-8437931b",
+                    "id": "obj-ac34e07f",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -264,7 +264,7 @@
             },
             {
                 "box": {
-                    "id": "obj-88f1a804",
+                    "id": "obj-54a13d29",
                     "maxclass": "flonum",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -305,7 +305,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a13fa4ad",
+                    "id": "obj-11dd698e",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -337,7 +337,7 @@
             },
             {
                 "box": {
-                    "id": "obj-d2eb8ce2",
+                    "id": "obj-fc61bbcc",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -364,7 +364,7 @@
             },
             {
                 "box": {
-                    "id": "obj-331251d6",
+                    "id": "obj-4411854e",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -396,7 +396,7 @@
             },
             {
                 "box": {
-                    "id": "obj-65c0cde5",
+                    "id": "obj-64ef5447",
                     "maxclass": "live.toggle",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -430,7 +430,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4db42962",
+                    "id": "obj-8a1775ac",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -462,7 +462,7 @@
             },
             {
                 "box": {
-                    "id": "obj-84f2c869",
+                    "id": "obj-bfddd77d",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -489,7 +489,7 @@
             },
             {
                 "box": {
-                    "id": "obj-241a1155",
+                    "id": "obj-a7d3a15c",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -521,7 +521,7 @@
             },
             {
                 "box": {
-                    "id": "obj-876bebd3",
+                    "id": "obj-f3a0fd2e",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -553,7 +553,7 @@
             },
             {
                 "box": {
-                    "id": "obj-165467ad",
+                    "id": "obj-bddb17f5",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -586,7 +586,7 @@
             },
             {
                 "box": {
-                    "id": "obj-818f9fcd",
+                    "id": "obj-b3c856f8",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -632,7 +632,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1e1528ae",
+                    "id": "obj-cd83bca8",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -678,7 +678,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b93c295c",
+                    "id": "obj-41e5aa13",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -724,7 +724,7 @@
             },
             {
                 "box": {
-                    "id": "obj-02f2f698",
+                    "id": "obj-3036def4",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -770,7 +770,7 @@
             },
             {
                 "box": {
-                    "id": "obj-de55f4ed",
+                    "id": "obj-1f730da6",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -816,7 +816,7 @@
             },
             {
                 "box": {
-                    "id": "obj-cb541aa9",
+                    "id": "obj-594d1908",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -848,7 +848,7 @@
             },
             {
                 "box": {
-                    "id": "obj-390ee082",
+                    "id": "obj-2f6a17e3",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -880,7 +880,7 @@
             },
             {
                 "box": {
-                    "id": "obj-80bab53c",
+                    "id": "obj-68ec469f",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -912,7 +912,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5f126bc7",
+                    "id": "obj-81b65752",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -944,7 +944,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2b92213a",
+                    "id": "obj-37ddc232",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -976,7 +976,7 @@
             },
             {
                 "box": {
-                    "id": "obj-99019bf7",
+                    "id": "obj-54554fd5",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -1034,7 +1034,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e8398b1f",
+                    "id": "obj-6ea20b5b",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -1066,7 +1066,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e1d01ee7",
+                    "id": "obj-ebe8c2ee",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -1099,7 +1099,7 @@
             },
             {
                 "box": {
-                    "id": "obj-165987b0",
+                    "id": "obj-c6909890",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -1155,7 +1155,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1648fbe9",
+                    "id": "obj-4b5b5bbe",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -1187,7 +1187,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1da6dc7c",
+                    "id": "obj-20ab0a13",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -1245,7 +1245,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2f0e1063",
+                    "id": "obj-4a6f51a1",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -1277,7 +1277,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5cb76cb0",
+                    "id": "obj-d97f2284",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -1329,7 +1329,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5f935ff9",
+                    "id": "obj-3e8bd934",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -1361,7 +1361,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c8fc60e6",
+                    "id": "obj-fa9facc3",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -1407,7 +1407,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0fb7fe83",
+                    "id": "obj-d38a7661",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -1439,7 +1439,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f307665d",
+                    "id": "obj-988cd34e",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -1485,7 +1485,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c25707b4",
+                    "id": "obj-3c095da9",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -1517,7 +1517,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5fe86676",
+                    "id": "obj-662d2ea6",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -1549,7 +1549,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4568e3c7",
+                    "id": "obj-7c232c4f",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -1582,7 +1582,7 @@
             },
             {
                 "box": {
-                    "id": "obj-63d33ff0",
+                    "id": "obj-fba60b38",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -1628,7 +1628,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2e6bfa4a",
+                    "id": "obj-acc6af03",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -1674,7 +1674,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f4791ac1",
+                    "id": "obj-f373977b",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -1720,7 +1720,7 @@
             },
             {
                 "box": {
-                    "id": "obj-6a1b1399",
+                    "id": "obj-a9f6c250",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -1766,7 +1766,7 @@
             },
             {
                 "box": {
-                    "id": "obj-78601e9f",
+                    "id": "obj-3c007bbe",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -1798,7 +1798,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5c754846",
+                    "id": "obj-2bcd94aa",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -1831,7 +1831,7 @@
             },
             {
                 "box": {
-                    "id": "obj-6da4abde",
+                    "id": "obj-88a2268f",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -1877,7 +1877,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2f67fb19",
+                    "id": "obj-d3f47682",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -1923,7 +1923,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ad4a2878",
+                    "id": "obj-1fb49b48",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -1969,7 +1969,7 @@
             },
             {
                 "box": {
-                    "id": "obj-108e7dd8",
+                    "id": "obj-8e6c141e",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -2001,7 +2001,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1d7bda61",
+                    "id": "obj-7ea18022",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -2034,7 +2034,7 @@
             },
             {
                 "box": {
-                    "id": "obj-d3713f95",
+                    "id": "obj-812bb320",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -2080,7 +2080,7 @@
             },
             {
                 "box": {
-                    "id": "obj-abd23ca8",
+                    "id": "obj-a347b05b",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -2126,7 +2126,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e86f25d3",
+                    "id": "obj-8297b732",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -2172,7 +2172,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0b803cdb",
+                    "id": "obj-c6bb72d5",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -2204,7 +2204,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ad6b83f1",
+                    "id": "obj-b0b04df3",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -2237,7 +2237,7 @@
             },
             {
                 "box": {
-                    "id": "obj-317706ff",
+                    "id": "obj-cfd356aa",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -2283,7 +2283,7 @@
             },
             {
                 "box": {
-                    "id": "obj-72e6df6d",
+                    "id": "obj-2a1ea0a1",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -2315,7 +2315,7 @@
             },
             {
                 "box": {
-                    "id": "obj-230d61c2",
+                    "id": "obj-cad61a71",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -2348,7 +2348,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c9592fba",
+                    "id": "obj-c6f05f19",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -2394,7 +2394,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b8ef27b4",
+                    "id": "obj-a51164a2",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -2440,7 +2440,7 @@
             },
             {
                 "box": {
-                    "id": "obj-baaad3cb",
+                    "id": "obj-c80e0b62",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -2486,7 +2486,7 @@
             },
             {
                 "box": {
-                    "id": "obj-99284893",
+                    "id": "obj-51d95525",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -2532,7 +2532,7 @@
             },
             {
                 "box": {
-                    "id": "obj-6a85155a",
+                    "id": "obj-e41170ff",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -2564,7 +2564,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c5fd05c3",
+                    "id": "obj-d6bee041",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -2597,7 +2597,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c6e3a9a9",
+                    "id": "obj-ace13a22",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -2661,7 +2661,7 @@
             },
             {
                 "box": {
-                    "id": "obj-70e2183c",
+                    "id": "obj-5cf2f694",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -2693,7 +2693,7 @@
             },
             {
                 "box": {
-                    "id": "obj-bcc83dab",
+                    "id": "obj-295c6cde",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -2763,7 +2763,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0a3c9b18",
+                    "id": "obj-1c862616",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -2795,7 +2795,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b54ad4e2",
+                    "id": "obj-aad15908",
                     "maxclass": "flonum",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -2836,7 +2836,7 @@
             },
             {
                 "box": {
-                    "id": "obj-dabe997c",
+                    "id": "obj-0a4d85d8",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -2868,7 +2868,7 @@
             },
             {
                 "box": {
-                    "id": "obj-3dec7760",
+                    "id": "obj-bea1adc1",
                     "maxclass": "flonum",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -2909,7 +2909,7 @@
             },
             {
                 "box": {
-                    "id": "obj-338b3ae8",
+                    "id": "obj-b2d2399f",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -2941,7 +2941,7 @@
             },
             {
                 "box": {
-                    "id": "obj-6b5fd215",
+                    "id": "obj-8d13df0e",
                     "maxclass": "flonum",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -2982,7 +2982,7 @@
             },
             {
                 "box": {
-                    "id": "obj-38830625",
+                    "id": "obj-9e647212",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -3014,7 +3014,7 @@
             },
             {
                 "box": {
-                    "id": "obj-38cae183",
+                    "id": "obj-6e2a1fe4",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -3098,7 +3098,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7520bd2b",
+                    "id": "obj-22251168",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -3130,7 +3130,7 @@
             },
             {
                 "box": {
-                    "id": "obj-54c59abb",
+                    "id": "obj-6a00e815",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -3162,7 +3162,7 @@
             },
             {
                 "box": {
-                    "id": "obj-44765316",
+                    "id": "obj-20936467",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -3195,7 +3195,7 @@
             },
             {
                 "box": {
-                    "id": "obj-76c55bab",
+                    "id": "obj-5e9feebb",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -3241,7 +3241,7 @@
             },
             {
                 "box": {
-                    "id": "obj-01493d4e",
+                    "id": "obj-5dc1423b",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -3287,7 +3287,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f4a12b2d",
+                    "id": "obj-0777140e",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -3333,7 +3333,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4a844fe8",
+                    "id": "obj-738e5ee5",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -3379,7 +3379,7 @@
             },
             {
                 "box": {
-                    "id": "obj-dc9b8ca9",
+                    "id": "obj-2775de15",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -3411,7 +3411,7 @@
             },
             {
                 "box": {
-                    "id": "obj-cbc74fc6",
+                    "id": "obj-729857b1",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -3443,7 +3443,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e4005922",
+                    "id": "obj-feec9700",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -3475,7 +3475,7 @@
             },
             {
                 "box": {
-                    "id": "obj-d191f40f",
+                    "id": "obj-4ac48a94",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -3507,7 +3507,7 @@
             },
             {
                 "box": {
-                    "id": "obj-961acdeb",
+                    "id": "obj-9586a6b7",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -3539,7 +3539,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1f5c2c6f",
+                    "id": "obj-305ccbfe",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -3572,7 +3572,7 @@
             },
             {
                 "box": {
-                    "id": "obj-dab3b53b",
+                    "id": "obj-a75fab32",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -3618,7 +3618,7 @@
             },
             {
                 "box": {
-                    "id": "obj-40913b87",
+                    "id": "obj-fca880e3",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -3664,7 +3664,7 @@
             },
             {
                 "box": {
-                    "id": "obj-04b2c823",
+                    "id": "obj-4301a93f",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -3710,7 +3710,7 @@
             },
             {
                 "box": {
-                    "id": "obj-522d42d4",
+                    "id": "obj-81aa8811",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -3756,7 +3756,7 @@
             },
             {
                 "box": {
-                    "id": "obj-79fe5a18",
+                    "id": "obj-d5ace063",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -3802,7 +3802,7 @@
             },
             {
                 "box": {
-                    "id": "obj-833b21ee",
+                    "id": "obj-70c135d6",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -3834,7 +3834,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f75d8146",
+                    "id": "obj-ca0aa2a2",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -3866,7 +3866,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c1ab891c",
+                    "id": "obj-675ea4b2",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -3898,7 +3898,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9bf581ea",
+                    "id": "obj-548ea016",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -3930,7 +3930,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e3ee8c52",
+                    "id": "obj-1d97b0ae",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -3962,7 +3962,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1b4a346f",
+                    "id": "obj-f555bd14",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -3994,7 +3994,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0b65634d",
+                    "id": "obj-24c9c31c",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -4027,7 +4027,7 @@
             },
             {
                 "box": {
-                    "id": "obj-30849b37",
+                    "id": "obj-ebafd0cb",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -4073,7 +4073,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e6befa04",
+                    "id": "obj-181a6a4c",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -4119,7 +4119,7 @@
             },
             {
                 "box": {
-                    "id": "obj-149ad24e",
+                    "id": "obj-6f6e071b",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -4165,7 +4165,7 @@
             },
             {
                 "box": {
-                    "id": "obj-56a0d8e6",
+                    "id": "obj-b31262d1",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -4211,7 +4211,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0b8daa92",
+                    "id": "obj-4ea1d8e1",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -4243,7 +4243,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7ec23187",
+                    "id": "obj-e314b491",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -4275,7 +4275,7 @@
             },
             {
                 "box": {
-                    "id": "obj-839cde31",
+                    "id": "obj-7f81a1b1",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -4307,7 +4307,7 @@
             },
             {
                 "box": {
-                    "id": "obj-05a8e816",
+                    "id": "obj-8f9f72cb",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -4339,7 +4339,7 @@
             },
             {
                 "box": {
-                    "id": "obj-43dad462",
+                    "id": "obj-6b729d78",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -4371,7 +4371,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e8322109",
+                    "id": "obj-88346db7",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -4404,7 +4404,7 @@
             },
             {
                 "box": {
-                    "id": "obj-198b9c62",
+                    "id": "obj-f0bbc460",
                     "maxclass": "flonum",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -4445,7 +4445,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9f50f997",
+                    "id": "obj-0a188577",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -4477,7 +4477,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1b25e889",
+                    "id": "obj-1ec3073c",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -4535,7 +4535,7 @@
             },
             {
                 "box": {
-                    "id": "obj-87b89faf",
+                    "id": "obj-8b8905ba",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -4567,7 +4567,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a86e2b5e",
+                    "id": "obj-7e182da0",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -4613,7 +4613,7 @@
             },
             {
                 "box": {
-                    "id": "obj-32333ce7",
+                    "id": "obj-15bde077",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -4659,7 +4659,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0e11eae5",
+                    "id": "obj-c6042b42",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -4705,7 +4705,7 @@
             },
             {
                 "box": {
-                    "id": "obj-79689045",
+                    "id": "obj-15c6dfc8",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -4737,7 +4737,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a94c7b25",
+                    "id": "obj-04865846",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -4769,7 +4769,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5f2cc4b0",
+                    "id": "obj-aad7915e",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -4801,7 +4801,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1e21df8b",
+                    "id": "obj-ff904057",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -4833,7 +4833,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4757ae89",
+                    "id": "obj-a2220322",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -4866,7 +4866,7 @@
             },
             {
                 "box": {
-                    "id": "obj-8a5a0513",
+                    "id": "obj-b12064aa",
                     "maxclass": "flonum",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -4907,7 +4907,7 @@
             },
             {
                 "box": {
-                    "id": "obj-dc6cfeaa",
+                    "id": "obj-256dd4ae",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -4939,7 +4939,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2750d185",
+                    "id": "obj-a04e5a18",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -4985,7 +4985,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ac3dd168",
+                    "id": "obj-87e8c514",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -5017,7 +5017,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5ce03502",
+                    "id": "obj-a2bb9f82",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -5063,7 +5063,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1ff6dd9f",
+                    "id": "obj-bddc470d",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -5095,7 +5095,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b8d45876",
+                    "id": "obj-040fbfe4",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -5141,7 +5141,7 @@
             },
             {
                 "box": {
-                    "id": "obj-68ae7da8",
+                    "id": "obj-366b50f3",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -5173,7 +5173,7 @@
             },
             {
                 "box": {
-                    "id": "obj-3cd52786",
+                    "id": "obj-f1fa836b",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -5227,7 +5227,7 @@
             },
             {
                 "box": {
-                    "id": "obj-bf96be6a",
+                    "id": "obj-edc8a26f",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -5259,7 +5259,7 @@
             },
             {
                 "box": {
-                    "id": "obj-df7038cd",
+                    "id": "obj-3ba1c132",
                     "maxclass": "flonum",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -5300,7 +5300,7 @@
             },
             {
                 "box": {
-                    "id": "obj-aa5a0162",
+                    "id": "obj-59c5d1a6",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -5332,7 +5332,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9a049961",
+                    "id": "obj-80ccfdcc",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -5359,7 +5359,7 @@
             },
             {
                 "box": {
-                    "id": "obj-02e16d1f",
+                    "id": "obj-94a16d3e",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -5386,7 +5386,7 @@
             },
             {
                 "box": {
-                    "id": "obj-28d13007",
+                    "id": "obj-46251bc4",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -5413,7 +5413,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9ec1167a",
+                    "id": "obj-87d735b1",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -5440,7 +5440,7 @@
             },
             {
                 "box": {
-                    "id": "obj-17a22d25",
+                    "id": "obj-45eef97d",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -5472,7 +5472,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c3d94ff7",
+                    "id": "obj-48719dc8",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -5499,7 +5499,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0708fb99",
+                    "id": "obj-d3644c86",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -5531,7 +5531,7 @@
             },
             {
                 "box": {
-                    "id": "obj-45c7a6fc",
+                    "id": "obj-216650f0",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -5558,7 +5558,7 @@
             },
             {
                 "box": {
-                    "id": "obj-66b87e74",
+                    "id": "obj-5a73bdf2",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -5590,7 +5590,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e15ed13e",
+                    "id": "obj-4ee08850",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -5617,7 +5617,7 @@
             },
             {
                 "box": {
-                    "id": "obj-579a2011",
+                    "id": "obj-34865759",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -5649,7 +5649,7 @@
             },
             {
                 "box": {
-                    "id": "obj-406b34df",
+                    "id": "obj-08bc57c7",
                     "maxclass": "matrixctrl",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -5691,7 +5691,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0277e1ec",
+                    "id": "obj-e7571192",
                     "maxclass": "matrixctrl",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -5733,7 +5733,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7939288c",
+                    "id": "obj-5e1ddf30",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -5765,7 +5765,7 @@
             },
             {
                 "box": {
-                    "id": "obj-64e3fdc1",
+                    "id": "obj-b5a2c576",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -5798,7 +5798,7 @@
             },
             {
                 "box": {
-                    "id": "obj-45082879",
+                    "id": "obj-6e63b494",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -5825,7 +5825,7 @@
             },
             {
                 "box": {
-                    "id": "obj-bb61910d",
+                    "id": "obj-fc64e1af",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -5857,7 +5857,7 @@
             },
             {
                 "box": {
-                    "id": "obj-739347c4",
+                    "id": "obj-c548f92d",
                     "maxclass": "live.toggle",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -5891,7 +5891,7 @@
             },
             {
                 "box": {
-                    "id": "obj-8c1c0a88",
+                    "id": "obj-b0f24a39",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -5923,7 +5923,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2076fa53",
+                    "id": "obj-0b8c44fe",
                     "maxclass": "live.meter~",
                     "numinlets": 1,
                     "numoutlets": 1,
@@ -5949,7 +5949,7 @@
             },
             {
                 "box": {
-                    "id": "obj-fe2389df",
+                    "id": "obj-ef3a11ee",
                     "maxclass": "live.meter~",
                     "numinlets": 1,
                     "numoutlets": 1,
@@ -5975,7 +5975,7 @@
             },
             {
                 "box": {
-                    "id": "obj-22f7f1a8",
+                    "id": "obj-a1d96da0",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -6007,7 +6007,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4d8d68d1",
+                    "id": "obj-93856b9b",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6040,7 +6040,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1a9e8480",
+                    "id": "obj-8477bbe3",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -6067,7 +6067,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a5a9cf61",
+                    "id": "obj-a2284c7a",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6099,7 +6099,7 @@
             },
             {
                 "box": {
-                    "id": "obj-23d37451",
+                    "id": "obj-0fcf1a4a",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -6126,7 +6126,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a439d2cf",
+                    "id": "obj-3705dc65",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6158,7 +6158,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0da434dd",
+                    "id": "obj-c782ecb1",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -6190,7 +6190,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e538047a",
+                    "id": "obj-db0e1568",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6223,7 +6223,7 @@
             },
             {
                 "box": {
-                    "id": "obj-fdf7c5b6",
+                    "id": "obj-f8e2e2a8",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -6250,7 +6250,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4d364704",
+                    "id": "obj-303ce96d",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6282,7 +6282,7 @@
             },
             {
                 "box": {
-                    "id": "obj-37dd7b3b",
+                    "id": "obj-e16fa0b1",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -6309,7 +6309,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9bdddb3c",
+                    "id": "obj-ae376814",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6341,7 +6341,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e12d1c00",
+                    "id": "obj-86e73772",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -6368,7 +6368,7 @@
             },
             {
                 "box": {
-                    "id": "obj-49644763",
+                    "id": "obj-2c424556",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6400,7 +6400,7 @@
             },
             {
                 "box": {
-                    "id": "obj-22b732bd",
+                    "id": "obj-838ea0da",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -6427,7 +6427,7 @@
             },
             {
                 "box": {
-                    "id": "obj-6d42214e",
+                    "id": "obj-0b61c5d3",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6459,7 +6459,7 @@
             },
             {
                 "box": {
-                    "id": "obj-213443d5",
+                    "id": "obj-f39955be",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -6491,7 +6491,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e1a1c8b5",
+                    "id": "obj-c27fb282",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6524,7 +6524,7 @@
             },
             {
                 "box": {
-                    "id": "obj-970c7b94",
+                    "id": "obj-116e93e9",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -6551,7 +6551,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2e920bdb",
+                    "id": "obj-311260d0",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6583,7 +6583,7 @@
             },
             {
                 "box": {
-                    "id": "obj-6cab37d4",
+                    "id": "obj-b7f592dc",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -6610,7 +6610,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9cc06e07",
+                    "id": "obj-0a23c36d",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6642,7 +6642,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2e902c35",
+                    "id": "obj-f9b7196d",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -6669,7 +6669,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f0eed3cc",
+                    "id": "obj-f6be8e30",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6701,7 +6701,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f313016f",
+                    "id": "obj-385e57b0",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -6733,7 +6733,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c5b20512",
+                    "id": "obj-29ac2b34",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6766,7 +6766,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7ee969ac",
+                    "id": "obj-5828ce23",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -6793,7 +6793,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b70e7ee7",
+                    "id": "obj-b3c13d67",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6825,7 +6825,7 @@
             },
             {
                 "box": {
-                    "id": "obj-33bf622a",
+                    "id": "obj-fca86198",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -6852,7 +6852,7 @@
             },
             {
                 "box": {
-                    "id": "obj-aa0a5c7d",
+                    "id": "obj-e5c8543a",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6884,7 +6884,7 @@
             },
             {
                 "box": {
-                    "id": "obj-88b87fdb",
+                    "id": "obj-0ad0574b",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -6911,7 +6911,7 @@
             },
             {
                 "box": {
-                    "id": "obj-d50cdf6c",
+                    "id": "obj-0ce07500",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -6943,7 +6943,7 @@
             },
             {
                 "box": {
-                    "id": "obj-516cd303",
+                    "id": "obj-f18e601b",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -6970,7 +6970,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4bb20005",
+                    "id": "obj-67a3bb83",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -7002,7 +7002,7 @@
             },
             {
                 "box": {
-                    "id": "obj-fb47764e",
+                    "id": "obj-d885e8ca",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -7029,7 +7029,7 @@
             },
             {
                 "box": {
-                    "id": "obj-265eb6f0",
+                    "id": "obj-78e22cc6",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -7061,7 +7061,7 @@
             },
             {
                 "box": {
-                    "id": "obj-df9f6632",
+                    "id": "obj-f225999e",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -7088,7 +7088,7 @@
             },
             {
                 "box": {
-                    "id": "obj-6bb57596",
+                    "id": "obj-f2e31385",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -7120,7 +7120,7 @@
             },
             {
                 "box": {
-                    "id": "obj-406bf100",
+                    "id": "obj-7e9f020c",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -7147,7 +7147,7 @@
             },
             {
                 "box": {
-                    "id": "obj-116baa58",
+                    "id": "obj-e55f9645",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -7179,7 +7179,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ff40d8d4",
+                    "id": "obj-999be96a",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -7206,7 +7206,7 @@
             },
             {
                 "box": {
-                    "id": "obj-d1782224",
+                    "id": "obj-920aa6bd",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -7238,7 +7238,7 @@
             },
             {
                 "box": {
-                    "id": "obj-55be2665",
+                    "id": "obj-d27528d5",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -7246,13 +7246,668 @@
                     "patching_rect": [
                         15.0,
                         1210.0,
+                        1070.0,
+                        90.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        15.0,
+                        1210.0,
+                        1070.0,
+                        90.0
+                    ],
+                    "varname": "panel_combos",
+                    "background": 1,
+                    "bgcolor": [
+                        0.07,
+                        0.07,
+                        0.08,
+                        1.0
+                    ],
+                    "bordersize": 0,
+                    "rounded": 0
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-c8e37f92",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        27.0,
+                        1216.0,
+                        1046.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        27.0,
+                        1216.0,
+                        1046.0,
+                        14.0
+                    ],
+                    "varname": "label_combos",
+                    "text": "Combos",
+                    "fontname": "S\u00f6hne",
+                    "fontface": 0,
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.4,
+                        0.45,
+                        0.62,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-83c41a49",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        30.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        30.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_lorenz",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-09ddc030",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        20.0,
+                        1266.0,
+                        50.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        20.0,
+                        1266.0,
+                        50.0,
+                        14.0
+                    ],
+                    "varname": "ac_lorenz_l",
+                    "text": "lorenz",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-956f9d20",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        85.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        85.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_rossler",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-c745b7e5",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        75.0,
+                        1266.0,
+                        50.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        75.0,
+                        1266.0,
+                        50.0,
+                        14.0
+                    ],
+                    "varname": "ac_rossler_l",
+                    "text": "rossler",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-a2178c8a",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        145.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        145.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_chua",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-9b4d66fd",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        137.0,
+                        1266.0,
+                        45.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        137.0,
+                        1266.0,
+                        45.0,
+                        14.0
+                    ],
+                    "varname": "ac_chua_l",
+                    "text": "chua",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-9ab61509",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        200.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        200.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_halvorsen",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-24c9385c",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        185.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        185.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "varname": "ac_halvorsen_l",
+                    "text": "halvorsen",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-d33daee0",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        260.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        260.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_aizawa",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-b486c8c9",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        250.0,
+                        1266.0,
+                        50.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        250.0,
+                        1266.0,
+                        50.0,
+                        14.0
+                    ],
+                    "varname": "ac_aizawa_l",
+                    "text": "aizawa",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-d20f3c31",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        335.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        335.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_lr_blend",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-a645d6ea",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        320.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        320.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "varname": "ac_lr_blend_l",
+                    "text": "l + r",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-7feee635",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        395.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        395.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_lc_mod",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-445e7b67",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        380.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        380.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "varname": "ac_lc_mod_l",
+                    "text": "l x c",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-7f1404ea",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        455.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        455.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_lh_route",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-0059a8c9",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        440.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        440.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "varname": "ac_lh_route_l",
+                    "text": "l to h",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-3923685a",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        515.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        515.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_ra_mod",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-a1026bfc",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        500.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        500.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "varname": "ac_ra_mod_l",
+                    "text": "r x a",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-83250a14",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        575.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        575.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_ha_blend",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-456d294e",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        560.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        560.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "varname": "ac_ha_blend_l",
+                    "text": "h + a",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-6d5eb774",
+                    "maxclass": "panel",
+                    "numinlets": 0,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        15.0,
+                        1320.0,
                         810.0,
                         110.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         15.0,
-                        1210.0,
+                        1320.0,
                         810.0,
                         110.0
                     ],
@@ -7270,21 +7925,21 @@
             },
             {
                 "box": {
-                    "id": "obj-009a87a2",
+                    "id": "obj-ff927c15",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
                     "outlettype": [],
                     "patching_rect": [
                         27.0,
-                        1216.0,
+                        1326.0,
                         786.0,
                         14.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         27.0,
-                        1216.0,
+                        1326.0,
                         786.0,
                         14.0
                     ],
@@ -7303,7 +7958,7 @@
             },
             {
                 "box": {
-                    "id": "obj-8b0a7912",
+                    "id": "obj-5e279dfd",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -7313,14 +7968,14 @@
                     ],
                     "patching_rect": [
                         30.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         30.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -7349,7 +8004,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a413fa79",
+                    "id": "obj-bd5d9a55",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -7359,14 +8014,14 @@
                     ],
                     "patching_rect": [
                         90.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         90.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -7395,7 +8050,7 @@
             },
             {
                 "box": {
-                    "id": "obj-31e9e4a1",
+                    "id": "obj-79e636bb",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -7405,14 +8060,14 @@
                     ],
                     "patching_rect": [
                         150.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         150.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -7441,7 +8096,7 @@
             },
             {
                 "box": {
-                    "id": "obj-60bf3c1f",
+                    "id": "obj-eef18a38",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -7451,14 +8106,14 @@
                     ],
                     "patching_rect": [
                         210.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         210.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -7487,7 +8142,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ab98c2d2",
+                    "id": "obj-b4f597b7",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -7497,14 +8152,14 @@
                     ],
                     "patching_rect": [
                         270.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         270.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -7533,7 +8188,7 @@
             },
             {
                 "box": {
-                    "id": "obj-14f76413",
+                    "id": "obj-c7d3b5b7",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -7543,14 +8198,14 @@
                     ],
                     "patching_rect": [
                         330.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         330.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -7579,7 +8234,7 @@
             },
             {
                 "box": {
-                    "id": "obj-abc7eaa6",
+                    "id": "obj-b1567601",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -7589,14 +8244,14 @@
                     ],
                     "patching_rect": [
                         390.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         390.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -7625,7 +8280,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5841ddd2",
+                    "id": "obj-f8c54a8c",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -7635,14 +8290,14 @@
                     ],
                     "patching_rect": [
                         450.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         450.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],

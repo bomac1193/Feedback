@@ -11773,7 +11773,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e7aa5bdb6b",
+                    "id": "obj-304f275ccf",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -11806,7 +11806,7 @@
             },
             {
                 "box": {
-                    "id": "obj-cd34e203c2",
+                    "id": "obj-b70e458839",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -11838,7 +11838,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a906604f2b",
+                    "id": "obj-a155647606",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -11870,7 +11870,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e9cbbb96b7",
+                    "id": "obj-c386a76c93",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -11902,7 +11902,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9d5742841c",
+                    "id": "obj-1e2bd4c8e0",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -11935,7 +11935,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1d2f92698d",
+                    "id": "obj-7ee10030fe",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -11962,7 +11962,7 @@
             },
             {
                 "box": {
-                    "id": "obj-96bee65abd",
+                    "id": "obj-9f32ca2bc1",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -11994,7 +11994,7 @@
             },
             {
                 "box": {
-                    "id": "obj-8eeb679ab1",
+                    "id": "obj-d4ba21fc64",
                     "maxclass": "flonum",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -12035,7 +12035,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a1d9878a4a",
+                    "id": "obj-d4a8dfbe3b",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -12067,7 +12067,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b5dd4129d3",
+                    "id": "obj-fcf24e4c35",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -12094,7 +12094,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1f057857d9",
+                    "id": "obj-db3cbca68e",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -12126,7 +12126,7 @@
             },
             {
                 "box": {
-                    "id": "obj-24c7085105",
+                    "id": "obj-b661a9a124",
                     "maxclass": "live.toggle",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -12160,7 +12160,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a8c4c66c87",
+                    "id": "obj-aa05b7a32d",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -12192,7 +12192,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7e4e916c2d",
+                    "id": "obj-84f27de1ef",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -12219,7 +12219,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c4f1cfcfbc",
+                    "id": "obj-60bc25d3c9",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -12251,7 +12251,7 @@
             },
             {
                 "box": {
-                    "id": "obj-182dd0fdb0",
+                    "id": "obj-f4d0641b62",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -12283,7 +12283,7 @@
             },
             {
                 "box": {
-                    "id": "obj-665bdc9b86",
+                    "id": "obj-d3554dd5b8",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -12316,7 +12316,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a67223224a",
+                    "id": "obj-ca9680380c",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -12362,7 +12362,7 @@
             },
             {
                 "box": {
-                    "id": "obj-12b3605df9",
+                    "id": "obj-db908ccf61",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -12408,7 +12408,7 @@
             },
             {
                 "box": {
-                    "id": "obj-76f65e9a5a",
+                    "id": "obj-35bdcdc86a",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -12454,7 +12454,7 @@
             },
             {
                 "box": {
-                    "id": "obj-88331e35a3",
+                    "id": "obj-0d4f835678",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -12500,7 +12500,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2fd44f69ad",
+                    "id": "obj-65b920ed16",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -12546,7 +12546,7 @@
             },
             {
                 "box": {
-                    "id": "obj-af6a1467f4",
+                    "id": "obj-bc4268716a",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -12578,7 +12578,7 @@
             },
             {
                 "box": {
-                    "id": "obj-8b9b3f74dc",
+                    "id": "obj-9b14174545",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -12610,7 +12610,7 @@
             },
             {
                 "box": {
-                    "id": "obj-23a36e9ee9",
+                    "id": "obj-32510ad638",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -12642,7 +12642,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e266dd0d1b",
+                    "id": "obj-a6383463ba",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -12674,7 +12674,7 @@
             },
             {
                 "box": {
-                    "id": "obj-22dd835458",
+                    "id": "obj-ed6fb4331d",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -12706,7 +12706,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5d7ce8a9de",
+                    "id": "obj-b86864e7a8",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -12764,7 +12764,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b53d92098f",
+                    "id": "obj-9181bf5d0b",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -12796,7 +12796,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ebd906597a",
+                    "id": "obj-9f78895c7d",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -12829,7 +12829,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9837a1c059",
+                    "id": "obj-05c4ff5e90",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -12885,7 +12885,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7de65c3c10",
+                    "id": "obj-f08c879016",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -12917,7 +12917,7 @@
             },
             {
                 "box": {
-                    "id": "obj-95f860b525",
+                    "id": "obj-5ace5013d6",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -12975,7 +12975,7 @@
             },
             {
                 "box": {
-                    "id": "obj-efe84a2085",
+                    "id": "obj-d421e799de",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -13007,7 +13007,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b70d7830e8",
+                    "id": "obj-5be07bf736",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -13059,7 +13059,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a7f83e7e92",
+                    "id": "obj-6af51c9726",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -13091,7 +13091,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ffc689ea26",
+                    "id": "obj-554881fb55",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -13137,7 +13137,7 @@
             },
             {
                 "box": {
-                    "id": "obj-cfd66c26ba",
+                    "id": "obj-c104b34229",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -13169,7 +13169,7 @@
             },
             {
                 "box": {
-                    "id": "obj-343d4ddb35",
+                    "id": "obj-e52a0833a5",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -13215,7 +13215,7 @@
             },
             {
                 "box": {
-                    "id": "obj-65d4b096f9",
+                    "id": "obj-716b14eb85",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -13247,7 +13247,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ae4f150dc5",
+                    "id": "obj-cb419477ed",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -13279,7 +13279,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ce7d4df5aa",
+                    "id": "obj-f85bedfdc2",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -13312,7 +13312,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c6886494bc",
+                    "id": "obj-cbaa077b6d",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -13358,7 +13358,7 @@
             },
             {
                 "box": {
-                    "id": "obj-50f5d43469",
+                    "id": "obj-0833635129",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -13404,7 +13404,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a588a853d7",
+                    "id": "obj-5a2e400572",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -13450,7 +13450,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2dbe10878a",
+                    "id": "obj-4777f843c2",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -13496,7 +13496,7 @@
             },
             {
                 "box": {
-                    "id": "obj-25336475cb",
+                    "id": "obj-036890e3ad",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -13528,7 +13528,7 @@
             },
             {
                 "box": {
-                    "id": "obj-87a80936f1",
+                    "id": "obj-d72a5064ef",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -13561,7 +13561,7 @@
             },
             {
                 "box": {
-                    "id": "obj-d3c9cf7d18",
+                    "id": "obj-2b3738f7c9",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -13607,7 +13607,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c4e525b66e",
+                    "id": "obj-de39b32684",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -13653,7 +13653,7 @@
             },
             {
                 "box": {
-                    "id": "obj-711ad0c059",
+                    "id": "obj-66e4976110",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -13699,7 +13699,7 @@
             },
             {
                 "box": {
-                    "id": "obj-41c09dd751",
+                    "id": "obj-ff80e6a8d5",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -13731,7 +13731,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9cf2856f83",
+                    "id": "obj-c13565848a",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -13764,7 +13764,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f4db1efa5c",
+                    "id": "obj-1570acaefc",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -13810,7 +13810,7 @@
             },
             {
                 "box": {
-                    "id": "obj-09abc939d5",
+                    "id": "obj-48f4e38e91",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -13856,7 +13856,7 @@
             },
             {
                 "box": {
-                    "id": "obj-43ac1c9a56",
+                    "id": "obj-cd9f31868d",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -13902,7 +13902,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7bd73ef30d",
+                    "id": "obj-d08deb305b",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -13934,7 +13934,7 @@
             },
             {
                 "box": {
-                    "id": "obj-32deec722e",
+                    "id": "obj-b9c843a765",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -13967,7 +13967,7 @@
             },
             {
                 "box": {
-                    "id": "obj-798236826f",
+                    "id": "obj-d9b4a6fd73",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -14013,7 +14013,7 @@
             },
             {
                 "box": {
-                    "id": "obj-07d47fbdf1",
+                    "id": "obj-38d632c82e",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -14045,7 +14045,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c973a37fb1",
+                    "id": "obj-d897bcb60c",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -14078,7 +14078,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f8dc4d1e76",
+                    "id": "obj-f09506c07e",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -14124,7 +14124,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c06ea00b6c",
+                    "id": "obj-de6686d435",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -14170,7 +14170,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4b45c1dbe3",
+                    "id": "obj-f4289417dc",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -14216,7 +14216,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f51c7aad7c",
+                    "id": "obj-4bd9d1988e",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -14262,7 +14262,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0a0abad0cd",
+                    "id": "obj-faa6a55099",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -14294,7 +14294,7 @@
             },
             {
                 "box": {
-                    "id": "obj-bb963a8165",
+                    "id": "obj-084705363e",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -14327,7 +14327,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b74fee2b39",
+                    "id": "obj-5fe3b709d5",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -14391,7 +14391,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b62cca12a6",
+                    "id": "obj-a0baaa3874",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -14423,7 +14423,7 @@
             },
             {
                 "box": {
-                    "id": "obj-6f4a1b3dfb",
+                    "id": "obj-5cb2ec5fbb",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -14493,7 +14493,7 @@
             },
             {
                 "box": {
-                    "id": "obj-fa3fcba183",
+                    "id": "obj-3543eb1485",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -14525,7 +14525,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f181e2ec73",
+                    "id": "obj-2219472fe9",
                     "maxclass": "flonum",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -14566,7 +14566,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0b0e759805",
+                    "id": "obj-fb65916907",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -14598,7 +14598,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0a044e38ca",
+                    "id": "obj-2050a5e462",
                     "maxclass": "flonum",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -14639,7 +14639,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1f92c890d8",
+                    "id": "obj-18f4c5bba9",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -14671,7 +14671,7 @@
             },
             {
                 "box": {
-                    "id": "obj-19b8fa9f57",
+                    "id": "obj-f8b7e48cb8",
                     "maxclass": "flonum",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -14712,7 +14712,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4d6792e60e",
+                    "id": "obj-5ec971da86",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -14744,7 +14744,7 @@
             },
             {
                 "box": {
-                    "id": "obj-038d2d3ca2",
+                    "id": "obj-c082f63c1d",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -14828,7 +14828,7 @@
             },
             {
                 "box": {
-                    "id": "obj-fa011bee7c",
+                    "id": "obj-c602c29624",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -14860,7 +14860,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f79c91d578",
+                    "id": "obj-d5867e2bb8",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -14892,7 +14892,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1acb8b74b9",
+                    "id": "obj-fd71590bec",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -14925,7 +14925,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f56b4f1739",
+                    "id": "obj-f2d2245c66",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -14971,7 +14971,7 @@
             },
             {
                 "box": {
-                    "id": "obj-73864f6e54",
+                    "id": "obj-8732d22781",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -15017,7 +15017,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a50ffcf5a1",
+                    "id": "obj-cc916eefa4",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -15063,7 +15063,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7815a481c2",
+                    "id": "obj-73c50de984",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -15109,7 +15109,7 @@
             },
             {
                 "box": {
-                    "id": "obj-69de129d89",
+                    "id": "obj-60886d845b",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -15141,7 +15141,7 @@
             },
             {
                 "box": {
-                    "id": "obj-8ce4ef3674",
+                    "id": "obj-013a902b9b",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -15173,7 +15173,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0afcccc8eb",
+                    "id": "obj-9fc4c10e0e",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -15205,7 +15205,7 @@
             },
             {
                 "box": {
-                    "id": "obj-510c9eac6e",
+                    "id": "obj-1fd73b8625",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -15237,7 +15237,7 @@
             },
             {
                 "box": {
-                    "id": "obj-52cc25faf5",
+                    "id": "obj-62edb8b970",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -15269,7 +15269,7 @@
             },
             {
                 "box": {
-                    "id": "obj-cbc132d419",
+                    "id": "obj-73dfff39d3",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -15302,7 +15302,7 @@
             },
             {
                 "box": {
-                    "id": "obj-402d45603c",
+                    "id": "obj-bd29c8ae60",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -15348,7 +15348,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5a1c7627e9",
+                    "id": "obj-0b871a0116",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -15394,7 +15394,7 @@
             },
             {
                 "box": {
-                    "id": "obj-39a34b5099",
+                    "id": "obj-1c79e3504d",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -15440,7 +15440,7 @@
             },
             {
                 "box": {
-                    "id": "obj-280f2d5e40",
+                    "id": "obj-ba18d30df7",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -15486,7 +15486,7 @@
             },
             {
                 "box": {
-                    "id": "obj-111131cc83",
+                    "id": "obj-74452b6f51",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -15532,7 +15532,7 @@
             },
             {
                 "box": {
-                    "id": "obj-293a6eae4c",
+                    "id": "obj-5e9900cf12",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -15564,7 +15564,7 @@
             },
             {
                 "box": {
-                    "id": "obj-d54e4880e3",
+                    "id": "obj-99667863fc",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -15596,7 +15596,7 @@
             },
             {
                 "box": {
-                    "id": "obj-68f5f4664b",
+                    "id": "obj-ef0e750804",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -15628,7 +15628,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f4dd115408",
+                    "id": "obj-b0cc8c5f60",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -15660,7 +15660,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1fad718e70",
+                    "id": "obj-1517b3953b",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -15692,7 +15692,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1edc232b78",
+                    "id": "obj-b6998839b7",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -15724,7 +15724,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a494b8bfa0",
+                    "id": "obj-177faf021f",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -15757,7 +15757,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a32fddcf44",
+                    "id": "obj-cb357afab8",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -15803,7 +15803,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e7a5cee54a",
+                    "id": "obj-9f52402355",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -15849,7 +15849,7 @@
             },
             {
                 "box": {
-                    "id": "obj-8422a6f341",
+                    "id": "obj-ddf6a0b992",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -15895,7 +15895,7 @@
             },
             {
                 "box": {
-                    "id": "obj-11c22d9ef4",
+                    "id": "obj-ad9a43c420",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -15941,7 +15941,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0ac1bc8275",
+                    "id": "obj-5c6c0406c1",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -15973,7 +15973,7 @@
             },
             {
                 "box": {
-                    "id": "obj-fa294e78f0",
+                    "id": "obj-799d9659e5",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16005,7 +16005,7 @@
             },
             {
                 "box": {
-                    "id": "obj-66dd1e162a",
+                    "id": "obj-e1ecd16b4e",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16037,7 +16037,7 @@
             },
             {
                 "box": {
-                    "id": "obj-12de706f1b",
+                    "id": "obj-ae8388262c",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16069,7 +16069,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4fa85ff854",
+                    "id": "obj-967fae3242",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -16101,7 +16101,7 @@
             },
             {
                 "box": {
-                    "id": "obj-aa2b750864",
+                    "id": "obj-2357310abd",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16134,7 +16134,7 @@
             },
             {
                 "box": {
-                    "id": "obj-725f56a7c8",
+                    "id": "obj-c83d2229a6",
                     "maxclass": "flonum",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -16175,7 +16175,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b619800c35",
+                    "id": "obj-03b056be9c",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16207,7 +16207,7 @@
             },
             {
                 "box": {
-                    "id": "obj-931ef51ff5",
+                    "id": "obj-fb606f2832",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -16265,7 +16265,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1489953541",
+                    "id": "obj-1dc7f458f1",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16297,7 +16297,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0c7061db85",
+                    "id": "obj-83c4fd8a7f",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -16343,7 +16343,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b4ce87eb11",
+                    "id": "obj-749d984900",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -16389,7 +16389,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e576694191",
+                    "id": "obj-38abbc593e",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -16435,7 +16435,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1a1131dad1",
+                    "id": "obj-009ea2cd38",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16467,7 +16467,7 @@
             },
             {
                 "box": {
-                    "id": "obj-662bfec412",
+                    "id": "obj-932896d0be",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16499,7 +16499,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f6dfe67148",
+                    "id": "obj-fd26c80eda",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16531,7 +16531,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0217b679cf",
+                    "id": "obj-2e1132d84d",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -16563,7 +16563,7 @@
             },
             {
                 "box": {
-                    "id": "obj-fcfbee66fa",
+                    "id": "obj-a114a0c8b5",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16596,7 +16596,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a677bf5341",
+                    "id": "obj-eacfb70bcd",
                     "maxclass": "flonum",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -16637,7 +16637,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ad1c2b1230",
+                    "id": "obj-3da7ffdad7",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16669,7 +16669,7 @@
             },
             {
                 "box": {
-                    "id": "obj-123ccb7b8f",
+                    "id": "obj-fc30ba6ff5",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -16715,7 +16715,7 @@
             },
             {
                 "box": {
-                    "id": "obj-193fc25739",
+                    "id": "obj-bcf5a55856",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16747,7 +16747,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7ae13ca9ae",
+                    "id": "obj-dc9f07a3ab",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -16793,7 +16793,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a7241747bb",
+                    "id": "obj-54dbda3c74",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16825,7 +16825,7 @@
             },
             {
                 "box": {
-                    "id": "obj-433005b987",
+                    "id": "obj-700b4dad50",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -16871,7 +16871,7 @@
             },
             {
                 "box": {
-                    "id": "obj-d8b9cede77",
+                    "id": "obj-c945014d2e",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16903,7 +16903,7 @@
             },
             {
                 "box": {
-                    "id": "obj-8b4fc7c421",
+                    "id": "obj-830a1bfd95",
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -16957,7 +16957,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4b5e50604e",
+                    "id": "obj-78263d0319",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -16989,7 +16989,7 @@
             },
             {
                 "box": {
-                    "id": "obj-98eddb2403",
+                    "id": "obj-068580e84a",
                     "maxclass": "flonum",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17030,7 +17030,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b510ad5c67",
+                    "id": "obj-febfab11e7",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -17062,7 +17062,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2f74da486b",
+                    "id": "obj-71e5e7f17e",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17089,7 +17089,7 @@
             },
             {
                 "box": {
-                    "id": "obj-3a022f3fd1",
+                    "id": "obj-8e3aaa0188",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17116,7 +17116,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f43a08c3d6",
+                    "id": "obj-fbb96da301",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17143,7 +17143,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2c65ebb1b7",
+                    "id": "obj-94f0db7f41",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17170,7 +17170,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1d53943c61",
+                    "id": "obj-21815f437b",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -17202,7 +17202,7 @@
             },
             {
                 "box": {
-                    "id": "obj-040d8a7524",
+                    "id": "obj-3b1956375d",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17229,7 +17229,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f5fad89b17",
+                    "id": "obj-fafb965f58",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -17261,7 +17261,7 @@
             },
             {
                 "box": {
-                    "id": "obj-94a2f04883",
+                    "id": "obj-eb1e7dc0d3",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17288,7 +17288,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c540b7d89a",
+                    "id": "obj-a593cefd32",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -17320,7 +17320,7 @@
             },
             {
                 "box": {
-                    "id": "obj-32d63e368f",
+                    "id": "obj-890e86f8a0",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17347,7 +17347,7 @@
             },
             {
                 "box": {
-                    "id": "obj-bf4d9cbbff",
+                    "id": "obj-4696caa8d7",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -17379,7 +17379,7 @@
             },
             {
                 "box": {
-                    "id": "obj-98e512eae3",
+                    "id": "obj-af7510ab30",
                     "maxclass": "matrixctrl",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17421,7 +17421,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4d5ad957dd",
+                    "id": "obj-9f4ff613c5",
                     "maxclass": "matrixctrl",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17463,7 +17463,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5d289ad246",
+                    "id": "obj-4853f028f4",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -17495,7 +17495,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7f263d323f",
+                    "id": "obj-82ef4a3ba0",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -17528,7 +17528,7 @@
             },
             {
                 "box": {
-                    "id": "obj-81eb208fd0",
+                    "id": "obj-fe3f81c59b",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17555,7 +17555,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0c46233886",
+                    "id": "obj-201e3d26b4",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -17587,7 +17587,7 @@
             },
             {
                 "box": {
-                    "id": "obj-21a74e9eae",
+                    "id": "obj-73917dabe3",
                     "maxclass": "live.toggle",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17621,7 +17621,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ede12fadc7",
+                    "id": "obj-21cfbbdf78",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -17653,7 +17653,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f1d0f7c2ab",
+                    "id": "obj-af664b6337",
                     "maxclass": "live.meter~",
                     "numinlets": 1,
                     "numoutlets": 1,
@@ -17679,7 +17679,7 @@
             },
             {
                 "box": {
-                    "id": "obj-d248c6799e",
+                    "id": "obj-2f5adbbe08",
                     "maxclass": "live.meter~",
                     "numinlets": 1,
                     "numoutlets": 1,
@@ -17705,7 +17705,7 @@
             },
             {
                 "box": {
-                    "id": "obj-3c9bd15446",
+                    "id": "obj-b790a92068",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -17737,7 +17737,7 @@
             },
             {
                 "box": {
-                    "id": "obj-866e5250ff",
+                    "id": "obj-723f922d69",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -17770,7 +17770,7 @@
             },
             {
                 "box": {
-                    "id": "obj-51399fd997",
+                    "id": "obj-61cb7550df",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17797,7 +17797,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2509ba1431",
+                    "id": "obj-6fa08c6f61",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -17829,7 +17829,7 @@
             },
             {
                 "box": {
-                    "id": "obj-3dc3373d5e",
+                    "id": "obj-58a9f04da0",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17856,7 +17856,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1bb03e6524",
+                    "id": "obj-9a45e2e2c8",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -17888,7 +17888,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b36bb3ea73",
+                    "id": "obj-081b98a5a4",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -17920,7 +17920,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ec1978f7f4",
+                    "id": "obj-19a49ba647",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -17953,7 +17953,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4ffed048d1",
+                    "id": "obj-912026454d",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -17980,7 +17980,7 @@
             },
             {
                 "box": {
-                    "id": "obj-de44b74b63",
+                    "id": "obj-3b7dab9316",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18012,7 +18012,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2594f20a59",
+                    "id": "obj-ec63d79dbc",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -18039,7 +18039,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f31d6476d6",
+                    "id": "obj-4085b08d15",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18071,7 +18071,7 @@
             },
             {
                 "box": {
-                    "id": "obj-effaa0edd9",
+                    "id": "obj-c8c14762a1",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -18098,7 +18098,7 @@
             },
             {
                 "box": {
-                    "id": "obj-dc9cdd598e",
+                    "id": "obj-399204d53d",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18130,7 +18130,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0f531b94b0",
+                    "id": "obj-8cf290f4e7",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -18157,7 +18157,7 @@
             },
             {
                 "box": {
-                    "id": "obj-983966e57d",
+                    "id": "obj-af3e0eff6f",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18189,7 +18189,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5ba17f22c7",
+                    "id": "obj-d665f30622",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -18221,7 +18221,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b58650bb52",
+                    "id": "obj-36f34da125",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18254,7 +18254,7 @@
             },
             {
                 "box": {
-                    "id": "obj-beeac3e32b",
+                    "id": "obj-102cab639c",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -18281,7 +18281,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4a6ae15ceb",
+                    "id": "obj-c788c38de5",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18313,7 +18313,7 @@
             },
             {
                 "box": {
-                    "id": "obj-48b9dfc6b1",
+                    "id": "obj-b4aa992e2e",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -18340,7 +18340,7 @@
             },
             {
                 "box": {
-                    "id": "obj-fef3ce5342",
+                    "id": "obj-2e6ed4b9c7",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18372,7 +18372,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7f89e8c568",
+                    "id": "obj-452231dd58",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -18399,7 +18399,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ff005b9834",
+                    "id": "obj-ec27d298b1",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18431,7 +18431,7 @@
             },
             {
                 "box": {
-                    "id": "obj-254cd56733",
+                    "id": "obj-488b12c85b",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -18463,7 +18463,7 @@
             },
             {
                 "box": {
-                    "id": "obj-728c05815c",
+                    "id": "obj-3c2b45be02",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18496,7 +18496,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4653a30e4a",
+                    "id": "obj-36b3bad600",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -18523,7 +18523,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e9f436d3a8",
+                    "id": "obj-37ed5a553e",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18555,7 +18555,7 @@
             },
             {
                 "box": {
-                    "id": "obj-cc24388c1d",
+                    "id": "obj-21b0f4d7e3",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -18582,7 +18582,7 @@
             },
             {
                 "box": {
-                    "id": "obj-694e282f89",
+                    "id": "obj-cdb6711cea",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18614,7 +18614,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c7ac91b77d",
+                    "id": "obj-1c28e22710",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -18641,7 +18641,7 @@
             },
             {
                 "box": {
-                    "id": "obj-54b479dc8f",
+                    "id": "obj-9adf9d793e",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18673,7 +18673,7 @@
             },
             {
                 "box": {
-                    "id": "obj-064a516cd3",
+                    "id": "obj-c516373744",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -18700,7 +18700,7 @@
             },
             {
                 "box": {
-                    "id": "obj-27a19b75b6",
+                    "id": "obj-c4596855d2",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18732,7 +18732,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4fbd71b77b",
+                    "id": "obj-be00d44d85",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -18759,7 +18759,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f6db0b1b55",
+                    "id": "obj-48ce1c59b1",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18791,7 +18791,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7b1d065099",
+                    "id": "obj-708021bc55",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -18818,7 +18818,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7c7dcc1871",
+                    "id": "obj-29dc987e5a",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18850,7 +18850,7 @@
             },
             {
                 "box": {
-                    "id": "obj-adb446f818",
+                    "id": "obj-ea4b354190",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -18877,7 +18877,7 @@
             },
             {
                 "box": {
-                    "id": "obj-915bab785b",
+                    "id": "obj-5839d2cf46",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18909,7 +18909,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c5136dbb98",
+                    "id": "obj-05e6fcb29b",
                     "maxclass": "live.button",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -18936,7 +18936,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0e771f3645",
+                    "id": "obj-77e7c4a66e",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -18968,7 +18968,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2d97095de8",
+                    "id": "obj-ee30f51416",
                     "maxclass": "panel",
                     "numinlets": 0,
                     "numoutlets": 0,
@@ -18976,13 +18976,668 @@
                     "patching_rect": [
                         15.0,
                         4710.0,
+                        1070.0,
+                        90.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        15.0,
+                        1210.0,
+                        1070.0,
+                        90.0
+                    ],
+                    "varname": "panel_combos",
+                    "background": 1,
+                    "bgcolor": [
+                        0.07,
+                        0.07,
+                        0.08,
+                        1.0
+                    ],
+                    "bordersize": 0,
+                    "rounded": 0
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-34bbf1772b",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        27.0,
+                        4716.0,
+                        1046.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        27.0,
+                        1216.0,
+                        1046.0,
+                        14.0
+                    ],
+                    "varname": "label_combos",
+                    "text": "Combos",
+                    "fontname": "S\u00f6hne",
+                    "fontface": 0,
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.4,
+                        0.45,
+                        0.62,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-3c1ea07682",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        30.0,
+                        4736.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        30.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_lorenz",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-24e58eaa1b",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        20.0,
+                        4766.0,
+                        50.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        20.0,
+                        1266.0,
+                        50.0,
+                        14.0
+                    ],
+                    "varname": "ac_lorenz_l",
+                    "text": "lorenz",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-39e714b5b2",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        85.0,
+                        4736.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        85.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_rossler",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-ab9c10ac08",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        75.0,
+                        4766.0,
+                        50.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        75.0,
+                        1266.0,
+                        50.0,
+                        14.0
+                    ],
+                    "varname": "ac_rossler_l",
+                    "text": "rossler",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-17e0f53430",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        145.0,
+                        4736.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        145.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_chua",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-fada35956b",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        137.0,
+                        4766.0,
+                        45.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        137.0,
+                        1266.0,
+                        45.0,
+                        14.0
+                    ],
+                    "varname": "ac_chua_l",
+                    "text": "chua",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-9e9b966274",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        200.0,
+                        4736.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        200.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_halvorsen",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-961be35e10",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        185.0,
+                        4766.0,
+                        60.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        185.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "varname": "ac_halvorsen_l",
+                    "text": "halvorsen",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-2183e3f672",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        260.0,
+                        4736.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        260.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_aizawa",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-a2d80ccbf3",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        250.0,
+                        4766.0,
+                        50.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        250.0,
+                        1266.0,
+                        50.0,
+                        14.0
+                    ],
+                    "varname": "ac_aizawa_l",
+                    "text": "aizawa",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-011197635c",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        335.0,
+                        4736.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        335.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_lr_blend",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-c2f19b94a8",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        320.0,
+                        4766.0,
+                        60.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        320.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "varname": "ac_lr_blend_l",
+                    "text": "l + r",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-bad1778155",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        395.0,
+                        4736.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        395.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_lc_mod",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-49bfcbbf82",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        380.0,
+                        4766.0,
+                        60.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        380.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "varname": "ac_lc_mod_l",
+                    "text": "l x c",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-794566490b",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        455.0,
+                        4736.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        455.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_lh_route",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-f9bc73cfc6",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        440.0,
+                        4766.0,
+                        60.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        440.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "varname": "ac_lh_route_l",
+                    "text": "l to h",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-10f820bede",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        515.0,
+                        4736.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        515.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_ra_mod",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-9334c482b8",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        500.0,
+                        4766.0,
+                        60.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        500.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "varname": "ac_ra_mod_l",
+                    "text": "r x a",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-9ba81d73af",
+                    "maxclass": "live.button",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [
+                        "",
+                        "float"
+                    ],
+                    "patching_rect": [
+                        575.0,
+                        4736.0,
+                        26.0,
+                        26.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        575.0,
+                        1236.0,
+                        26.0,
+                        26.0
+                    ],
+                    "varname": "ac_ha_blend",
+                    "parameter_enable": 1
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-e24cb9959c",
+                    "maxclass": "comment",
+                    "numinlets": 1,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        560.0,
+                        4766.0,
+                        60.0,
+                        14.0
+                    ],
+                    "presentation": 1,
+                    "presentation_rect": [
+                        560.0,
+                        1266.0,
+                        60.0,
+                        14.0
+                    ],
+                    "varname": "ac_ha_blend_l",
+                    "text": "h + a",
+                    "fontname": "S\u00f6hne",
+                    "fontsize": 9.0,
+                    "textcolor": [
+                        0.32,
+                        0.3,
+                        0.28,
+                        1.0
+                    ]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-e5ec523495",
+                    "maxclass": "panel",
+                    "numinlets": 0,
+                    "numoutlets": 0,
+                    "outlettype": [],
+                    "patching_rect": [
+                        15.0,
+                        4820.0,
                         810.0,
                         110.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         15.0,
-                        1210.0,
+                        1320.0,
                         810.0,
                         110.0
                     ],
@@ -19000,21 +19655,21 @@
             },
             {
                 "box": {
-                    "id": "obj-1ae97d7411",
+                    "id": "obj-55cecf1150",
                     "maxclass": "comment",
                     "numinlets": 1,
                     "numoutlets": 0,
                     "outlettype": [],
                     "patching_rect": [
                         27.0,
-                        4716.0,
+                        4826.0,
                         786.0,
                         14.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         27.0,
-                        1216.0,
+                        1326.0,
                         786.0,
                         14.0
                     ],
@@ -19033,7 +19688,7 @@
             },
             {
                 "box": {
-                    "id": "obj-8c8eb36306",
+                    "id": "obj-b02ae96f6d",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -19043,14 +19698,14 @@
                     ],
                     "patching_rect": [
                         30.0,
-                        4736.0,
+                        4846.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         30.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -19079,7 +19734,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9c50047f36",
+                    "id": "obj-c2824c3bae",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -19089,14 +19744,14 @@
                     ],
                     "patching_rect": [
                         90.0,
-                        4736.0,
+                        4846.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         90.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -19125,7 +19780,7 @@
             },
             {
                 "box": {
-                    "id": "obj-56393869c4",
+                    "id": "obj-e4963027a8",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -19135,14 +19790,14 @@
                     ],
                     "patching_rect": [
                         150.0,
-                        4736.0,
+                        4846.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         150.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -19171,7 +19826,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7345f2d3f0",
+                    "id": "obj-563458332a",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -19181,14 +19836,14 @@
                     ],
                     "patching_rect": [
                         210.0,
-                        4736.0,
+                        4846.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         210.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -19217,7 +19872,7 @@
             },
             {
                 "box": {
-                    "id": "obj-35577fea20",
+                    "id": "obj-483ae6d2ea",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -19227,14 +19882,14 @@
                     ],
                     "patching_rect": [
                         270.0,
-                        4736.0,
+                        4846.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         270.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -19263,7 +19918,7 @@
             },
             {
                 "box": {
-                    "id": "obj-bdcb326fa1",
+                    "id": "obj-d2e4712e7b",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -19273,14 +19928,14 @@
                     ],
                     "patching_rect": [
                         330.0,
-                        4736.0,
+                        4846.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         330.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -19309,7 +19964,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e0e938cfd4",
+                    "id": "obj-a90a106bf1",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -19319,14 +19974,14 @@
                     ],
                     "patching_rect": [
                         390.0,
-                        4736.0,
+                        4846.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         390.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -19355,7 +20010,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1c2856d2cc",
+                    "id": "obj-605d6d1c01",
                     "maxclass": "live.dial",
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -19365,14 +20020,14 @@
                     ],
                     "patching_rect": [
                         450.0,
-                        4736.0,
+                        4846.0,
                         50.0,
                         50.0
                     ],
                     "presentation": 1,
                     "presentation_rect": [
                         450.0,
-                        1236.0,
+                        1346.0,
                         50.0,
                         50.0
                     ],
@@ -19401,7 +20056,7 @@
             },
             {
                 "box": {
-                    "id": "obj-fffe4a2f47",
+                    "id": "obj-92f1f5bcc4",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19420,7 +20075,7 @@
             },
             {
                 "box": {
-                    "id": "obj-59aa6fcbf8",
+                    "id": "obj-0948b376fe",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19439,7 +20094,7 @@
             },
             {
                 "box": {
-                    "id": "obj-00ab3a1148",
+                    "id": "obj-870f16606a",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19455,7 +20110,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9d0e37b556",
+                    "id": "obj-bc4746335f",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19474,7 +20129,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c13f68d0de",
+                    "id": "obj-b881f2f5d4",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19490,7 +20145,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4a2b98d098",
+                    "id": "obj-c945f74736",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19509,7 +20164,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4ebd5f4c41",
+                    "id": "obj-66c98ab6e2",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19525,7 +20180,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ade44b6f9e",
+                    "id": "obj-94fbafe589",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19544,7 +20199,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b8f70b54bb",
+                    "id": "obj-bd802bd21e",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19560,7 +20215,7 @@
             },
             {
                 "box": {
-                    "id": "obj-d40c106fca",
+                    "id": "obj-c4c126ec25",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19579,7 +20234,7 @@
             },
             {
                 "box": {
-                    "id": "obj-101935df1e",
+                    "id": "obj-ed83182414",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19595,7 +20250,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0d7343dcca",
+                    "id": "obj-26e47455dd",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19614,7 +20269,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f91f35ac51",
+                    "id": "obj-86f9995d8b",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19630,7 +20285,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e2cbb7d0bf",
+                    "id": "obj-7486b5a18f",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19649,7 +20304,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2fba40ea72",
+                    "id": "obj-4ecfe1da12",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19665,7 +20320,7 @@
             },
             {
                 "box": {
-                    "id": "obj-902e90b289",
+                    "id": "obj-5d37718780",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19684,7 +20339,7 @@
             },
             {
                 "box": {
-                    "id": "obj-6b3e2837ad",
+                    "id": "obj-37e703747a",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19700,7 +20355,7 @@
             },
             {
                 "box": {
-                    "id": "obj-45750fe2e8",
+                    "id": "obj-e967af845a",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19719,7 +20374,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ed49cc608f",
+                    "id": "obj-0d308b494e",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19735,7 +20390,7 @@
             },
             {
                 "box": {
-                    "id": "obj-05830e0e9c",
+                    "id": "obj-50ba750c0c",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19754,7 +20409,7 @@
             },
             {
                 "box": {
-                    "id": "obj-fbbaf46615",
+                    "id": "obj-3ebc4bb730",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19770,7 +20425,7 @@
             },
             {
                 "box": {
-                    "id": "obj-17c845f6b7",
+                    "id": "obj-749cf1f0a7",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19789,7 +20444,7 @@
             },
             {
                 "box": {
-                    "id": "obj-df3331bafa",
+                    "id": "obj-ea07c0017c",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19805,7 +20460,7 @@
             },
             {
                 "box": {
-                    "id": "obj-50623b58b5",
+                    "id": "obj-700eda7e57",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19824,7 +20479,7 @@
             },
             {
                 "box": {
-                    "id": "obj-0c82f61fcb",
+                    "id": "obj-3333b08c5a",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19840,7 +20495,7 @@
             },
             {
                 "box": {
-                    "id": "obj-d5b177fcd9",
+                    "id": "obj-c37c7fa8f6",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19859,7 +20514,7 @@
             },
             {
                 "box": {
-                    "id": "obj-35490abdab",
+                    "id": "obj-a1b74240d8",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19875,7 +20530,7 @@
             },
             {
                 "box": {
-                    "id": "obj-96e8ccc2cd",
+                    "id": "obj-73ade4f261",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19894,7 +20549,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ab69c06cf1",
+                    "id": "obj-ead481c266",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19910,7 +20565,7 @@
             },
             {
                 "box": {
-                    "id": "obj-eca94c94f6",
+                    "id": "obj-26c4ee70f5",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19929,7 +20584,7 @@
             },
             {
                 "box": {
-                    "id": "obj-232a38f0a7",
+                    "id": "obj-d0e01e9279",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19945,7 +20600,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2eab0f8263",
+                    "id": "obj-9701c7277f",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19964,7 +20619,7 @@
             },
             {
                 "box": {
-                    "id": "obj-6cc57f4c43",
+                    "id": "obj-2c037b13b5",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -19980,7 +20635,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9819623c88",
+                    "id": "obj-0fd75d3c70",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -19999,7 +20654,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ae90a446a0",
+                    "id": "obj-64269fc081",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20015,7 +20670,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c89c6122c4",
+                    "id": "obj-e8fa02db5c",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20034,7 +20689,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5d51fcaeb1",
+                    "id": "obj-0ca7a6f501",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20050,7 +20705,7 @@
             },
             {
                 "box": {
-                    "id": "obj-78cb197cc0",
+                    "id": "obj-f36a6e0120",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20069,7 +20724,7 @@
             },
             {
                 "box": {
-                    "id": "obj-03415aaa85",
+                    "id": "obj-cad812b31e",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20085,7 +20740,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a8b40238b1",
+                    "id": "obj-37af6c907f",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20104,7 +20759,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f1f0326ca6",
+                    "id": "obj-1cff320079",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20120,7 +20775,7 @@
             },
             {
                 "box": {
-                    "id": "obj-093b3d0a3a",
+                    "id": "obj-0df941b203",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20139,7 +20794,7 @@
             },
             {
                 "box": {
-                    "id": "obj-630d62febf",
+                    "id": "obj-f6030049a9",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20155,7 +20810,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ab912cae3c",
+                    "id": "obj-ecf42cd14d",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20174,7 +20829,7 @@
             },
             {
                 "box": {
-                    "id": "obj-d11a07cc05",
+                    "id": "obj-91ba365912",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20190,7 +20845,7 @@
             },
             {
                 "box": {
-                    "id": "obj-681d5d72ef",
+                    "id": "obj-78adf162cf",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20209,7 +20864,7 @@
             },
             {
                 "box": {
-                    "id": "obj-803b979e03",
+                    "id": "obj-6e596f0db6",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20225,7 +20880,7 @@
             },
             {
                 "box": {
-                    "id": "obj-555148922a",
+                    "id": "obj-c46af53704",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20244,7 +20899,7 @@
             },
             {
                 "box": {
-                    "id": "obj-6701358490",
+                    "id": "obj-da7361127d",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20260,7 +20915,7 @@
             },
             {
                 "box": {
-                    "id": "obj-adfab7a87f",
+                    "id": "obj-5f90fedceb",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20279,7 +20934,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b08495b4f8",
+                    "id": "obj-01c2757bbb",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20295,7 +20950,7 @@
             },
             {
                 "box": {
-                    "id": "obj-473010f1c2",
+                    "id": "obj-5dba77708e",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20314,7 +20969,7 @@
             },
             {
                 "box": {
-                    "id": "obj-09263073aa",
+                    "id": "obj-8074cd2fe4",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20330,7 +20985,7 @@
             },
             {
                 "box": {
-                    "id": "obj-8be7a2f740",
+                    "id": "obj-e4e112b84e",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20349,7 +21004,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1dbcbd0ffb",
+                    "id": "obj-8052e450ee",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20365,7 +21020,7 @@
             },
             {
                 "box": {
-                    "id": "obj-389db5fecb",
+                    "id": "obj-a3de03f420",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20384,7 +21039,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e023bf4e0e",
+                    "id": "obj-57368096ca",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20400,7 +21055,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7fd5e005d2",
+                    "id": "obj-d2d792e902",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20419,7 +21074,7 @@
             },
             {
                 "box": {
-                    "id": "obj-3a41ac029b",
+                    "id": "obj-15e69e7f9b",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20435,7 +21090,7 @@
             },
             {
                 "box": {
-                    "id": "obj-91fab19a7d",
+                    "id": "obj-8923dcca49",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20454,7 +21109,7 @@
             },
             {
                 "box": {
-                    "id": "obj-fa509640d3",
+                    "id": "obj-f585fbea58",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20470,7 +21125,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2458f5cbd7",
+                    "id": "obj-e8c2665922",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20489,7 +21144,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ad0645807b",
+                    "id": "obj-f46397142b",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20505,7 +21160,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a99f6b23e9",
+                    "id": "obj-9f1c2434a6",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20524,7 +21179,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2ba97191dc",
+                    "id": "obj-68c6224071",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20540,7 +21195,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5efad4b2bc",
+                    "id": "obj-0ebd19d7a2",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20559,7 +21214,7 @@
             },
             {
                 "box": {
-                    "id": "obj-d94ceed458",
+                    "id": "obj-fa7381d810",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20575,7 +21230,7 @@
             },
             {
                 "box": {
-                    "id": "obj-416e0dc1c7",
+                    "id": "obj-60fd576b30",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20594,7 +21249,7 @@
             },
             {
                 "box": {
-                    "id": "obj-df324c262e",
+                    "id": "obj-632106c1a7",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20610,7 +21265,7 @@
             },
             {
                 "box": {
-                    "id": "obj-026e0cb6cb",
+                    "id": "obj-ffdf3e9f52",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20629,7 +21284,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7eed6f9708",
+                    "id": "obj-84f4996d8b",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20645,7 +21300,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5c237a0a04",
+                    "id": "obj-4004e80c72",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20664,7 +21319,7 @@
             },
             {
                 "box": {
-                    "id": "obj-3eb6e81651",
+                    "id": "obj-80bdf80d43",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20680,7 +21335,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9c559cdde4",
+                    "id": "obj-6b0e9c6dbd",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20699,7 +21354,7 @@
             },
             {
                 "box": {
-                    "id": "obj-71baa2c506",
+                    "id": "obj-beb356f77c",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20715,7 +21370,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e9cbf82eff",
+                    "id": "obj-13f8202462",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20734,7 +21389,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f64433206a",
+                    "id": "obj-f0fd64e213",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20750,7 +21405,7 @@
             },
             {
                 "box": {
-                    "id": "obj-ac329a8d4a",
+                    "id": "obj-5e45b7049f",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20769,7 +21424,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f0ddb1dfbc",
+                    "id": "obj-649debf1b9",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20785,7 +21440,7 @@
             },
             {
                 "box": {
-                    "id": "obj-a081c961d9",
+                    "id": "obj-45ce085722",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20804,7 +21459,7 @@
             },
             {
                 "box": {
-                    "id": "obj-33cad1f01d",
+                    "id": "obj-e1d2c24752",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20820,7 +21475,7 @@
             },
             {
                 "box": {
-                    "id": "obj-265e9fe545",
+                    "id": "obj-1ea91cfc75",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20839,7 +21494,7 @@
             },
             {
                 "box": {
-                    "id": "obj-8805a70f36",
+                    "id": "obj-03655b95d0",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20855,7 +21510,7 @@
             },
             {
                 "box": {
-                    "id": "obj-615a142f38",
+                    "id": "obj-1b93978a44",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20874,7 +21529,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c23b0995b5",
+                    "id": "obj-cfe9b06ffd",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20890,7 +21545,7 @@
             },
             {
                 "box": {
-                    "id": "obj-76e1a63169",
+                    "id": "obj-ce0e098641",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20909,7 +21564,7 @@
             },
             {
                 "box": {
-                    "id": "obj-41bcfc7093",
+                    "id": "obj-e3f22d941d",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20925,7 +21580,7 @@
             },
             {
                 "box": {
-                    "id": "obj-d81ea35f82",
+                    "id": "obj-45b5d45a6d",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20944,7 +21599,7 @@
             },
             {
                 "box": {
-                    "id": "obj-05f5ece97a",
+                    "id": "obj-c28ecd6e3c",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20960,7 +21615,7 @@
             },
             {
                 "box": {
-                    "id": "obj-1aab7d8460",
+                    "id": "obj-cbc00959a2",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -20979,7 +21634,7 @@
             },
             {
                 "box": {
-                    "id": "obj-edbce19fb3",
+                    "id": "obj-ad099e0e0e",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -20995,7 +21650,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4d82810944",
+                    "id": "obj-78e5bf9ef9",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -21014,7 +21669,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b6fb62294d",
+                    "id": "obj-1f871eedb0",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -21030,7 +21685,7 @@
             },
             {
                 "box": {
-                    "id": "obj-57c4eb25a0",
+                    "id": "obj-b428d80917",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -21049,7 +21704,7 @@
             },
             {
                 "box": {
-                    "id": "obj-5703f76fd3",
+                    "id": "obj-70bef28c6a",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -21065,7 +21720,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f4de941ac0",
+                    "id": "obj-d7c79a72c0",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -21084,7 +21739,7 @@
             },
             {
                 "box": {
-                    "id": "obj-4b04568a89",
+                    "id": "obj-1932ad29da",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -21100,7 +21755,7 @@
             },
             {
                 "box": {
-                    "id": "obj-bdc92a40f2",
+                    "id": "obj-4f3ac9b4d4",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -21119,7 +21774,7 @@
             },
             {
                 "box": {
-                    "id": "obj-15ec554e0f",
+                    "id": "obj-30ca54d0d7",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -21135,7 +21790,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9cdc06b8d4",
+                    "id": "obj-c230dd8722",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -21154,7 +21809,7 @@
             },
             {
                 "box": {
-                    "id": "obj-9f236cda79",
+                    "id": "obj-181d8e8547",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -21170,7 +21825,7 @@
             },
             {
                 "box": {
-                    "id": "obj-2a2e49ede7",
+                    "id": "obj-6b59f5c41a",
                     "maxclass": "newobj",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -21189,7 +21844,7 @@
             },
             {
                 "box": {
-                    "id": "obj-8abf09b307",
+                    "id": "obj-a1269c6d2b",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -21205,7 +21860,7 @@
             },
             {
                 "box": {
-                    "id": "obj-efc55c73a1",
+                    "id": "obj-1a378789d3",
                     "maxclass": "message",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -21224,7 +21879,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f575f31c09",
+                    "id": "obj-1f1ff6727d",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -21240,7 +21895,7 @@
             },
             {
                 "box": {
-                    "id": "obj-259acc96cf",
+                    "id": "obj-d4df35c19a",
                     "maxclass": "message",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -21259,7 +21914,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b46e0e450c",
+                    "id": "obj-07a5ef4077",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -21275,7 +21930,7 @@
             },
             {
                 "box": {
-                    "id": "obj-783f8cea63",
+                    "id": "obj-15bcace287",
                     "maxclass": "message",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -21294,7 +21949,7 @@
             },
             {
                 "box": {
-                    "id": "obj-38de4999f1",
+                    "id": "obj-b03ae7a0f9",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -21310,7 +21965,7 @@
             },
             {
                 "box": {
-                    "id": "obj-7fb7c809b4",
+                    "id": "obj-ec2d920aa2",
                     "maxclass": "message",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -21329,7 +21984,7 @@
             },
             {
                 "box": {
-                    "id": "obj-3197c0a6e3",
+                    "id": "obj-c5dcbefdd8",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -21345,7 +22000,7 @@
             },
             {
                 "box": {
-                    "id": "obj-118136a2aa",
+                    "id": "obj-16a5408331",
                     "maxclass": "message",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -21364,7 +22019,7 @@
             },
             {
                 "box": {
-                    "id": "obj-25abcec1d9",
+                    "id": "obj-631dde95e7",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -21380,7 +22035,7 @@
             },
             {
                 "box": {
-                    "id": "obj-228a9400ce",
+                    "id": "obj-e4ee3c1e7a",
                     "maxclass": "message",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -21399,7 +22054,7 @@
             },
             {
                 "box": {
-                    "id": "obj-348a2dbb26",
+                    "id": "obj-989e54b345",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -21415,7 +22070,7 @@
             },
             {
                 "box": {
-                    "id": "obj-b6db0d2073",
+                    "id": "obj-dd4da98b84",
                     "maxclass": "message",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -21434,7 +22089,7 @@
             },
             {
                 "box": {
-                    "id": "obj-f9aba49c90",
+                    "id": "obj-7ae31953c5",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -21450,7 +22105,7 @@
             },
             {
                 "box": {
-                    "id": "obj-e6980caf45",
+                    "id": "obj-2b9f0fd240",
                     "maxclass": "message",
                     "numinlets": 2,
                     "numoutlets": 1,
@@ -21469,7 +22124,7 @@
             },
             {
                 "box": {
-                    "id": "obj-c6b40a48fc",
+                    "id": "obj-3533276ffc",
                     "maxclass": "newobj",
                     "numinlets": 1,
                     "numoutlets": 0,
@@ -27027,6 +27682,126 @@
                     ],
                     "destination": [
                         "obj-spread-wide",
+                        0
+                    ]
+                }
+            },
+            {
+                "patchline": {
+                    "source": [
+                        "ac_lorenz",
+                        0
+                    ],
+                    "destination": [
+                        "obj-ac1",
+                        0
+                    ]
+                }
+            },
+            {
+                "patchline": {
+                    "source": [
+                        "ac_rossler",
+                        0
+                    ],
+                    "destination": [
+                        "obj-ac2",
+                        0
+                    ]
+                }
+            },
+            {
+                "patchline": {
+                    "source": [
+                        "ac_chua",
+                        0
+                    ],
+                    "destination": [
+                        "obj-ac3",
+                        0
+                    ]
+                }
+            },
+            {
+                "patchline": {
+                    "source": [
+                        "ac_halvorsen",
+                        0
+                    ],
+                    "destination": [
+                        "obj-ac4",
+                        0
+                    ]
+                }
+            },
+            {
+                "patchline": {
+                    "source": [
+                        "ac_aizawa",
+                        0
+                    ],
+                    "destination": [
+                        "obj-ac5",
+                        0
+                    ]
+                }
+            },
+            {
+                "patchline": {
+                    "source": [
+                        "ac_lr_blend",
+                        0
+                    ],
+                    "destination": [
+                        "obj-ac6",
+                        0
+                    ]
+                }
+            },
+            {
+                "patchline": {
+                    "source": [
+                        "ac_lc_mod",
+                        0
+                    ],
+                    "destination": [
+                        "obj-ac7",
+                        0
+                    ]
+                }
+            },
+            {
+                "patchline": {
+                    "source": [
+                        "ac_lh_route",
+                        0
+                    ],
+                    "destination": [
+                        "obj-ac8",
+                        0
+                    ]
+                }
+            },
+            {
+                "patchline": {
+                    "source": [
+                        "ac_ra_mod",
+                        0
+                    ],
+                    "destination": [
+                        "obj-ac9",
+                        0
+                    ]
+                }
+            },
+            {
+                "patchline": {
+                    "source": [
+                        "ac_ha_blend",
+                        0
+                    ],
+                    "destination": [
+                        "obj-ac10",
                         0
                     ]
                 }
