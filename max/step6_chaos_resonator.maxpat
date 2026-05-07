@@ -82,7 +82,7 @@
                     "numoutlets": 1,
                     "outlettype": [ "" ],
                     "patching_rect": [ 237.0, 299.0, 602.0, 36.0 ],
-                    "text": "mute 0, chaos_gain 0.05, master_gain 1., rho 28, root 55, arp_mode 8, arp_div 3, arp_bpm 120, att_sel 0, att_b_sel 2, combine_mode 1, mod_depth 0.3, sub_amt 0, sub_drone 0",
+                    "text": "mute 0, chaos_gain 0.3, master_gain 1., rho 28, root 55, arp_mode 8, arp_div 3, arp_bpm 120, att_sel 0, att_b_sel 2, combine_mode 0, blend_mix 0.5, sub_amt 0, sub_drone 0",
                     "varname": "obj-init-msg"
                 }
             },
@@ -1088,7 +1088,7 @@
                     "format": 6,
                     "id": "obj-dt-n",
                     "maxclass": "flonum",
-                    "maximum": 0.004,
+                    "maximum": 0.02,
                     "minimum": 0.0003,
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -1128,7 +1128,7 @@
                     "format": 6,
                     "id": "obj-cg-n",
                     "maxclass": "flonum",
-                    "maximum": 0.5,
+                    "maximum": 1.0,
                     "minimum": 0.0,
                     "numinlets": 1,
                     "numoutlets": 2,
@@ -1938,7 +1938,7 @@
                     "numoutlets": 1,
                     "outlettype": [ "" ],
                     "patching_rect": [ 623.0, 604.0, 130.0, 22.0 ],
-                    "text": "scale 0. 1. 0.002 0.01",
+                    "text": "scale 0. 1. 0. 1.",
                     "varname": "obj-camac-scg"
                 }
             },
@@ -3349,6 +3349,76 @@
                     "patching_rect": [ 188.0, 1600.0, 320.0, 120.0 ],
                     "rows": 6,
                     "varname": "obj-ugrid"
+                }
+            },
+            {
+                "box": {
+                    "columns": 16,
+                    "id": "obj-stepind",
+                    "maxclass": "matrixctrl",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [ "list", "list" ],
+                    "parameter_enable": 0,
+                    "patching_rect": [ 188.0, 1735.0, 320.0, 18.0 ],
+                    "rows": 1,
+                    "varname": "obj-stepind"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-stepind-snap",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "float" ],
+                    "patching_rect": [ 540.0, 1735.0, 90.0, 22.0 ],
+                    "text": "snapshot~ 16"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-stepind-change",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "int" ],
+                    "patching_rect": [ 540.0, 1762.0, 60.0, 22.0 ],
+                    "text": "change"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-stepind-trig",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 2,
+                    "outlettype": [ "int", "bang" ],
+                    "patching_rect": [ 540.0, 1789.0, 50.0, 22.0 ],
+                    "text": "t i b"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-stepind-clear",
+                    "maxclass": "message",
+                    "numinlets": 2,
+                    "numoutlets": 1,
+                    "outlettype": [ "" ],
+                    "patching_rect": [ 605.0, 1816.0, 45.0, 22.0 ],
+                    "text": "clear",
+                    "varname": "obj-stepind-clear"
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-stepind-pak",
+                    "maxclass": "newobj",
+                    "numinlets": 4,
+                    "numoutlets": 1,
+                    "outlettype": [ "" ],
+                    "patching_rect": [ 540.0, 1816.0, 130.0, 22.0 ],
+                    "text": "pak setcell 0 0 1"
                 }
             },
             {
@@ -5675,6 +5745,7 @@
                     "outlettype": [ "", "bang" ],
                     "parameter_enable": 0,
                     "patching_rect": [ 707.0, 1722.0, 50.0, 22.0 ],
+                    "value": 120.0,
                     "varname": "obj-grid-bpm-n"
                 }
             },
@@ -6623,7 +6694,7 @@
             {
                 "box": {
                     "id": "obj-pm-pattern",
-                    "items": [ "Bembe 12/8", ",", "Shiko", ",", "Poly 3:2", ",", "Call/Response", ",", "Gahu 15-step", ",", "Son Clave 3:2", ",", "Fume Fume", ",", "Kassa" ],
+                    "items": [ "Bembe 12/8", ",", "Shiko", ",", "Poly 3:2", ",", "Call/Response", ",", "Gahu 15-step", ",", "Son Clave 3:2", ",", "Fume Fume", ",", "Kassa", ",", "Kuduro", ",", "Semba", ",", "Kizomba", ",", "Marrabenta" ],
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -6826,7 +6897,7 @@
             {
                 "box": {
                     "id": "obj-arpmode-umenu",
-                    "items": [ "All On", ",", "Up", ",", "Down", ",", "Up/Down", ",", "Random", ",", "Chord", ",", "Poly 3:2", ",", "Triplet", ",", "Bembe", ",", "Shiko", ",", "Call/Resp", ",", "Gahu", ",", "Son Clave", ",", "Fume Fume", ",", "Kassa", ",", "Kuduro", ",", "Semba", ",", "Kizomba", ",", "Marrabenta", ",", "Euclidean", ",", "Sequencer" ],
+                    "items": [ "All On", ",", "Up", ",", "Down", ",", "Up/Down", ",", "Random", ",", "Chord", ",", "Triplet", ",", "Euclidean", ",", "Sequencer" ],
                     "maxclass": "umenu",
                     "numinlets": 1,
                     "numoutlets": 3,
@@ -6840,12 +6911,24 @@
             },
             {
                 "box": {
+                    "id": "obj-arpmode-expr",
+                    "maxclass": "newobj",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "int" ],
+                    "patching_rect": [ 540.0, 1305.0, 220.0, 22.0 ],
+                    "text": "expr if($i1<6, $i1, if($i1==6, 7, if($i1==7, 19, 20)))",
+                    "varname": "obj-arpmode-expr"
+                }
+            },
+            {
+                "box": {
                     "id": "obj-arpmode-msg",
                     "maxclass": "message",
                     "numinlets": 2,
                     "numoutlets": 1,
                     "outlettype": [ "" ],
-                    "patching_rect": [ 540.0, 1310.0, 90.0, 22.0 ],
+                    "patching_rect": [ 540.0, 1335.0, 90.0, 22.0 ],
                     "text": "arp_mode $1",
                     "varname": "obj-arpmode-msg"
                 }
@@ -7016,8 +7099,14 @@
             },
             {
                 "patchline": {
-                    "destination": [ "obj-arpmode-msg", 0 ],
+                    "destination": [ "obj-arpmode-expr", 0 ],
                     "source": [ "obj-arpmode-umenu", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-arpmode-msg", 0 ],
+                    "source": [ "obj-arpmode-expr", 0 ]
                 }
             },
             {
@@ -7214,6 +7303,48 @@
                 "patchline": {
                     "destination": [ "obj-camac-rhom", 0 ],
                     "source": [ "obj-camac-srho", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-stepind-snap", 0 ],
+                    "source": [ "obj-gen", 5 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-stepind-change", 0 ],
+                    "source": [ "obj-stepind-snap", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-stepind-trig", 0 ],
+                    "source": [ "obj-stepind-change", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-stepind-clear", 0 ],
+                    "source": [ "obj-stepind-trig", 1 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-stepind-pak", 1 ],
+                    "source": [ "obj-stepind-trig", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-stepind", 0 ],
+                    "source": [ "obj-stepind-clear", 0 ]
+                }
+            },
+            {
+                "patchline": {
+                    "destination": [ "obj-stepind", 0 ],
+                    "source": [ "obj-stepind-pak", 0 ]
                 }
             },
             {
