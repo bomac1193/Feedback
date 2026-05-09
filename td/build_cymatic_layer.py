@@ -344,12 +344,43 @@ def build_cymatic_layer(chaos_top):
     layer.par.pixeldat = dat.path
     print(f"[OK] Created {layer.path} with cymatic shader")
 
+    # Discover what chaos_viz currently feeds (downstream consumers)
+    downstream_targets = []
+    try:
+        for conn in chaos_top.outputConnectors[0].connections:
+            owner = conn.owner
+            in_index = conn.index
+            downstream_targets.append((owner, in_index))
+    except Exception as e:
+        print(f"[INFO] Could not enumerate downstream connections: {e}")
+
+    if downstream_targets:
+        print(f"[INFO] chaos_viz currently feeds {len(downstream_targets)} downstream op(s):")
+        for op_, idx in downstream_targets:
+            print(f"       - {op_.path} (input {idx})")
+
+    # Disconnect chaos_viz from all downstream targets
+    for op_, in_index in downstream_targets:
+        try:
+            chaos_top.outputConnectors[0].disconnect(op_.inputConnectors[in_index])
+            print(f"[OK] Disconnected {chaos_top.path} from {op_.path}")
+        except Exception as e:
+            print(f"[WARN] Could not disconnect from {op_.path}: {e}")
+
     # Connect chaos_viz output to cymatic_layer input
     try:
         chaos_top.outputConnectors[0].connect(layer.inputConnectors[0])
         print(f"[OK] Connected {chaos_top.path} -> {layer.path}")
     except Exception as e:
-        print(f"[WARN] Could not auto-connect: {e}")
+        print(f"[WARN] Could not connect {chaos_top.path} to {layer.path}: {e}")
+
+    # Connect cymatic_layer output to each former downstream target
+    for op_, in_index in downstream_targets:
+        try:
+            layer.outputConnectors[0].connect(op_.inputConnectors[in_index])
+            print(f"[OK] Connected {layer.path} -> {op_.path} (input {in_index})")
+        except Exception as e:
+            print(f"[WARN] Could not connect {layer.path} to {op_.path}: {e}")
 
     # Configure 5 vec4 uniforms in fresh slots 0-4
     target_path = parent.path  # /project1/feedback_viz, where custom params live
@@ -400,24 +431,14 @@ def main():
 
     print()
     print("=" * 60)
-    print("Wiring complete. Two outputs now:")
-    print(f"  - {chaos.path}: original chaos-point, OSC-driven (back to working)")
-    print(f"  - {layer.path}: cymatic effects layered on top, slider-driven")
+    print("Wiring complete:")
+    print(f"  Audio in (OSC) -> {chaos.path} (original chaos-point shader)")
+    print(f"           -> {layer.path} (cymatic shader, slider-driven)")
+    print(f"           -> downstream ops (trail/feedback/composite, restored)")
     print()
-    print("By default cymatic_layer is connected to chaos_viz's input but its")
-    print("output isn't wired anywhere downstream. Wire its output to whatever")
-    print("op was previously consuming chaos_viz's output (the trail/feedback")
-    print("chain or composite).")
-    print()
-    print("To find what was consuming chaos_viz output:")
-    print(f"  for c in op('{chaos.path}').outputConnectors[0].connections:")
-    print(f"      print(c.owner.path)")
-    print()
-    print("To swap in cymatic_layer in place of chaos_viz, you'd do roughly:")
-    print(f"  downstream = <the op that was reading chaos_viz>")
-    print(f"  op('{layer.path}').outputConnectors[0].connect(downstream.inputConnectors[0])")
-    print()
-    print("Sliders: click /project1/feedback_viz, find the 'Cymatic' page, drag.")
+    print("Try sliders: click /project1/feedback_viz, find 'Cymatic' page, drag.")
+    print("Try material: set Material slider to 1 (chalk), then bring up Texture Size,")
+    print("Noise Intensity, Film Grain to taste.")
     print("=" * 60)
 
 
