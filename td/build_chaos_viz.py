@@ -255,7 +255,7 @@ def build_chaos_viz():
     glsl_dat.text = CHAOS_GLSL
     glsl_dat.nodeX = base_x + 200
     glsl_dat.nodeY = base_y - 300
-    chaos_viz.par.glsl = glsl_dat.path
+    chaos_viz.par.dat = glsl_dat
 
     # Wire CHOP uniforms to GLSL
     # Map channel names to uniform names

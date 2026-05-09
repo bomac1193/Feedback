@@ -182,42 +182,51 @@ void main()
         weightSum += w;
     }
     cymatic /= max(weightSum, 0.001);
-    cymatic *= mix(0.5, 1.0, kr);
 
-    // Add FBM noise into the field for material grain
+    // Anti-flicker: gentle smoothstep mapping of kr instead of linear mix.
+    // kr ranges 0-1 but real audio sees rapid binary-ish swings; smooth them.
+    float krCurve = smoothstep(0.05, 0.95, kr);
+    float krBrightness = mix(0.65, 1.0, krCurve);
+    cymatic *= krBrightness;
+
+    // Normalize field magnitude so harmonic count doesn't change overall
+    // brightness (wider visual sweet spot across the Harmonics slider).
+    float absC = abs(cymatic);
+    float fieldNorm = cymatic / (0.5 + absC * 0.6);
+
+    // Add FBM noise into the field for material grain (subtle bend, not break)
     if (noiseIntensity > 0.001) {
         float n = fbm(warpUv * noiseScale * 5.0 + t * 0.05, int(detailOctaves + 0.5));
-        cymatic += (n - 0.5) * noiseIntensity;
+        fieldNorm += (n - 0.5) * noiseIntensity * 0.3;
     }
 
-    // === ANTI-ALIASED NODAL LINE ===
-    // Use absolute UV-space thickness for consistent visible lines, not fwidth
-    // (which goes to zero at high frequencies and causes thin/aliased look).
-    // Supersample 4 taps for proper AA, then smoothstep into a clean line.
-    float dist = abs(cymatic);
-    float lineWidthUV = nodalThickness * 0.014;          // line core width
-    float lineEdgeUV  = lineWidthUV * (1.0 + edgeSoftness * 3.0); // soft edge
+    // === TEXTURAL NODAL LINES (anti-aliased, with stroke character) ===
+    // Two-layer line: textural core + permanent soft halo.
+    // Core line uses FBM modulation so it reads as ink/chalk stroke, not clean math edge.
+    // Halo gives lines visible presence at any thickness.
+    float dist = abs(fieldNorm);
 
-    // 4-tap supersample (0.25 px offsets) reduces aliasing on busy patterns
-    float pxX = 0.5 / res.x;
-    float pxY = 0.5 / res.y;
-    float aaSum = 0.0;
-    for (int sx = -1; sx <= 1; sx += 2) {
-        for (int sy = -1; sy <= 1; sy += 2) {
-            vec2 sUv = uv + vec2(float(sx) * pxX, float(sy) * pxY);
-            // Re-eval a small offset of cymatic at sample position. Approximate
-            // by reusing the existing field gradient for cheapness.
-            float dSample = dist + (float(sx) + float(sy)) * fwidth(dist) * 0.25;
-            aaSum += smoothstep(lineEdgeUV, lineWidthUV * 0.4, dSample);
-        }
-    }
-    float nodalLine = aaSum * 0.25;
+    float coreWidthUV = nodalThickness * 0.012;
+    float haloWidthUV = coreWidthUV * (4.0 + edgeSoftness * 4.0);
 
-    // Optional soft halo for line presence (disabled when edgeSoftness is 0)
-    float haloWidth = lineWidthUV * 5.0 * (0.3 + edgeSoftness);
-    float halo = smoothstep(haloWidth, lineWidthUV * 0.4, dist) * 0.35 * edgeSoftness;
-    nodalLine = clamp(nodalLine + halo, 0.0, 1.0);
-    nodalLine = pow(nodalLine, contrast);
+    // Core: textural by FBM modulation along the line
+    float strokeNoise = fbm(uv * 90.0 + warpUv * 30.0, 3);
+    float strokeMod = mix(0.55, 1.0, strokeNoise); // 0.55-1.0 stroke intensity variation
+    float coreSharp = smoothstep(coreWidthUV * 1.5, coreWidthUV * 0.3, dist);
+    float coreTextured = coreSharp * strokeMod;
+
+    // Per-pixel jitter at the edge for chalky character
+    float edgeJitter = (hash21(uv * 800.0) - 0.5) * coreWidthUV * 0.3;
+    float jitteredCore = smoothstep(coreWidthUV * 1.2, coreWidthUV * 0.4,
+                                    dist + edgeJitter);
+    coreTextured = max(coreTextured, jitteredCore * strokeMod * 0.7);
+
+    // Halo: permanent presence around line
+    float halo = smoothstep(haloWidthUV, coreWidthUV * 0.6, dist);
+    halo = halo * halo * 0.35;
+
+    float nodalLine = clamp(coreTextured + halo, 0.0, 1.0);
+    nodalLine = pow(nodalLine, max(contrast, 0.4));
 
     // === LUSONA DISTANCE (Pass 1 texture) ===
     float minDist = texture(sTD2DInputs[0], uv).r;

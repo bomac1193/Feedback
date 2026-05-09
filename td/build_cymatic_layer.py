@@ -229,7 +229,7 @@ void main() {
     float grainScale = baseGrainScale / max(textureSize, 0.05);
     cymaticColor = mix(cymaticColor, mix(cymaticColor, vec3(1.0, 0.85, 0.6), colorWarmth), 0.5);
 
-    vec3 lineColor = cymaticColor * nodalLine;
+    vec3 lineColor = cymaticColor;
     if (grainAmount > 0.001) {
         float g = hash21(uv * grainScale + vec2(t * 60.0, t * 47.0));
         float gateThresh = (1.0 - particleDensity) * 0.5;
@@ -241,7 +241,9 @@ void main() {
         lineColor *= 1.0 + (sh - 0.5) * surfaceShimmer;
     }
 
-    vec3 finalColor = background + lineColor * mix(0.5, 1.0, materialMix);
+    // ALPHA BLEND (not additive) so feedback chain doesn't accumulate to white
+    float cymaticAlpha = clamp(nodalLine * materialMix, 0.0, 1.0);
+    vec3 finalColor = mix(background, lineColor, cymaticAlpha);
     fragColor = TDOutputSwizzle(vec4(finalColor, 1.0));
 }
 '''

@@ -3,3 +3,50 @@ __pycache__/
 *.log
 .DS_Store
 npm-debug-*.log
+
+# Heavy training data (large; commit separately via LFS if needed)
+lora_training/apex_118/
+lora_training/ubani_photos/
+lora_training/gen_output/
+lora_training/_higgsfield_backup/
+lora_training/dontwant/
+lora_training/cloud_tests/
+lora_training/*.zip
+
+# Reference image folders (large)
+abimbola_reference/
+deren_reference/
+eglash_reference/
+fukiau_reference/
+grant_reference/
+rigaud_secrets_reference/
+thompson_reference/
+veve_reference/
+
+# Large reference PDFs
+abimbola.pdf
+deren_divine_horsemen.pdf
+eglash_fractals.pdf
+fukiau.pdf
+thompson_flash.pdf
+
+# Backups and cruft
+*.before_maxui_integration
+*.bak
+*.tmp
+
+# Python
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Editor / OS
+*.swp
+.vscode/
+.idea/
+
+# Secrets
+.env
+*.env.local
+secrets/

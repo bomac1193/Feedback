@@ -1,0 +1,112 @@
+{
+  "_comment": "API-format FLUX-dev + alabo_eye LoRA + PuLID face match. Used by gen.py for local face-mode submissions.",
+
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "flux1-dev-fp8.safetensors",
+      "weight_dtype": "fp8_e4m3fn_fast"
+    }
+  },
+  "2": {
+    "class_type": "DualCLIPLoader",
+    "inputs": {
+      "clip_name1": "clip_l.safetensors",
+      "clip_name2": "t5xxl_fp8_e4m3fn.safetensors",
+      "type": "flux"
+    }
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": { "vae_name": "ae.safetensors" }
+  },
+  "4": {
+    "class_type": "LoraLoader",
+    "inputs": {
+      "model": ["1", 0],
+      "clip": ["2", 0],
+      "lora_name": "alabo_eye_v1.safetensors",
+      "strength_model": 1.0,
+      "strength_clip": 1.0
+    }
+  },
+  "12": {
+    "class_type": "PulidFluxModelLoader",
+    "inputs": { "pulid_file": "pulid_flux_v0.9.1.safetensors" }
+  },
+  "13": {
+    "class_type": "PulidFluxInsightFaceLoader",
+    "inputs": { "provider": "CUDA" }
+  },
+  "14": {
+    "class_type": "PulidFluxEvaClipLoader",
+    "inputs": {}
+  },
+  "15": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "face_ref.png"
+    }
+  },
+  "16": {
+    "class_type": "ApplyPulidFlux",
+    "inputs": {
+      "model": ["4", 0],
+      "pulid_flux": ["12", 0],
+      "eva_clip": ["14", 0],
+      "face_analysis": ["13", 0],
+      "image": ["15", 0],
+      "weight": 0.9,
+      "start_at": 0.0,
+      "end_at": 1.0
+    }
+  },
+  "5": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": ["4", 1],
+      "text": "alabo_eye, portrait of a man in white robes, cinematic"
+    }
+  },
+  "11": {
+    "class_type": "FluxGuidance",
+    "inputs": {
+      "conditioning": ["5", 0],
+      "guidance": 3.5
+    }
+  },
+  "6": {
+    "class_type": "CLIPTextEncode",
+    "inputs": { "clip": ["4", 1], "text": "" }
+  },
+  "7": {
+    "class_type": "EmptyLatentImage",
+    "inputs": { "width": 768, "height": 768, "batch_size": 1 }
+  },
+  "8": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["16", 0],
+      "positive": ["11", 0],
+      "negative": ["6", 0],
+      "latent_image": ["7", 0],
+      "seed": 42,
+      "steps": 20,
+      "cfg": 1.0,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "sgm_uniform",
+      "denoise": 1.0
+    }
+  },
+  "9": {
+    "class_type": "VAEDecode",
+    "inputs": { "samples": ["8", 0], "vae": ["3", 0] }
+  },
+  "10": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": ["9", 0],
+      "filename_prefix": "alabo_eye_face"
+    }
+  }
+}
