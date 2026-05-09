@@ -522,10 +522,10 @@ def main():
         return
     print(f"[OK] Found cymatic GLSL: {glsl.path}")
     patch_glsl(glsl)
-    build_panel(glsl)
+    build_custom_parameters(glsl)
     print()
-    print("Done. Slide knobs while audio plays. Patterns should respond live.")
-    print("Try material preset 1 (sand) or 4 (ferrofluid) for immediate texture.")
+    print("Done. Click the GLSL TOP, find the 'Cymatic' page in the parameter pane.")
+    print("Slide any knob and the visual updates live.")
 
 
 main()
