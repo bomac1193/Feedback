@@ -474,23 +474,10 @@ def build_custom_parameters(glsl_top):
         ('uTexture3',  ['Texturesize', 'Edgesoftness', 'Noisestretch', 'Particledensity']),
     ]
 
-    # Find first free uniform slot via attribute access. Existing uniforms in
-    # build_chaos_viz use 0-7. Walk forward until uniformnameN is empty.
-    start_slot = 8  # safe default
-    for j in range(40):
-        attr = f'uniformname{j}'
-        if not hasattr(glsl_top.par, attr):
-            start_slot = j
-            break
-        cur = getattr(glsl_top.par, attr).eval()
-        if cur is None or str(cur).strip() == '':
-            start_slot = j
-            break
+    # Hardcode start at slot 8 (build_chaos_viz uses 0-7).
+    start_slot = 8
+    print(f"[INFO] Writing 5 vec4 uniforms starting at slot {start_slot}")
 
-    print(f"[INFO] First free uniform slot: {start_slot}")
-
-    # Convert mode=2 expression mode constant. Some TD versions use 'EXPRESSION'
-    # via Par.mode object; others accept ints. We try both safely.
     def set_expr(par_obj, expr_text):
         try:
             par_obj.mode = ParMode.EXPRESSION
@@ -501,24 +488,13 @@ def build_custom_parameters(glsl_top):
                 pass
         par_obj.expr = expr_text
 
-    def set_par_val(par_obj, value):
-        # Use .val on Par; do not assign directly to par[name].
-        par_obj.val = value
-
     for k, (uniform_name, param_names) in enumerate(uniform_groups):
         slot = start_slot + k
         try:
-            type_par = getattr(glsl_top.par, f'uniformtype{slot}', None)
-            name_par = getattr(glsl_top.par, f'uniformname{slot}', None)
-            if type_par is None or name_par is None:
-                print(f"[WARN] Slot {slot} has no uniform pars on this GLSL TOP, stopping.")
-                break
-            set_par_val(type_par, 'vec4')
-            set_par_val(name_par, uniform_name)
+            glsl_top.par[f'uniformtype{slot}'].val = 'vec4'
+            glsl_top.par[f'uniformname{slot}'].val = uniform_name
             for ax_idx, ax in enumerate(['x', 'y', 'z', 'w']):
-                p = getattr(glsl_top.par, f'value{slot}{ax}', None)
-                if p is None:
-                    continue
+                p = glsl_top.par[f'value{slot}{ax}']
                 set_expr(p, f"op('{target.path}').par.{param_names[ax_idx]}.eval()")
             print(f"[OK] Bound {uniform_name} to slot {slot}")
         except Exception as e:
