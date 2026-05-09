@@ -69,19 +69,31 @@ void main()
     vec2 plate = (uv - 0.5) * 2.0;
     plate.x *= aspect;
 
-    // OSC chaos values arrive normalized (~0-1 range), so we use larger
-    // multipliers here than for raw attractor coords. cymWarp/cymPhase/
-    // cymAudioDepth then scale on top for user control.
+    // SMOOTH AUDIO TRANSFORMS — fixed cymatic structure breathes/morphs.
+    // Mode numbers stay constant (no slideshow). Audio warps, scales,
+    // rotates, phase-shifts the SAME underlying standing-wave figure.
+
+    // Domain warp: translates the pattern with chaos motion
     vec2 audioOffset = vec2(uChaosX, uChaosY) * cymWarp * 0.6;
     plate += audioOffset;
 
-    float phaseN = uChaosZ * cymPhase * 8.0;
-    float phaseM = -uChaosZ * cymPhase * 6.0;
+    // Scale: expand/contract pulse with amplitude (breath)
+    float audioScale = 1.0 + uAmp * 0.4 * cymAudioDepth + uChaosGain * 0.3;
+    plate *= audioScale;
 
-    float modeN = cymFreqN + abs(uChaosX) * cymAudioDepth * 1.5
-                  + uChaosGain * cymAudioDepth * 1.2;
-    float modeM = cymFreqM + abs(uChaosY) * cymAudioDepth * 1.3
-                  + uDrive * cymAudioDepth * 1.0;
+    // Rotate: smooth swirl driven by Z
+    float audioRot = uChaosZ * cymAudioDepth * 0.3;
+    float cs = cos(audioRot), sn = sin(audioRot);
+    plate = mat2(cs, -sn, sn, cs) * plate;
+
+    // Phase modulation continues to slide the standing wave fronts
+    float phaseN = uChaosZ * cymPhase * 8.0 + uAmp * cymAudioDepth * 2.0;
+    float phaseM = -uChaosZ * cymPhase * 6.0 + uDrive * cymAudioDepth * 1.5;
+
+    // Mode numbers are FIXED — preserves the cymatic structure so transforms
+    // morph it instead of jumping to a different pattern.
+    float modeN = cymFreqN;
+    float modeM = cymFreqM;
 
     float c1 = chladni(plate * 0.5, modeN, modeM, phaseN, phaseM);
     float c2 = chladni(plate * 0.5, modeN + 1.7, modeM + 1.3, phaseN + 0.7, phaseM + 0.5);
@@ -103,7 +115,8 @@ void main()
     lineCore = max(lineCore, jitteredCore * 0.8);
 
     float nodalLine = clamp(lineCore + halo, 0.0, 1.0);
-    nodalLine *= cymBright * (0.4 + uAmp * 0.8) * (0.5 + uChaosGain * 0.7);
+    // Brightness pulses with amplitude — Audio Depth slider amplifies the pulse
+    nodalLine *= cymBright * (0.3 + uAmp * 1.5 * cymAudioDepth) * (0.5 + uChaosGain * 0.7);
     nodalLine = pow(nodalLine, max(cymContrast, 0.4));
 
     vec3 cymaticColor = mix(vec3(0.85, 0.9, 1.0),
