@@ -134,26 +134,26 @@ void main() {
     vec3 background = texture(sTD2DInputs[0], uv).rgb;
 
     // Baked-in parameter values (regenerated from feedback_viz Cymatic page)
-    float modeBaseN     = {Moden};
-    float modeBaseM     = {Modem};
-    float harmonicCount = {Harmoniccount};
-    float driftSpeed    = {Driftspeed};
-    float nodalThickness = {Nodalthickness};
-    float contrast      = {Contrast};
-    float complexity    = {Complexity};
-    float colorWarmth   = {Colorwarmth};
-    float noiseIntensity = {Noiseintensity};
-    float noiseScale     = {Noisescale};
-    float warpAmount     = {Warpamount};
-    float grainAmount    = {Grainamount};
-    float detailOctaves  = {Detailoctaves};
-    int   materialPreset = int({Materialpreset});
-    float materialMix    = {Materialmix};
-    float surfaceShimmer = {Surfaceshimmer};
-    float textureSize     = {Texturesize};
-    float edgeSoftness    = {Edgesoftness};
-    float noiseStretch    = {Noisestretch};
-    float particleDensity = {Particledensity};
+    float modeBaseN     = __Moden__;
+    float modeBaseM     = __Modem__;
+    float harmonicCount = __Harmoniccount__;
+    float driftSpeed    = __Driftspeed__;
+    float nodalThickness = __Nodalthickness__;
+    float contrast      = __Contrast__;
+    float complexity    = __Complexity__;
+    float colorWarmth   = __Colorwarmth__;
+    float noiseIntensity = __Noiseintensity__;
+    float noiseScale     = __Noisescale__;
+    float warpAmount     = __Warpamount__;
+    float grainAmount    = __Grainamount__;
+    float detailOctaves  = __Detailoctaves__;
+    int   materialPreset = int(__Materialpreset__);
+    float materialMix    = __Materialmix__;
+    float surfaceShimmer = __Surfaceshimmer__;
+    float textureSize     = __Texturesize__;
+    float edgeSoftness    = __Edgesoftness__;
+    float noiseStretch    = __Noisestretch__;
+    float particleDensity = __Particledensity__;
 
     // Domain warp
     vec2 warpUv = uv;
@@ -275,7 +275,10 @@ def render():
         except Exception:
             values[name] = "0.0"
 
-    rendered = template.format(**values)
+    # String-replace __Name__ placeholders instead of .format() (GLSL has {} blocks)
+    rendered = template
+    for name, v in values.items():
+        rendered = rendered.replace(f"__{name}__", v)
     out_dat.text = rendered
 '''
 
