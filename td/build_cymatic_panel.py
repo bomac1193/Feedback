@@ -498,8 +498,24 @@ def build_custom_parameters(glsl_top):
         ('uTexture3',  ['Texturesize', 'Edgesoftness', 'Noisestretch', 'Particledensity']),
     ]
 
-    # Hardcode start at slot 8 (build_chaos_viz uses 0-7).
-    start_slot = 8
+    # Diagnose available uniform slots first
+    existing_slots = []
+    for j in range(40):
+        try:
+            p = getattr(glsl_top.par, f'uniformname{j}')
+            if p is not None:
+                v = p.eval()
+                existing_slots.append((j, v))
+        except (AttributeError, Exception):
+            break
+    print(f"[INFO] GLSL TOP has {len(existing_slots)} uniform slots existing.")
+    if existing_slots:
+        print(f"       Slots in use: {[(s, n) for s, n in existing_slots if n]}")
+
+    max_existing = existing_slots[-1][0] if existing_slots else -1
+    start_slot = max_existing + 1
+    if start_slot < 8:
+        start_slot = 8
     print(f"[INFO] Writing 5 vec4 uniforms starting at slot {start_slot}")
 
     def set_expr(par_obj, expr_text):
@@ -512,17 +528,36 @@ def build_custom_parameters(glsl_top):
                 pass
         par_obj.expr = expr_text
 
+    bound_any = False
     for k, (uniform_name, param_names) in enumerate(uniform_groups):
         slot = start_slot + k
         try:
-            glsl_top.par[f'uniformtype{slot}'].val = 'vec4'
-            glsl_top.par[f'uniformname{slot}'].val = uniform_name
+            # Use attribute assignment (shorthand for .val=) which TD supports
+            # for auto-creating uniform slots when needed.
+            setattr(glsl_top.par, f'uniformtype{slot}', 'vec4')
+            setattr(glsl_top.par, f'uniformname{slot}', uniform_name)
             for ax_idx, ax in enumerate(['x', 'y', 'z', 'w']):
-                p = glsl_top.par[f'value{slot}{ax}']
+                attr = f'value{slot}{ax}'
+                p = getattr(glsl_top.par, attr, None)
+                if p is None:
+                    raise AttributeError(f"value{slot}{ax} not on GLSL TOP")
                 set_expr(p, f"op('{target.path}').par.{param_names[ax_idx]}.eval()")
             print(f"[OK] Bound {uniform_name} to slot {slot}")
+            bound_any = True
         except Exception as e:
             print(f"[WARN] Could not bind {uniform_name} at slot {slot}: {e}")
+
+    if not bound_any:
+        print()
+        print("[FALLBACK] GLSL TOP doesn't have enough uniform slots. Manual fix:")
+        print(f"  1. Click {glsl_top.path}")
+        print(f"  2. Look at the parameter pane, find 'Vectors 1' page")
+        print(f"  3. There should be a button to add 'Vectors 2' page (or similar)")
+        print(f"  4. Click it to add 8 more vec4 uniform slots")
+        print(f"  5. Re-run this script and the bindings will go through")
+        print()
+        print("Alternatively, we can rewrite chaos_viz to merge the chaos point")
+        print("and cymatic shaders. Tell me if you want that path.")
 
     print()
     print("=" * 60)
