@@ -447,12 +447,15 @@ def build_custom_parameters(glsl_top):
     page = target.appendCustomPage('Cymatic')
     for name, label, default, lo, hi in params:
         page.appendFloat(name, label=label)
-        target.par[name].default = default
-        target.par[name].val = default
-        target.par[name].normMin = lo
-        target.par[name].normMax = hi
-        target.par[name].clampMin = True
-        target.par[name].clampMax = True
+        p = target.par[name]
+        p.default = default
+        p.min = lo
+        p.max = hi
+        p.normMin = lo
+        p.normMax = hi
+        p.clampMin = True
+        p.clampMax = True
+        p.val = default
 
     print(f"[OK] Added 'Cymatic' page with {len(params)} parameters to {target.path}")
 
@@ -471,30 +474,52 @@ def build_custom_parameters(glsl_top):
         ('uTexture3',  ['Texturesize', 'Edgesoftness', 'Noisestretch', 'Particledensity']),
     ]
 
-    # Find first free uniform slot. Existing uniforms in build_chaos_viz use 0-7.
-    # We'll write to the first 5 unused slots starting from 8.
-    start_slot = 8
+    # Find first free uniform slot via attribute access. Existing uniforms in
+    # build_chaos_viz use 0-7. Walk forward until uniformnameN is empty.
+    start_slot = 8  # safe default
     for j in range(40):
-        try:
-            v = glsl_top.par[f'uniformname{j}'].eval()
-            if not v or v.strip() == '':
-                start_slot = j
-                break
-        except Exception:
+        attr = f'uniformname{j}'
+        if not hasattr(glsl_top.par, attr):
             start_slot = j
             break
+        cur = getattr(glsl_top.par, attr).eval()
+        if cur is None or str(cur).strip() == '':
+            start_slot = j
+            break
+
+    print(f"[INFO] First free uniform slot: {start_slot}")
+
+    # Convert mode=2 expression mode constant. Some TD versions use 'EXPRESSION'
+    # via Par.mode object; others accept ints. We try both safely.
+    def set_expr(par_obj, expr_text):
+        try:
+            par_obj.mode = ParMode.EXPRESSION
+        except Exception:
+            try:
+                par_obj.mode = 2
+            except Exception:
+                pass
+        par_obj.expr = expr_text
+
+    def set_par_val(par_obj, value):
+        # Use .val on Par; do not assign directly to par[name].
+        par_obj.val = value
 
     for k, (uniform_name, param_names) in enumerate(uniform_groups):
         slot = start_slot + k
         try:
-            glsl_top.par[f'uniformtype{slot}'] = 'vec4'
-            glsl_top.par[f'uniformname{slot}'] = uniform_name
+            type_par = getattr(glsl_top.par, f'uniformtype{slot}', None)
+            name_par = getattr(glsl_top.par, f'uniformname{slot}', None)
+            if type_par is None or name_par is None:
+                print(f"[WARN] Slot {slot} has no uniform pars on this GLSL TOP, stopping.")
+                break
+            set_par_val(type_par, 'vec4')
+            set_par_val(name_par, uniform_name)
             for ax_idx, ax in enumerate(['x', 'y', 'z', 'w']):
-                par_attr = f'value{slot}{ax}'
-                if hasattr(glsl_top.par, par_attr):
-                    p = getattr(glsl_top.par, par_attr)
-                    p.mode = 2  # expression mode
-                    p.expr = f"op('{target.path}').par.{param_names[ax_idx]}.eval()"
+                p = getattr(glsl_top.par, f'value{slot}{ax}', None)
+                if p is None:
+                    continue
+                set_expr(p, f"op('{target.path}').par.{param_names[ax_idx]}.eval()")
             print(f"[OK] Bound {uniform_name} to slot {slot}")
         except Exception as e:
             print(f"[WARN] Could not bind {uniform_name} at slot {slot}: {e}")
