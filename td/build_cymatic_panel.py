@@ -15,7 +15,16 @@ Slide noise/warp/grain to add organic detail.
 """
 
 BASE_PATH = '/project1'
-TARGET_GLSL_NAMES = ['chaos_viz', 'cymatic_viz', 'composite_viz', 'feedback_viz/chaos_viz']
+# Search order: direct names at /project1/, then inside known containers, then full recursive scan
+TARGET_GLSL_NAMES = [
+    '/project1/feedback_viz/chaos_viz',
+    '/project1/feedback_viz/cymatic_viz',
+    '/project1/feedback_viz/composite_viz',
+    '/project1/chaos_viz',
+    '/project1/cymatic_viz',
+    '/project1/composite_viz',
+]
+CONTAINER_HINTS = ['feedback_viz', 'chaos_viz_container', 'viz']
 
 
 CYMATIC_GLSL = '''// Cymatic Field with texture, domain warp, film grain, material selector.
@@ -309,104 +318,184 @@ void main()
 
 
 def find_cymatic_glsl():
+    """Look for the cymatic GLSL TOP in known places and via recursive scan."""
     project = op(BASE_PATH)
     if project is None:
         print(f"[ERROR] {BASE_PATH} not found")
         return None
+
+    # 1. Direct paths
     for name in TARGET_GLSL_NAMES:
-        node = op(name) or project.op(name)
+        node = op(name)
         if node and node.type.startswith('glsl'):
+            print(f"[INFO] Found cymatic GLSL by direct path: {node.path}")
             return node
-    for child in project.children:
-        if child.type == 'glslTOP':
-            print(f"[INFO] Using found GLSL TOP: {child.path}")
-            return child
-    return None
+
+    # 2. Inside known container hints
+    for hint in CONTAINER_HINTS:
+        container = project.op(hint)
+        if container is None:
+            continue
+        # Look for child glsl TOPs
+        for child in container.children:
+            if child.type == 'glslTOP':
+                print(f"[INFO] Found cymatic GLSL inside {container.path}: {child.path}")
+                return child
+
+    # 3. Full recursive scan of /project1 for any glslTOP. Pick the one whose
+    #    pixel shader looks like our cymatic shader (contains 'chladni' or
+    #    'Cymatic'), else fall back to first match.
+    candidates = []
+    def walk(node):
+        for c in node.children:
+            if c.type == 'glslTOP':
+                candidates.append(c)
+            if hasattr(c, 'children') and c.children:
+                walk(c)
+    walk(project)
+
+    if not candidates:
+        print("[ERROR] No GLSL TOPs found anywhere in /project1.")
+        return None
+
+    # Prefer one whose pixel DAT contains 'chladni' or 'Cymatic'
+    for c in candidates:
+        try:
+            pix_par = c.par.pixeldat.eval() if hasattr(c.par, 'pixeldat') else ''
+            pix_dat = op(pix_par) if pix_par else None
+            if pix_dat and ('chladni' in pix_dat.text.lower() or 'cymatic' in pix_dat.text.lower()):
+                print(f"[INFO] Cymatic-shader match: {c.path}")
+                return c
+        except Exception:
+            pass
+
+    print(f"[INFO] Falling back to first GLSL TOP: {candidates[0].path}")
+    print(f"       (Other GLSL TOPs found: {[c.path for c in candidates[1:]]})")
+    return candidates[0]
 
 
 def patch_glsl(glsl_top):
-    project = op(BASE_PATH)
+    """Replace the GLSL pixel shader with the textured cymatic version.
+
+    Puts the source DAT alongside the GLSL TOP (same parent) so it stays with
+    the rest of the visualization graph.
+    """
+    parent = glsl_top.parent()
     dat_name = 'cymatic_glsl_src'
-    dat = project.op(dat_name)
+    dat = parent.op(dat_name)
     if dat is None:
-        dat = project.create('textDAT', dat_name)
+        dat = parent.create('textDAT', dat_name)
         dat.nodeX = glsl_top.nodeX - 250
         dat.nodeY = glsl_top.nodeY
     dat.text = CYMATIC_GLSL
     glsl_top.par.pixeldat = dat.path
     print(f"[OK] Patched GLSL pixel shader on {glsl_top.path}")
+    print(f"     Source DAT: {dat.path}")
 
 
-def build_panel(glsl_top):
-    project = op(BASE_PATH)
-    panel_name = 'cymatic_panel'
-    existing = project.op(panel_name)
-    if existing is not None:
-        existing.destroy()
+def build_custom_parameters(glsl_top):
+    """Add custom 'Cymatic' parameter page to the GLSL TOP and wire 5 vec4 uniforms to it.
 
-    panel = project.create('containerCOMP', panel_name)
-    panel.nodeX = glsl_top.nodeX + 400
-    panel.nodeY = glsl_top.nodeY + 200
-    panel.par.w = 340
-    panel.par.h = 850
-
-    sliders = [
-        # Group 1: shape
-        ('mode_n',            'Mode N (X)',          1.0, 12.0, 2.0),
-        ('mode_m',            'Mode M (Y)',          1.0, 12.0, 3.0),
-        ('harmonic_count',    'Harmonics',           1.0,  8.0, 4.0),
-        ('drift_speed',       'Drift Speed',         0.0,  1.0, 0.1),
-        ('nodal_thickness',   'Nodal Thickness',     0.3,  4.0, 1.0),
-        ('contrast',          'Contrast',            0.5,  4.0, 1.5),
-        ('complexity',        'Pattern Complexity',  0.0,  2.0, 0.7),
-        # Group 2: texture (defaults tuned for very fine grain)
-        ('noise_intensity',   'Noise Intensity',     0.0,  1.5, 0.4),
-        ('noise_scale',       'Noise Scale',         0.5, 30.0, 12.0),
-        ('warp_amount',       'Domain Warp',         0.0,  0.5, 0.06),
-        ('grain_amount',      'Film Grain',          0.0,  0.5, 0.08),
-        ('detail_octaves',    'Detail Octaves',      1.0,  8.0, 5.0),
-        ('texture_size',      'Texture Size',        0.05, 2.0, 0.4),
-        ('edge_softness',     'Edge Softness',       0.0,  1.0, 0.1),
-        ('noise_stretch',     'Noise Stretch (anisotropy)', 0.1, 4.0, 1.0),
-        ('particle_density',  'Particle Density',    0.0,  1.0, 0.7),
-        # Group 3: material
-        ('material_preset',   'Material (0-8)',      0.0,  8.0, 1.0),
-        ('material_mix',      'Material Mix',        0.0,  1.0, 1.0),
-        ('surface_shimmer',   'Surface Shimmer',     0.0,  1.0, 0.1),
-        ('color_warmth',      'Color Warmth',        0.0,  1.0, 0.0),
+    After this runs, click the GLSL TOP and the 'Cymatic' page in the parameter
+    pane gives you 20 sliders. Adjusting them updates the shader live.
+    """
+    # Parameter spec: (internal_name, label, default, min, max)
+    # internal_name must start uppercase for TD custom params
+    params = [
+        # Shape
+        ('Moden',           'Mode N (X)',          2.0,  1.0, 12.0),
+        ('Modem',           'Mode M (Y)',          3.0,  1.0, 12.0),
+        ('Harmoniccount',   'Harmonics',           4.0,  1.0,  8.0),
+        ('Driftspeed',      'Drift Speed',         0.1,  0.0,  1.0),
+        ('Nodalthickness',  'Nodal Thickness',     1.0,  0.3,  4.0),
+        ('Contrast',        'Contrast',            1.5,  0.5,  4.0),
+        ('Complexity',      'Pattern Complexity',  0.7,  0.0,  2.0),
+        ('Colorwarmth',     'Color Warmth',        0.0,  0.0,  1.0),
+        # Texture
+        ('Noiseintensity',  'Noise Intensity',     0.4,  0.0,  1.5),
+        ('Noisescale',      'Noise Scale',        12.0,  0.5, 30.0),
+        ('Warpamount',      'Domain Warp',         0.06, 0.0,  0.5),
+        ('Grainamount',     'Film Grain',          0.08, 0.0,  0.5),
+        ('Detailoctaves',   'Detail Octaves',      5.0,  1.0,  8.0),
+        ('Texturesize',     'Texture Size',        0.4,  0.05, 2.0),
+        ('Edgesoftness',    'Edge Softness',       0.1,  0.0,  1.0),
+        ('Noisestretch',    'Noise Stretch',       1.0,  0.1,  4.0),
+        ('Particledensity', 'Particle Density',    0.7,  0.0,  1.0),
+        # Material
+        ('Materialpreset',  'Material (0-8)',      1.0,  0.0,  8.0),
+        ('Materialmix',     'Material Mix',        1.0,  0.0,  1.0),
+        ('Surfaceshimmer',  'Surface Shimmer',     0.1,  0.0,  1.0),
     ]
 
-    sx = 20
-    sy_step = 38
-    sy_start = 20
+    # Remove old custom page if present (idempotency)
+    for page in glsl_top.customPages:
+        if page.name == 'Cymatic':
+            page.destroy()
 
-    for i, (name, label, lo, hi, default) in enumerate(sliders):
-        slider = panel.create('sliderCOMP', name)
-        slider.par.w = 280
-        slider.par.h = 28
+    page = glsl_top.appendCustomPage('Cymatic')
+    for name, label, default, lo, hi in params:
+        page.appendFloat(name, label=label)
+        glsl_top.par[name].default = default
+        glsl_top.par[name].val = default
+        glsl_top.par[name].normMin = lo
+        glsl_top.par[name].normMax = hi
+        glsl_top.par[name].clampMin = True
+        glsl_top.par[name].clampMax = True
+
+    print(f"[OK] Added 'Cymatic' page with {len(params)} parameters to {glsl_top.path}")
+
+    # Wire 5 vec4 uniforms to those parameters
+    # uCymatic   = (Moden, Modem, Harmoniccount, Driftspeed)
+    # uCymatic2  = (Nodalthickness, Contrast, Complexity, Colorwarmth)
+    # uTexture   = (Noiseintensity, Noisescale, Warpamount, Grainamount)
+    # uTexture2  = (Detailoctaves, Materialpreset, Materialmix, Surfaceshimmer)
+    # uTexture3  = (Texturesize, Edgesoftness, Noisestretch, Particledensity)
+
+    uniform_groups = [
+        ('uCymatic',   ['Moden', 'Modem', 'Harmoniccount', 'Driftspeed']),
+        ('uCymatic2',  ['Nodalthickness', 'Contrast', 'Complexity', 'Colorwarmth']),
+        ('uTexture',   ['Noiseintensity', 'Noisescale', 'Warpamount', 'Grainamount']),
+        ('uTexture2',  ['Detailoctaves', 'Materialpreset', 'Materialmix', 'Surfaceshimmer']),
+        ('uTexture3',  ['Texturesize', 'Edgesoftness', 'Noisestretch', 'Particledensity']),
+    ]
+
+    # Find first free uniform slot. Existing uniforms in build_chaos_viz use 0-7.
+    # We'll write to the first 5 unused slots starting from 8.
+    start_slot = 8
+    for j in range(40):
         try:
-            slider.par.parentpos.val = (sx, sy_start + i * sy_step)
-            slider.par.label = label
-            slider.par.rangelow0 = lo
-            slider.par.rangehigh0 = hi
-            slider.par.value0 = default
+            v = glsl_top.par[f'uniformname{j}'].eval()
+            if not v or v.strip() == '':
+                start_slot = j
+                break
         except Exception:
-            pass
+            start_slot = j
+            break
+
+    for k, (uniform_name, param_names) in enumerate(uniform_groups):
+        slot = start_slot + k
+        try:
+            glsl_top.par[f'uniformtype{slot}'] = 'vec4'
+            glsl_top.par[f'uniformname{slot}'] = uniform_name
+            for ax_idx, ax in enumerate(['x', 'y', 'z', 'w']):
+                par_attr = f'value{slot}{ax}'
+                if hasattr(glsl_top.par, par_attr):
+                    p = getattr(glsl_top.par, par_attr)
+                    p.mode = 2  # expression mode
+                    p.expr = f"op('{glsl_top.path}').par.{param_names[ax_idx]}.eval()"
+            print(f"[OK] Bound {uniform_name} to slot {slot}")
+        except Exception as e:
+            print(f"[WARN] Could not bind {uniform_name} at slot {slot}: {e}")
 
     print()
-    print("[OK] Cymatic panel built at " + panel.path)
+    print("=" * 60)
+    print("How to use:")
+    print(f"  1. In TD, click {glsl_top.path}")
+    print("  2. Look at the parameter pane on the right")
+    print("  3. Find the 'Cymatic' page tab")
+    print("  4. Drag any slider, the visual updates live")
     print()
-    print("Manual finishing step:")
-    print(f"  On {glsl_top.path} add five vec4 uniforms:")
-    print("     uniformname[next free] = 'uCymatic'    type vec4")
-    print("     uniformname[next free] = 'uCymatic2'   type vec4")
-    print("     uniformname[next free] = 'uTexture'    type vec4")
-    print("     uniformname[next free] = 'uTexture2'   type vec4")
-    print("     uniformname[next free] = 'uTexture3'   type vec4")
-    print()
-    print("  Then wire panel slider values into those uniforms (mergeCHOP into each).")
-    print()
-    print("Material presets (slide Material 0-8):")
+    print("Material presets (slide 'Material' parameter 0 to 8):")
     print("  0 = clean (math interference)")
     print("  1 = chalk (fine white dust on black)")
     print("  2 = white sand (fine cream grain)")
@@ -417,9 +506,10 @@ def build_panel(glsl_top):
     print("  7 = ferrofluid (iridescent dark liquid)")
     print("  8 = flour (very fine pale dust, soft edges)")
     print()
-    print("Slider ranges and defaults:")
-    for name, label, lo, hi, default in sliders:
-        print(f"  {label:25s}  {lo:5.1f} to {hi:5.1f}, default {default:5.2f}")
+    print("Try first: set Material to 1 (chalk) and Texture Size to 0.2.")
+    print("Then bring Noise Intensity to 0.5 and Film Grain to 0.1.")
+    print("That gets you the fine-cymatic-on-chalkboard look immediately.")
+    print("=" * 60)
 
 
 def main():
