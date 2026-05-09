@@ -498,19 +498,28 @@ def build_custom_parameters(glsl_top):
         ('uTexture3',  ['Texturesize', 'Edgesoftness', 'Noisestretch', 'Particledensity']),
     ]
 
-    # Diagnose available uniform slots first
+    # Diagnose: dump all parameter names on the GLSL TOP, group by prefix
+    print(f"[DIAG] GLSL TOP param names (looking for uniform-related):")
+    all_pars = sorted(p.name for p in glsl_top.pars())
+    uniform_pars = [n for n in all_pars if any(s in n.lower() for s in ['uniform', 'value', 'vec', 'const', 'const'])]
+    print(f"       Total pars on GLSL TOP: {len(all_pars)}")
+    print(f"       Uniform-like par names ({len(uniform_pars)}): {uniform_pars[:30]}")
+    if len(uniform_pars) > 30:
+        print(f"       ... and {len(uniform_pars) - 30} more")
+
+    # Look for indexed uniform slot params
     existing_slots = []
     for j in range(40):
+        attr = f'uniformname{j}'
         try:
-            p = getattr(glsl_top.par, f'uniformname{j}')
+            p = getattr(glsl_top.par, attr)
             if p is not None:
-                v = p.eval()
-                existing_slots.append((j, v))
+                existing_slots.append((j, p.eval()))
         except (AttributeError, Exception):
             break
-    print(f"[INFO] GLSL TOP has {len(existing_slots)} uniform slots existing.")
+    print(f"[INFO] uniformname<N> indexed slots found: {len(existing_slots)}")
     if existing_slots:
-        print(f"       Slots in use: {[(s, n) for s, n in existing_slots if n]}")
+        print(f"       Slots in use: {existing_slots}")
 
     max_existing = existing_slots[-1][0] if existing_slots else -1
     start_slot = max_existing + 1
