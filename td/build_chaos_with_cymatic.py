@@ -17,24 +17,40 @@ CHAOS_VIZ_PATH = '/project1/feedback_viz/chaos_viz'
 
 
 CHAOS_PLUS_CYMATIC_GLSL = '''// Chaos Attractor Point + Audio-Reactive Cymatic Background
-// Single-pass. Uses only the 8 existing OSC-bound uniforms — full reactivity.
+// Single-pass. Uses only the 8 existing OSC-bound uniforms.
+// Continuous warp + phase modulation = patterns smoothly morph with audio.
 
-uniform float uChaosX;     // Attractor X (drives cymatic mode N + position)
-uniform float uChaosY;     // Attractor Y (drives cymatic mode M + position)
-uniform float uChaosZ;     // Attractor Z (drives cymatic drift)
-uniform float uAmp;        // Audio amplitude (drives brightness, point size)
-uniform float uAttractor;  // Attractor type (used by point projection)
-uniform float uChaosGain;  // Chaos intensity (drives cymatic line thickness)
-uniform float uDecay;      // Decay (drives warm tint)
-uniform float uDrive;      // Drive (drives point size + cymatic contrast)
+uniform float uChaosX;
+uniform float uChaosY;
+uniform float uChaosZ;
+uniform float uAmp;
+uniform float uAttractor;
+uniform float uChaosGain;
+uniform float uDecay;
+uniform float uDrive;
 
 out vec4 fragColor;
 
 #define PI 3.14159265359
 
-float chladni(vec2 p, float n, float m) {
-    return sin(n * PI * p.x) * sin(m * PI * p.y)
-         + sin(m * PI * p.x) * sin(n * PI * p.y);
+// =====================================================================
+// EDIT THESE TO TASTE — they control the cymatic light/scale/frequency
+// =====================================================================
+#define CYMATIC_BRIGHTNESS    0.7    // overall cymatic line brightness (0-2)
+#define CYMATIC_LINE_SCALE    1.0    // line thickness multiplier (0.3-3.0)
+#define CYMATIC_FREQ_BASE_N   2.0    // base x-mode (1-8)
+#define CYMATIC_FREQ_BASE_M   3.0    // base y-mode (1-8)
+#define CYMATIC_AUDIO_DEPTH   1.5    // how aggressively audio warps the pattern (0-3)
+#define CYMATIC_WARP_AMOUNT   0.08   // domain-warp depth from chaos (0-0.3)
+#define CYMATIC_PHASE_GAIN    1.5    // phase modulation gain from chaos (0-3)
+#define POINT_BRIGHTNESS      1.2    // chaos point intensity multiplier
+#define POINT_SCALE           1.0    // chaos point size multiplier
+// =====================================================================
+
+float chladni(vec2 p, float n, float m, float pn, float pm) {
+    // Phase-modulated chladni for smooth warping (instead of integer mode hop)
+    return sin(n * PI * p.x + pn) * sin(m * PI * p.y + pm)
+         + sin(m * PI * p.x + pm) * sin(n * PI * p.y + pn);
 }
 
 float hash21(vec2 p) {
@@ -50,42 +66,48 @@ void main()
     float aspect = res.x / res.y;
 
     // ============================================================
-    // CYMATIC BACKGROUND (audio-reactive, derived from chaos uniforms)
+    // CYMATIC BACKGROUND (continuous audio warp, no mode hopping)
     // ============================================================
-
-    // Mode numbers driven by chaos position (continuous wandering)
-    float modeN = 2.0 + abs(uChaosX) * 0.15 + uChaosGain * 1.5;
-    float modeM = 3.0 + abs(uChaosY) * 0.12 + uDrive * 1.2;
-
-    // Drift derived from Z
-    float drift = uChaosZ * 0.05;
 
     vec2 plate = (uv - 0.5) * 2.0;
     plate.x *= aspect;
 
-    // Two-harmonic chladni — wobble between modes via drift
-    float c1 = chladni(plate * 0.5, modeN, modeM);
-    float c2 = chladni(plate * 0.5, modeN + 1.5 + sin(drift) * 0.5,
-                                     modeM + 1.0 + cos(drift * 0.7) * 0.5);
-    float cymatic = mix(c1, c2, 0.4 + 0.3 * sin(drift));
+    // Domain warp — chaos position smoothly shifts the plate, so the
+    // entire pattern slides/morphs continuously with audio motion
+    vec2 audioOffset = vec2(uChaosX, uChaosY) * CYMATIC_WARP_AMOUNT;
+    plate += audioOffset;
 
-    // Normalize to keep brightness stable across mode count
+    // Phase modulation — uChaosZ continuously slides phase of the standing
+    // waves, producing a smooth flowing morph instead of discrete mode jumps
+    float phaseN = uChaosZ * CYMATIC_PHASE_GAIN;
+    float phaseM = -uChaosZ * CYMATIC_PHASE_GAIN * 0.7;
+
+    // Mode numbers — small audio influence on top of the base
+    float modeN = CYMATIC_FREQ_BASE_N + abs(uChaosX) * 0.05 * CYMATIC_AUDIO_DEPTH
+                  + uChaosGain * 0.4 * CYMATIC_AUDIO_DEPTH;
+    float modeM = CYMATIC_FREQ_BASE_M + abs(uChaosY) * 0.04 * CYMATIC_AUDIO_DEPTH
+                  + uDrive * 0.3 * CYMATIC_AUDIO_DEPTH;
+
+    // Two phase-modulated harmonics — smooth blend, no flicker
+    float c1 = chladni(plate * 0.5, modeN, modeM, phaseN, phaseM);
+    float c2 = chladni(plate * 0.5, modeN + 1.7, modeM + 1.3,
+                                     phaseN + 0.7, phaseM + 0.5);
+    float cymatic = mix(c1, c2, 0.5 + 0.4 * sin(phaseN));
+
+    // Normalize so brightness stays stable
     float fieldNorm = cymatic / (0.5 + abs(cymatic) * 0.5);
 
-    // Line width driven by chaos gain (wider = more visible)
-    float lineWidthUV = 0.005 + uChaosGain * 0.025;
+    // Line width — base + audio modulation
+    float lineWidthUV = (0.006 + uChaosGain * 0.02) * CYMATIC_LINE_SCALE;
     float dist = abs(fieldNorm);
 
-    // Anti-aliased nodal line
     float fw = max(fwidth(dist), 0.001);
     float lineCore = smoothstep(lineWidthUV + fw, lineWidthUV * 0.4, dist);
 
-    // Soft halo for line presence (always on)
-    float haloWidth = lineWidthUV * 4.0;
+    float haloWidth = lineWidthUV * 4.5;
     float halo = smoothstep(haloWidth, lineWidthUV * 0.6, dist);
     halo = halo * halo * 0.4;
 
-    // Chalk-like edge jitter for textural feel
     float jitter = (hash21(uv * 1200.0) - 0.5) * lineWidthUV * 0.3;
     float jitteredCore = smoothstep(lineWidthUV * 1.2, lineWidthUV * 0.4,
                                     dist + jitter);
@@ -93,14 +115,13 @@ void main()
 
     float nodalLine = clamp(lineCore + halo, 0.0, 1.0);
 
-    // Cymatic brightness scales with amplitude (audio-reactive intensity)
-    float cymaticBright = (0.3 + uAmp * 0.7) * (0.4 + uChaosGain * 0.6);
+    // Brightness reactivity to amplitude
+    float cymaticBright = CYMATIC_BRIGHTNESS *
+                          (0.4 + uAmp * 0.8) * (0.5 + uChaosGain * 0.7);
     nodalLine *= cymaticBright;
 
-    // Contrast from drive
     nodalLine = pow(nodalLine, 1.0 + uDrive * 0.5);
 
-    // Cymatic color: cool with warm tint when decay is high
     vec3 cymaticColor = mix(vec3(0.85, 0.9, 1.0),
                             vec3(1.0, 0.85, 0.6),
                             clamp(uDecay / 1.5, 0.0, 1.0) * 0.6);
