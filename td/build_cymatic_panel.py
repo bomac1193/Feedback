@@ -394,11 +394,23 @@ def patch_glsl(glsl_top):
 
 
 def build_custom_parameters(glsl_top):
-    """Add custom 'Cymatic' parameter page to the GLSL TOP and wire 5 vec4 uniforms to it.
+    """Add custom 'Cymatic' parameter page to the GLSL TOP's parent COMP.
 
-    After this runs, click the GLSL TOP and the 'Cymatic' page in the parameter
-    pane gives you 20 sliders. Adjusting them updates the shader live.
+    TOPs in TD don't support custom parameter pages. We attach the page to the
+    parent containerCOMP (e.g. /project1/feedback_viz) and have the GLSL TOP's
+    uniform expressions read from those parameters via op(parent).par.<Name>.
+
+    After this runs, click the parent COMP (NOT the GLSL TOP) and the 'Cymatic'
+    page in the parameter pane gives you 20 sliders. The GLSL TOP updates live.
     """
+    # COMPs support custom pages; TOPs don't. Walk up to the nearest COMP.
+    target = glsl_top.parent()
+    while target is not None and not hasattr(target, 'appendCustomPage'):
+        target = target.parent() if target.parent() is not None else None
+    if target is None:
+        target = op(BASE_PATH)  # fallback to /project1
+    print(f"[INFO] Custom parameters will live on {target.path} (parent COMP of the GLSL TOP)")
+
     # Parameter spec: (internal_name, label, default, min, max)
     # internal_name must start uppercase for TD custom params
     params = [
@@ -428,21 +440,21 @@ def build_custom_parameters(glsl_top):
     ]
 
     # Remove old custom page if present (idempotency)
-    for page in glsl_top.customPages:
+    for page in target.customPages:
         if page.name == 'Cymatic':
             page.destroy()
 
-    page = glsl_top.appendCustomPage('Cymatic')
+    page = target.appendCustomPage('Cymatic')
     for name, label, default, lo, hi in params:
         page.appendFloat(name, label=label)
-        glsl_top.par[name].default = default
-        glsl_top.par[name].val = default
-        glsl_top.par[name].normMin = lo
-        glsl_top.par[name].normMax = hi
-        glsl_top.par[name].clampMin = True
-        glsl_top.par[name].clampMax = True
+        target.par[name].default = default
+        target.par[name].val = default
+        target.par[name].normMin = lo
+        target.par[name].normMax = hi
+        target.par[name].clampMin = True
+        target.par[name].clampMax = True
 
-    print(f"[OK] Added 'Cymatic' page with {len(params)} parameters to {glsl_top.path}")
+    print(f"[OK] Added 'Cymatic' page with {len(params)} parameters to {target.path}")
 
     # Wire 5 vec4 uniforms to those parameters
     # uCymatic   = (Moden, Modem, Harmoniccount, Driftspeed)
@@ -482,7 +494,7 @@ def build_custom_parameters(glsl_top):
                 if hasattr(glsl_top.par, par_attr):
                     p = getattr(glsl_top.par, par_attr)
                     p.mode = 2  # expression mode
-                    p.expr = f"op('{glsl_top.path}').par.{param_names[ax_idx]}.eval()"
+                    p.expr = f"op('{target.path}').par.{param_names[ax_idx]}.eval()"
             print(f"[OK] Bound {uniform_name} to slot {slot}")
         except Exception as e:
             print(f"[WARN] Could not bind {uniform_name} at slot {slot}: {e}")
@@ -490,10 +502,10 @@ def build_custom_parameters(glsl_top):
     print()
     print("=" * 60)
     print("How to use:")
-    print(f"  1. In TD, click {glsl_top.path}")
+    print(f"  1. In TD, click {target.path}  (the parent COMP, NOT the GLSL TOP)")
     print("  2. Look at the parameter pane on the right")
     print("  3. Find the 'Cymatic' page tab")
-    print("  4. Drag any slider, the visual updates live")
+    print("  4. Drag any slider, the GLSL TOP updates live")
     print()
     print("Material presets (slide 'Material' parameter 0 to 8):")
     print("  0 = clean (math interference)")
