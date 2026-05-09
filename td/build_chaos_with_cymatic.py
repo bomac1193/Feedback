@@ -69,14 +69,19 @@ void main()
     vec2 plate = (uv - 0.5) * 2.0;
     plate.x *= aspect;
 
-    vec2 audioOffset = vec2(uChaosX, uChaosY) * cymWarp * 0.05;
+    // OSC chaos values arrive normalized (~0-1 range), so we use larger
+    // multipliers here than for raw attractor coords. cymWarp/cymPhase/
+    // cymAudioDepth then scale on top for user control.
+    vec2 audioOffset = vec2(uChaosX, uChaosY) * cymWarp * 0.6;
     plate += audioOffset;
 
-    float phaseN = uChaosZ * cymPhase;
-    float phaseM = -uChaosZ * cymPhase * 0.7;
+    float phaseN = uChaosZ * cymPhase * 8.0;
+    float phaseM = -uChaosZ * cymPhase * 6.0;
 
-    float modeN = cymFreqN + abs(uChaosX) * 0.05 * cymAudioDepth + uChaosGain * 0.5 * cymAudioDepth;
-    float modeM = cymFreqM + abs(uChaosY) * 0.04 * cymAudioDepth + uDrive * 0.4 * cymAudioDepth;
+    float modeN = cymFreqN + abs(uChaosX) * cymAudioDepth * 1.5
+                  + uChaosGain * cymAudioDepth * 1.2;
+    float modeM = cymFreqM + abs(uChaosY) * cymAudioDepth * 1.3
+                  + uDrive * cymAudioDepth * 1.0;
 
     float c1 = chladni(plate * 0.5, modeN, modeM, phaseN, phaseM);
     float c2 = chladni(plate * 0.5, modeN + 1.7, modeM + 1.3, phaseN + 0.7, phaseM + 0.5);
