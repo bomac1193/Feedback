@@ -518,6 +518,22 @@ def build_custom_parameters(glsl_top):
         start_slot = 8
     print(f"[INFO] Writing 5 vec4 uniforms starting at slot {start_slot}")
 
+    # If we need slots beyond what exists, try pulsing 'addvector' or similar
+    # to grow the uniform list. TD GLSL TOPs sometimes expose this as a button.
+    needed_slot = start_slot + 4  # last slot we'll write
+    if needed_slot >= len(existing_slots):
+        for _ in range(needed_slot - len(existing_slots) + 1):
+            for pulse_name in ['addvector', 'Addvector', 'addvectoruniforms', 'Numvecuniforms']:
+                try:
+                    par = getattr(glsl_top.par, pulse_name, None)
+                    if par is not None:
+                        par.pulse() if hasattr(par, 'pulse') else None
+                        if hasattr(par, 'val') and isinstance(par.val, (int, float)):
+                            par.val = par.val + 1
+                        break
+                except Exception:
+                    continue
+
     def set_expr(par_obj, expr_text):
         try:
             par_obj.mode = ParMode.EXPRESSION
