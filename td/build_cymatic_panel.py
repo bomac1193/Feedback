@@ -190,9 +190,33 @@ void main()
         cymatic += (n - 0.5) * noiseIntensity;
     }
 
-    float fw = fwidth(cymatic);
-    float softFactor = 1.0 + edgeSoftness * 6.0; // 1 = sharp, 7 = very soft
-    float nodalLine = 1.0 - smoothstep(0.0, fw * nodalThickness * softFactor, abs(cymatic));
+    // === ANTI-ALIASED NODAL LINE ===
+    // Use absolute UV-space thickness for consistent visible lines, not fwidth
+    // (which goes to zero at high frequencies and causes thin/aliased look).
+    // Supersample 4 taps for proper AA, then smoothstep into a clean line.
+    float dist = abs(cymatic);
+    float lineWidthUV = nodalThickness * 0.014;          // line core width
+    float lineEdgeUV  = lineWidthUV * (1.0 + edgeSoftness * 3.0); // soft edge
+
+    // 4-tap supersample (0.25 px offsets) reduces aliasing on busy patterns
+    float pxX = 0.5 / res.x;
+    float pxY = 0.5 / res.y;
+    float aaSum = 0.0;
+    for (int sx = -1; sx <= 1; sx += 2) {
+        for (int sy = -1; sy <= 1; sy += 2) {
+            vec2 sUv = uv + vec2(float(sx) * pxX, float(sy) * pxY);
+            // Re-eval a small offset of cymatic at sample position. Approximate
+            // by reusing the existing field gradient for cheapness.
+            float dSample = dist + (float(sx) + float(sy)) * fwidth(dist) * 0.25;
+            aaSum += smoothstep(lineEdgeUV, lineWidthUV * 0.4, dSample);
+        }
+    }
+    float nodalLine = aaSum * 0.25;
+
+    // Optional soft halo for line presence (disabled when edgeSoftness is 0)
+    float haloWidth = lineWidthUV * 5.0 * (0.3 + edgeSoftness);
+    float halo = smoothstep(haloWidth, lineWidthUV * 0.4, dist) * 0.35 * edgeSoftness;
+    nodalLine = clamp(nodalLine + halo, 0.0, 1.0);
     nodalLine = pow(nodalLine, contrast);
 
     // === LUSONA DISTANCE (Pass 1 texture) ===
@@ -419,8 +443,8 @@ def build_custom_parameters(glsl_top):
         ('Modem',           'Mode M (Y)',          3.0,  1.0, 12.0),
         ('Harmoniccount',   'Harmonics',           4.0,  1.0,  8.0),
         ('Driftspeed',      'Drift Speed',         0.1,  0.0,  1.0),
-        ('Nodalthickness',  'Nodal Thickness',     1.0,  0.3,  4.0),
-        ('Contrast',        'Contrast',            1.5,  0.5,  4.0),
+        ('Nodalthickness',  'Nodal Thickness',     2.5,  0.3,  6.0),
+        ('Contrast',        'Contrast',            1.0,  0.5,  4.0),
         ('Complexity',      'Pattern Complexity',  0.7,  0.0,  2.0),
         ('Colorwarmth',     'Color Warmth',        0.0,  0.0,  1.0),
         # Texture
@@ -430,7 +454,7 @@ def build_custom_parameters(glsl_top):
         ('Grainamount',     'Film Grain',          0.08, 0.0,  0.5),
         ('Detailoctaves',   'Detail Octaves',      5.0,  1.0,  8.0),
         ('Texturesize',     'Texture Size',        0.4,  0.05, 2.0),
-        ('Edgesoftness',    'Edge Softness',       0.1,  0.0,  1.0),
+        ('Edgesoftness',    'Edge Softness',       0.3,  0.0,  1.0),
         ('Noisestretch',    'Noise Stretch',       1.0,  0.1,  4.0),
         ('Particledensity', 'Particle Density',    0.7,  0.0,  1.0),
         # Material
