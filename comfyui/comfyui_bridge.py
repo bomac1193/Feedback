@@ -80,8 +80,31 @@ WORKFLOWS = {
     "sdxl_latent_walk": os.path.join(WORKFLOW_DIR, "workflow_latent_walk.json"),
 }
 
+# LoRA-enabled variants (loaded when USE_ALABO_LORA=True)
+WORKFLOWS_ALABO = {
+    "flux_bootstrap":  os.path.join(WORKFLOW_DIR, "workflow_flux_bootstrap_alabo.json"),
+    "flux_img2img":    os.path.join(WORKFLOW_DIR, "workflow_flux_img2img_alabo.json"),
+    "flux_controlnet": os.path.join(WORKFLOW_DIR, "workflow_flux_controlnet_alabo.json"),
+}
+
+
+def workflow_path(key: str) -> str:
+    """Return _alabo variant when LoRA is enabled, else the base workflow."""
+    if USE_ALABO_LORA and key in WORKFLOWS_ALABO:
+        return WORKFLOWS_ALABO[key]
+    return WORKFLOWS[key]
+
 # Active mode
 MODE = "flux_img2img"  # "flux_img2img" | "flux_controlnet" | "sdxl_latent"
+
+# alabo_eye LoRA toggle
+# When True: uses *_alabo.json workflows (loads alabo_eye_v1.safetensors)
+#            and prepends "alabo_eye, " to every prompt as the trigger token.
+# Set this to True after dropping alabo_eye_v1.safetensors into
+# D:/Visuals/ComfyUI/models/loras/
+USE_ALABO_LORA = False
+ALABO_TRIGGER = "alabo_eye"
+ALABO_LORA_STRENGTH = 1.0  # 0.6-1.2 sensible range; lower = subtler
 
 MIN_INTERVAL = 2.0    # Seconds between requests
 BASE_SEED = 42
@@ -187,6 +210,22 @@ MEDIA_TRANSITION = [
     "photograph of mercury droplet on vibrating surface oscillating between circular and polygonal modes, metallic liquid shifting shape under frequency sweep on dark plate",
 ]
 
+# Geomancy pool: explicit divination/earth-pattern systems.
+# Activates at high Kuramoto sync (r > 0.85): when oscillators lock,
+# topology becomes legible as figure. Veves, ifa odu, sikidy, lusona,
+# khatt al-raml are all geomantic — patterns drawn in earth that
+# encode topology and force connection. Surveying is the rationalist
+# descendant of this 5,000-year tradition.
+MEDIA_GEOMANTIC = [
+    "photograph of Yoruba ifa odu binary marks pressed into pale cornmeal on dark wood, four-line geometric figures arranged in concentric ring, ritual sand drawing",
+    "macro photograph of Madagascar sikidy tableau drawn in red sand on dark earth, sixteen geometric four-line figures arranged in tableau grid, single mark per row",
+    "photograph of Arabic khatt al-raml chart on black slate, sixteen geomantic figures of four binary marks each, fine pale dust drawn lines, palm-nut casting marks scattered",
+    "long exposure photograph of Chokwe lusona Eulerian path drawn in white chalk on black ground, single continuous line filling frame without crossing itself, sand drawing tradition",
+    "photograph of Vodou veve drawn in cornmeal on packed dark earth, geometric cosmogram with concentric rings and crossing diagonal lines, ritual ground drawing for spirit invocation",
+    "macro photograph of four-line geomantic figure self-organizing in ferrofluid under sustained magnetic field, binary marks emerging from metallic liquid on dark glass, divination figure",
+    "photograph of bismuth crystal terraces forming spontaneous four-line geomantic figure, oxidation rainbow surface revealing recursive binary structure on dark metal, geometric divination grid",
+]
+
 DENSITY_HIGH = "dense, filling the frame, forms overlapping at multiple scales"
 DENSITY_MED = "moderate density, clear forms with space between iterations"
 DENSITY_LOW = "sparse, isolated form surrounded by vast negative space"
@@ -208,7 +247,13 @@ def build_flux_prompt():
     # Rotate through pool slowly for visual stability
     pool_idx = (state.frame_count // 8) % 7
 
-    if x > 5:
+    # When the system locks into deep coherence (Kuramoto r > 0.85),
+    # topology becomes legible as figure: pull from the geomantic pool.
+    # This is the moment veves and ifa odu and lusona earn their visual
+    # presence. Otherwise fall through to the warm/cool/transition logic.
+    if state.kuramoto_r > 0.85:
+        medium = MEDIA_GEOMANTIC[pool_idx]
+    elif x > 5:
         medium = MEDIA_WARM[pool_idx]
     elif x < -5:
         medium = MEDIA_COOL[pool_idx]
@@ -237,7 +282,10 @@ def build_flux_prompt():
     else:
         structure = STRUCTURE_CHAOTIC
 
-    return f"{medium}, {density}, {structure}, {FRAME_RULES}"
+    body = f"{medium}, {density}, {structure}, {FRAME_RULES}"
+    if USE_ALABO_LORA:
+        return f"{ALABO_TRIGGER}, {body}"
+    return body
 
 
 # ============================================
@@ -577,7 +625,7 @@ def queue_prompt(workflow):
         return None
 
 def load_workflow(key):
-    path = WORKFLOWS.get(key)
+    path = workflow_path(key)
     if not path:
         return None
     try:
@@ -592,6 +640,10 @@ def load_workflow(key):
             continue
         node = {"class_type": v["class_type"], "inputs": dict(v["inputs"])}
         workflow[k] = node
+    # When LoRA is enabled, the _alabo workflows have node "5" = LoraLoaderModelOnly.
+    # Apply current strength so it's tweakable from the bridge at runtime.
+    if USE_ALABO_LORA and "5" in workflow:
+        workflow["5"]["inputs"]["strength_model"] = ALABO_LORA_STRENGTH
     return workflow
 
 
