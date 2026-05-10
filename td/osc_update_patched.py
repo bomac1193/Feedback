@@ -147,6 +147,15 @@ def onFrameStart(frame):
         step = dt / max(release, 0.001)
         loudness = max(prev_gate - step, target_gate)
     s['_gate'] = loudness
+    # Contrast envelope: separate slow release for noise contrast transition
+    cr = comp.par.Contrastrelease.eval()
+    prev_c = s.get('_contrast_env', 0.0)
+    if loudness > prev_c:
+        contrast_env = loudness
+    else:
+        step = (1.0 / 60.0) / max(cr, 0.001)
+        contrast_env = max(prev_c - step, loudness)
+    s['_contrast_env'] = contrast_env
     
     dx = abs(raw_x - _prev_x)
     dy = abs(raw_y - _prev_y)
@@ -218,7 +227,7 @@ def onFrameStart(frame):
         viz.par.vec10name = "uParams10"
         viz.par.vec10valuex = comp.par.Idleamount.eval()
         viz.par.vec10valuey = comp.par.Noisecontrastidle.eval()
-        viz.par.vec10valuez = 0.0
+        viz.par.vec10valuez = s.get("_contrast_env", 0.0)
         viz.par.vec10valuew = 0.0
     
     # --- Constant CHOP ---
