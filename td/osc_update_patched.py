@@ -215,6 +215,11 @@ def onFrameStart(frame):
         viz.par.vec9valuey = comp.par.Noisecontrast.eval()
         viz.par.vec9valuez = comp.par.Noiseoctaves.eval()
         viz.par.vec9valuew = comp.par.Noisewarp.eval()
+        viz.par.vec10name = "uParams10"
+        viz.par.vec10valuex = comp.par.Idleamount.eval()
+        viz.par.vec10valuey = 0.0
+        viz.par.vec10valuez = 0.0
+        viz.par.vec10valuew = 0.0
     
     # --- Constant CHOP ---
     c = op('/project1/feedback_viz/osc_const')

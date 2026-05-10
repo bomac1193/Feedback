@@ -20,6 +20,7 @@ uniform vec4 uParams6;
 uniform vec4 uParams7;
 uniform vec4 uParams8;
 uniform vec4 uParams9;
+uniform vec4 uParams10;
 
 layout(location = 0) out vec4 fragColor;
 
@@ -98,6 +99,7 @@ void main()
     float noiseContrast  = max(uParams9.y, 0.05);  // power applied to noise
     int   noiseOctaves   = int(clamp(uParams9.z, 1.0, 8.0));
     float noiseWarp      = clamp(uParams9.w, 0.0, 1.0); // domain warp via noise itself
+    float idleAmount     = clamp(uParams10.x, 0.0, 1.0); // 0=noise on always, 1=noise off when quiet
 
     // === CHLADNI CYMATIC FIELD (with domain warp + FBM blend) ===
     vec2 plate = (uv - 0.5) * 2.0;
@@ -152,10 +154,15 @@ void main()
         noiseUv += (vec2(wx, wy) - 0.5) * noiseWarp;
     }
 
+    // Idle gate: scales noise (and grain) when audio is quiet.
+    // idleAmount=0 means noise full strength always; =1 means noise off
+    // when quiet, full when peak. Uses gated loudness as the activity signal.
+    float idleGate = mix(1.0, peakEnergy, idleAmount);
+
     // FBM noise blended into the cymatic field for material grain
     float n = fbm(noiseUv * noiseScaleP + t * 0.1 * noiseSpeed, noiseOctaves) - 0.5;
     n = sign(n) * pow(abs(n) * 2.0, noiseContrast) * 0.5;
-    cymatic += n * noiseIntensity;
+    cymatic += n * noiseIntensity * idleGate;
 
     // Smooth vs jagged line: lineSmoothness multiplies the antialiased edge width.
     // Low smoothness (0.3-1) = sharp/jagged. High smoothness (3-8) = soft/smooth halo.
@@ -220,10 +227,13 @@ void main()
     // Background floor (dark base on which film grain rides)
     color = max(color, vec3(0.008, 0.007, 0.006));
 
-    // Film grain � applied AFTER background floor so it textures the dark areas too
+    // Film grain: positive-only so it visibly textures dark/black areas
+    // (was bipolar (g-0.5) which clamped negative half to nothing on black).
+    // Idle-gated softly so background quiets when audio is silent.
     if (grainAmount > 0.001) {
         float g = hash21(uv * 400.0 + vec2(t * 60.0, t * 47.0));
-        color += (g - 0.5) * grainAmount;
+        float grainGate = mix(1.0, peakEnergy, idleAmount * 0.7);
+        color += vec3(g * grainAmount * grainGate);
     }
 
     fragColor = TDOutputSwizzle(vec4(color, 1.0));
