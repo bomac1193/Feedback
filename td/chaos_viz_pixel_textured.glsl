@@ -102,20 +102,27 @@ void main()
     vec2 plate = (uv - 0.5) * 2.0;
     plate.x *= displayAspect;
 
-    // Domain warp from audio (uChaos.xy) — scaled by audioDepth
-    vec2 audioWarp = vec2(uChaos.x, uChaos.y) * warpAmount
-                     * (1.0 + loudness * 2.0) * audioDepth;
+    // PEAK-DRIVEN AUDIO REACTIVITY
+    // All audio influence is multiplied by `loudness` (the gated peak envelope).
+    // When audio is quiet, loudness ~= 0 and visual is static. When a peak hits,
+    // loudness spikes and the cymatic warps, scales, and shifts in lockstep.
+    // The base pattern (when loudness=0) is the unmodulated cymatic.
+
+    float peakEnergy = loudness * audioDepth;
+
+    // Domain warp gated by peak energy (chaos.xy direction, peak amplitude)
+    vec2 audioWarp = vec2(uChaos.x, uChaos.y) * warpAmount * peakEnergy * 4.0;
     plate += audioWarp;
 
-    // Audio scale (breath: expand/contract pulse) — scaled by audioDepth
-    float audioScale = 1.0 + (loudness * 0.25 + uParams1.z * 0.15) * audioDepth;
+    // Audio scale pulse — peak gated
+    float audioScale = 1.0 + peakEnergy * 0.6;
     plate *= audioScale;
 
-    // Mode shift from audio — scaled by audioDepth
-    float baseN = 2.0 + abs(uChaos.x) * 0.1 * audioDepth;
-    float baseM = 3.0 + abs(uChaos.y) * 0.08 * audioDepth;
-    // Drift sliding from chaos.z — scaled by audioDepth
-    float drift = t * 0.1 + uChaos.z * 0.5 * audioDepth;
+    // Mode shift gated by peak (chaos position is direction, loudness is gate)
+    float baseN = 2.0 + abs(uChaos.x) * peakEnergy * 0.4;
+    float baseM = 3.0 + abs(uChaos.y) * peakEnergy * 0.3;
+    // Drift gated by peak — chaos.z direction, peak amplitude
+    float drift = t * 0.1 + uChaos.z * peakEnergy * 1.5;
 
     int hCount = int(harmonicCount + 0.5);
     float cymatic = 0.0;
