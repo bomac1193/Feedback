@@ -99,7 +99,8 @@ void main()
     float noiseContrast  = max(uParams9.y, 0.05);  // power applied to noise
     int   noiseOctaves   = int(clamp(uParams9.z, 1.0, 8.0));
     float noiseWarp      = clamp(uParams9.w, 0.0, 1.0); // domain warp via noise itself
-    float idleAmount     = clamp(uParams10.x, 0.0, 1.0); // 0=noise on always, 1=noise off when quiet
+    float idleAmount        = clamp(uParams10.x, 0.0, 1.0); // 0=noise on always, 1=noise off when quiet
+    float noiseContrastIdle = max(uParams10.y, 0.05);       // contrast value when audio is idle
 
     // === CHLADNI CYMATIC FIELD (with domain warp + FBM blend) ===
     vec2 plate = (uv - 0.5) * 2.0;
@@ -159,9 +160,12 @@ void main()
     // when quiet, full when peak. Uses gated loudness as the activity signal.
     float idleGate = mix(1.0, peakEnergy, idleAmount);
 
-    // FBM noise blended into the cymatic field for material grain
+    // FBM noise blended into the cymatic field for material grain.
+    // Contrast lerps between idle and peak values: idle = sharper/higher,
+    // peak = soft/lower (or whatever user sets).
+    float effectiveContrast = mix(noiseContrastIdle, noiseContrast, peakEnergy);
     float n = fbm(noiseUv * noiseScaleP + t * 0.1 * noiseSpeed, noiseOctaves) - 0.5;
-    n = sign(n) * pow(abs(n) * 2.0, noiseContrast) * 0.5;
+    n = sign(n) * pow(abs(n) * 2.0, effectiveContrast) * 0.5;
     cymatic += n * noiseIntensity * idleGate;
 
     // Smooth vs jagged line: lineSmoothness multiplies the antialiased edge width.

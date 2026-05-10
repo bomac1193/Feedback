@@ -217,7 +217,7 @@ def onFrameStart(frame):
         viz.par.vec9valuew = comp.par.Noisewarp.eval()
         viz.par.vec10name = "uParams10"
         viz.par.vec10valuex = comp.par.Idleamount.eval()
-        viz.par.vec10valuey = 0.0
+        viz.par.vec10valuey = comp.par.Noisecontrastidle.eval()
         viz.par.vec10valuez = 0.0
         viz.par.vec10valuew = 0.0
     
