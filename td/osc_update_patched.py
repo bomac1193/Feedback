@@ -128,7 +128,25 @@ def onFrameStart(frame):
     raw_y = s.get('y', 0.0)
     raw_z = s.get('z', 0.0)
     raw_loud = s.get('loudness', 0.0)
-    loudness = min(abs(raw_loud) * 3.0, 1.0)
+    raw_loudness = min(abs(raw_loud) * 3.0, 1.0)
+    # Audio gate: only let loudness through above threshold,
+    # with attack/release envelope so visuals catch peaks cleanly.
+    threshold = comp.par.Audiothreshold.eval()
+    attack    = comp.par.Audioattack.eval()
+    release   = comp.par.Audiorelease.eval()
+    prev_gate = s.get('_gate', 0.0)
+    target_gate = max(0.0, raw_loudness - threshold) / max(1.0 - threshold, 0.001)
+    target_gate = min(target_gate, 1.0)
+    dt = 1.0 / 60.0
+    if target_gate > prev_gate:
+        # attack toward target
+        step = dt / max(attack, 0.001)
+        loudness = min(prev_gate + step, target_gate)
+    else:
+        # release toward 0
+        step = dt / max(release, 0.001)
+        loudness = max(prev_gate - step, target_gate)
+    s['_gate'] = loudness
     
     dx = abs(raw_x - _prev_x)
     dy = abs(raw_y - _prev_y)
