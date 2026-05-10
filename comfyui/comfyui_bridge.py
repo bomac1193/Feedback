@@ -35,7 +35,7 @@ import base64
 # "replicate" = Replicate cloud API (~$0.003/image, no downloads)
 # "fal"       = fal.ai cloud (needs active billing)
 # "local"     = local ComfyUI on localhost:8000 (free, needs 21GB download)
-BACKEND = "replicate"
+BACKEND = "local"
 
 # Replicate config
 REPLICATE_TOKEN = os.environ.get("REPLICATE_API_TOKEN", "")
@@ -73,7 +73,7 @@ def find_latest_frame():
 
 
 # Workflow paths (local mode only)
-WORKFLOW_DIR = "D:/Visuals/Touchdesigner/Projects/Feedback/comfyui"
+WORKFLOW_DIR = "D:/Visuals/Touchdesigner/Projects/Feedback/comfyui/workflows"
 WORKFLOWS = {
     "flux_bootstrap":   os.path.join(WORKFLOW_DIR, "workflow_flux_bootstrap.json"),
     "flux_img2img":     os.path.join(WORKFLOW_DIR, "workflow_flux_img2img.json"),
@@ -108,9 +108,15 @@ USE_ALABO_LORA = True
 ALABO_TRIGGER = "alabo_eye"
 ALABO_LORA_STRENGTH = 1.0  # 0.6-1.2 sensible range; lower = subtler
 
-# Min seconds between requests. Alabo (FLUX-dev + LoRA) takes ~5-8s and costs
-# ~$0.04/frame, so pace it slower than schnell's 2s budget to keep cost sane.
-MIN_INTERVAL = 8.0 if USE_ALABO_LORA else 2.0
+# Min seconds between requests.
+# - local + alabo LoRA on FLUX Schnell: ~1.5-2s/frame, free.
+# - replicate + alabo (FLUX-dev base): ~5-8s/frame, ~$0.04 each, pace slower.
+if BACKEND == "local":
+    MIN_INTERVAL = 2.0
+elif USE_ALABO_LORA:
+    MIN_INTERVAL = 8.0
+else:
+    MIN_INTERVAL = 2.0
 BASE_SEED = 42
 MAX_COST = 1.00       # Stop generating after spending this much ($)
 
