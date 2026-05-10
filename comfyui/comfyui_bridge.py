@@ -41,6 +41,8 @@ BACKEND = "replicate"
 REPLICATE_TOKEN = os.environ.get("REPLICATE_API_TOKEN", "")
 REPLICATE_SCHNELL_URL = "https://api.replicate.com/v1/models/black-forest-labs/flux-schnell/predictions"
 REPLICATE_IMG2IMG_URL = "https://api.replicate.com/v1/models/bxclib2/flux_img2img/predictions"
+# Trained alabo_eye LoRA (FLUX.1-dev base, ostris flux-dev-lora-trainer)
+REPLICATE_ALABO_URL = "https://api.replicate.com/v1/models/bomac1193/alabo-eye-flux/predictions"
 
 # fal.ai config (backup — needs billing top-up)
 FAL_KEY = os.environ.get("FAL_KEY", "")
@@ -102,11 +104,13 @@ MODE = "flux_img2img"  # "flux_img2img" | "flux_controlnet" | "sdxl_latent"
 #            and prepends "alabo_eye, " to every prompt as the trigger token.
 # Set this to True after dropping alabo_eye_v1.safetensors into
 # D:/Visuals/ComfyUI/models/loras/
-USE_ALABO_LORA = False
+USE_ALABO_LORA = True
 ALABO_TRIGGER = "alabo_eye"
 ALABO_LORA_STRENGTH = 1.0  # 0.6-1.2 sensible range; lower = subtler
 
-MIN_INTERVAL = 2.0    # Seconds between requests
+# Min seconds between requests. Alabo (FLUX-dev + LoRA) takes ~5-8s and costs
+# ~$0.04/frame, so pace it slower than schnell's 2s budget to keep cost sane.
+MIN_INTERVAL = 8.0 if USE_ALABO_LORA else 2.0
 BASE_SEED = 42
 MAX_COST = 1.00       # Stop generating after spending this much ($)
 
@@ -217,6 +221,7 @@ MEDIA_TRANSITION = [
 # encode topology and force connection. Surveying is the rationalist
 # descendant of this 5,000-year tradition.
 MEDIA_GEOMANTIC = [
+    # Pure earth-mark divination figures (no human present)
     "photograph of Yoruba ifa odu binary marks pressed into pale cornmeal on dark wood, four-line geometric figures arranged in concentric ring, ritual sand drawing",
     "macro photograph of Madagascar sikidy tableau drawn in red sand on dark earth, sixteen geometric four-line figures arranged in tableau grid, single mark per row",
     "photograph of Arabic khatt al-raml chart on black slate, sixteen geomantic figures of four binary marks each, fine pale dust drawn lines, palm-nut casting marks scattered",
@@ -224,6 +229,16 @@ MEDIA_GEOMANTIC = [
     "photograph of Vodou veve drawn in cornmeal on packed dark earth, geometric cosmogram with concentric rings and crossing diagonal lines, ritual ground drawing for spirit invocation",
     "macro photograph of four-line geomantic figure self-organizing in ferrofluid under sustained magnetic field, binary marks emerging from metallic liquid on dark glass, divination figure",
     "photograph of bismuth crystal terraces forming spontaneous four-line geomantic figure, oxidation rainbow surface revealing recursive binary structure on dark metal, geometric divination grid",
+    # Surveying lineage (rationalist branch of geomancy)
+    "long exposure photograph of plumb bob and theodolite traces on dark surveyor's slate, fine white isopleth contour lines and intersecting baselines forming Euclidean field measurement, mathematical beauty",
+    "photograph of cadastral survey marks scratched into pale ochre dust on black earth, triangulation network of fine lines with corner monuments, geodesic figure drawn at one to one scale",
+    # Figure within figure (works with alabo portrait training)
+    "cinematic portrait of a single dark-skinned figure traced in fine pale dust on black ground, lusona Eulerian outline forming the silhouette, single continuous line drawn in chalk, dark cinematic, geometric pattern",
+    "long exposure photograph of a hand drawing closed lusona figure in pale cornmeal on dark earth, fingers and chalk and the unfolding line all sharp, single light source from above, mathematical beauty",
+    "macro photograph of palm-nut casting marks on black slate next to half-completed sikidy tableau, four binary rows partially filled, ritual divination in process, dark cinematic, shallow depth of field",
+    # Ferrofluid + magnetic + geomantic hybrid (carries audio reactivity feel)
+    "macro photograph of ferrofluid forming closed lusona Eulerian path under traveling magnetic field, single unbroken metallic line drawing itself across dark glass, no crossings, divination figure emerging from liquid",
+    "photograph of iron filings on dark plate forming Yoruba odu binary marks under magnetic stencil, four-line geometric figure crisp at the edges, single overhead light, mathematical beauty",
 ]
 
 DENSITY_HIGH = "dense, filling the frame, forms overlapping at multiple scales"
@@ -244,15 +259,19 @@ def build_flux_prompt():
     x = state.chaos_x
 
     # --- Medium selection ---
-    # Rotate through pool slowly for visual stability
+    # Rotate slowly through whichever pool is active; geomantic pool is now
+    # 14 entries so it gets its own modulus.
     pool_idx = (state.frame_count // 8) % 7
+    geo_idx = (state.frame_count // 8) % len(MEDIA_GEOMANTIC)
 
-    # When the system locks into deep coherence (Kuramoto r > 0.85),
-    # topology becomes legible as figure: pull from the geomantic pool.
-    # This is the moment veves and ifa odu and lusona earn their visual
-    # presence. Otherwise fall through to the warm/cool/transition logic.
-    if state.kuramoto_r > 0.85:
-        medium = MEDIA_GEOMANTIC[pool_idx]
+    # Geomantic pool fires when the system either locks into coherence
+    # (Kuramoto r > 0.7) or is hit by a hard audio peak (loudness > 0.6).
+    # 0.85 was practically unreachable; 0.7 is real-world common during
+    # held tones, and the peak path catches transients regardless of sync.
+    # Either way, this is the moment veves / ifa odu / lusona earn their
+    # visual presence over the warm/cool/transition material pools.
+    if state.kuramoto_r > 0.7 or state.loudness > 0.6:
+        medium = MEDIA_GEOMANTIC[geo_idx]
     elif x > 5:
         medium = MEDIA_WARM[pool_idx]
     elif x < -5:
@@ -436,6 +455,43 @@ def generate_replicate_schnell(params):
     dest = LATEST_FRAME_FILE
     if download_image(str(img_url), dest):
         state.total_cost += 0.003
+        return dest
+    return None
+
+
+def generate_replicate_alabo(params):
+    """Generate via the user's hosted alabo_eye LoRA (FLUX-dev base).
+    Slower (~5-8s) and pricier (~$0.04/frame) than schnell, but applies the
+    trained Alabo visual identity. Trigger word is prepended in build_flux_prompt
+    when USE_ALABO_LORA is True. txt2img only (this endpoint does not accept
+    an image input)."""
+    payload = {
+        "input": {
+            "prompt": params["prompt"],
+            "num_outputs": 1,
+            "aspect_ratio": "16:9",
+            "output_format": "png",
+            "output_quality": 90,
+            "num_inference_steps": 28,
+            "guidance_scale": 3.5,
+            "lora_scale": ALABO_LORA_STRENGTH,
+            "seed": params["seed"],
+        }
+    }
+
+    result = replicate_request(REPLICATE_ALABO_URL, payload)
+    if result is None:
+        return None
+
+    output = result.get("output", [])
+    if not output:
+        print(f"[Bridge/replicate] No output in alabo response")
+        return None
+
+    img_url = output[0] if isinstance(output, list) else output
+    dest = LATEST_FRAME_FILE
+    if download_image(str(img_url), dest):
+        state.total_cost += 0.04
         return dest
     return None
 
@@ -736,10 +792,13 @@ def generate_replicate():
     try:
         params = map_chaos_to_params()
 
-        # Always use Schnell txt2img (cheap, fast, great quality)
-        # Prompt continuity provides visual coherence between frames
-        result_path = generate_replicate_schnell(params)
-        mode_label = "replicate_schnell"
+        # Route by toggle: alabo LoRA endpoint (slow, identity) vs schnell (fast, generic)
+        if USE_ALABO_LORA:
+            result_path = generate_replicate_alabo(params)
+            mode_label = "replicate_alabo"
+        else:
+            result_path = generate_replicate_schnell(params)
+            mode_label = "replicate_schnell"
 
         if result_path:
             state.frame_count += 1
