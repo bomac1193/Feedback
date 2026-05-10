@@ -1,4 +1,4 @@
-# osc_update — per-frame driver for chaos_viz + lusona progress
+# osc_update â€” per-frame driver for chaos_viz + lusona progress
 # Reads custom params on feedback_viz COMP + OSC In CHOP
 import time as _time
 import math as _math
@@ -192,6 +192,11 @@ def onFrameStart(frame):
         viz.par.vec8valuey = comp.par.Noisescale.eval()
         viz.par.vec8valuez = comp.par.Harmonics.eval()
         viz.par.vec8valuew = comp.par.Audiodepth.eval()
+        viz.par.vec9name = "uParams9"
+        viz.par.vec9valuex = comp.par.Noisespeed.eval()
+        viz.par.vec9valuey = comp.par.Noisecontrast.eval()
+        viz.par.vec9valuez = comp.par.Noiseoctaves.eval()
+        viz.par.vec9valuew = comp.par.Noisewarp.eval()
     
     # --- Constant CHOP ---
     c = op('/project1/feedback_viz/osc_const')
