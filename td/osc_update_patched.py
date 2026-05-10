@@ -156,6 +156,15 @@ def onFrameStart(frame):
         step = (1.0 / 60.0) / max(cr, 0.001)
         contrast_env = max(prev_c - step, loudness)
     s['_contrast_env'] = contrast_env
+    # Scale envelope: separate release for cymatic scale zoom
+    csr = comp.par.Cymscalerelease.eval()
+    prev_s = s.get('_scale_env', 0.0)
+    if loudness > prev_s:
+        scale_env = loudness
+    else:
+        step = (1.0 / 60.0) / max(csr, 0.001)
+        scale_env = max(prev_s - step, loudness)
+    s['_scale_env'] = scale_env
     
     dx = abs(raw_x - _prev_x)
     dy = abs(raw_y - _prev_y)
@@ -228,7 +237,12 @@ def onFrameStart(frame):
         viz.par.vec10valuex = comp.par.Idleamount.eval()
         viz.par.vec10valuey = comp.par.Noisecontrastidle.eval()
         viz.par.vec10valuez = s.get("_contrast_env", 0.0)
-        viz.par.vec10valuew = 0.0
+        viz.par.vec10valuew = s.get('_scale_env', 0.0)
+        viz.par.vec11name = 'uParams11'
+        viz.par.vec11valuex = comp.par.Cymscalepeak.eval()
+        viz.par.vec11valuey = 0.0
+        viz.par.vec11valuez = 0.0
+        viz.par.vec11valuew = 0.0
     
     # --- Constant CHOP ---
     c = op('/project1/feedback_viz/osc_const')

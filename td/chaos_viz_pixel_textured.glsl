@@ -21,6 +21,7 @@ uniform vec4 uParams7;
 uniform vec4 uParams8;
 uniform vec4 uParams9;
 uniform vec4 uParams10;
+uniform vec4 uParams11;
 
 layout(location = 0) out vec4 fragColor;
 
@@ -101,6 +102,8 @@ void main()
     float noiseWarp      = clamp(uParams9.w, 0.0, 1.0); // domain warp via noise itself
     float idleAmount        = clamp(uParams10.x, 0.0, 1.0); // 0=noise on always, 1=noise off when quiet
     float noiseContrastIdle = max(uParams10.y, 0.05);       // contrast value when audio is idle
+    float scaleEnv          = clamp(uParams10.w, 0.0, 1.0); // scale envelope (peak-driven, slow release)
+    float cymScalePeak      = max(uParams11.x, 0.01);       // target pattern scale at audio peak
 
     // === CHLADNI CYMATIC FIELD (with domain warp + FBM blend) ===
     vec2 plate = (uv - 0.5) * 2.0;
@@ -140,8 +143,11 @@ void main()
         float ni = baseN + fi * 1.3 + sin(drift + fi) * 0.5;
         float mi = baseM + fi * 0.9 + cos(drift * 0.7 + fi) * 0.5;
         float w = 1.0 / (1.0 + fi * 0.5);
-        // cymScale shrinks/grows the plate sampling � smaller = bigger pattern
-        cymatic += w * chladni(plate * 0.5 / cymScale, ni, mi);
+        // cymScale shrinks/grows the plate sampling. effectiveCymScale lerps
+        // toward cymScalePeak when audio peaks (scaleEnv high), back to cymScale
+        // when idle (scaleEnv low). Release controlled by Cymscalerelease.
+        float effectiveCymScale = mix(cymScale, cymScalePeak, scaleEnv);
+        cymatic += w * chladni(plate * 0.5 / effectiveCymScale, ni, mi);
         wSum += w;
     }
     cymatic /= max(wSum, 0.001);
