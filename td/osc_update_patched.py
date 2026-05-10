@@ -191,7 +191,7 @@ def onFrameStart(frame):
         viz.par.vec8valuex = comp.par.Cymscale.eval()
         viz.par.vec8valuey = comp.par.Noisescale.eval()
         viz.par.vec8valuez = comp.par.Harmonics.eval()
-        viz.par.vec8valuew = 0.0
+        viz.par.vec8valuew = comp.par.Audiodepth.eval()
     
     # --- Constant CHOP ---
     c = op('/project1/feedback_viz/osc_const')
