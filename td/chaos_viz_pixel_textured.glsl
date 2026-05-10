@@ -87,6 +87,7 @@ void main()
     float materialWarmth = uParams6.x;
     float grainAmount    = uParams6.y;
     float lineTextureOn  = uParams6.z;
+    float turbulence     = clamp(uParams6.w, 0.0, 2.0); // ambient non-gated motion
     float cymLineWidth   = max(uParams7.x, 0.1);   // multiplier on cymatic line core width
     vec3  cymColorRGB    = uParams7.yzw;            // cymatic line color RGB
     float cymScale       = max(uParams8.x, 0.01);  // pattern scale (1 = default, 0.01 = tiny)
@@ -109,20 +110,23 @@ void main()
     // The base pattern (when loudness=0) is the unmodulated cymatic.
 
     float peakEnergy = loudness * audioDepth;
+    // Combined energy = strong peak pulses + gentle baseline turbulence
+    float chaosEnergy = peakEnergy + turbulence * 0.3;
 
-    // Domain warp gated by peak energy (chaos.xy direction, peak amplitude)
-    vec2 audioWarp = vec2(uChaos.x, uChaos.y) * warpAmount * peakEnergy * 4.0;
+    // Domain warp: peak-gated AND turbulence baseline
+    vec2 audioWarp = vec2(uChaos.x, uChaos.y) * warpAmount * chaosEnergy * 4.0;
     plate += audioWarp;
 
-    // Audio scale pulse — peak gated
-    float audioScale = 1.0 + peakEnergy * 0.6;
+    // Audio scale pulse: peak-gated, turbulence adds tiny baseline breath
+    float audioScale = 1.0 + peakEnergy * 0.6 + turbulence * 0.05;
     plate *= audioScale;
 
-    // Mode shift gated by peak (chaos position is direction, loudness is gate)
-    float baseN = 2.0 + abs(uChaos.x) * peakEnergy * 0.4;
-    float baseM = 3.0 + abs(uChaos.y) * peakEnergy * 0.3;
-    // Drift gated by peak — chaos.z direction, peak amplitude
-    float drift = t * 0.1 + uChaos.z * peakEnergy * 1.5;
+    // Mode shift: combined peak + turbulence
+    float baseN = 2.0 + abs(uChaos.x) * chaosEnergy * 0.4;
+    float baseM = 3.0 + abs(uChaos.y) * chaosEnergy * 0.3;
+    // Drift: turbulence keeps the pattern slowly flowing even when audio is quiet
+    float drift = t * 0.1 + uChaos.z * chaosEnergy * 1.5
+                  + t * turbulence * 0.3;
 
     int hCount = int(harmonicCount + 0.5);
     float cymatic = 0.0;

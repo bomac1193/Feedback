@@ -199,7 +199,7 @@ def onFrameStart(frame):
         viz.par.vec6valuex = comp.par.Materialwarmth.eval()
         viz.par.vec6valuey = comp.par.Grainamount.eval()
         viz.par.vec6valuez = comp.par.Linetexture.eval()
-        viz.par.vec6valuew = 0.0
+        viz.par.vec6valuew = comp.par.Turbulence.eval()
         viz.par.vec7name = "uParams7"
         viz.par.vec7valuex = comp.par.Cymlinewidth.eval()
         viz.par.vec7valuey = comp.par.Cymcolorr.eval()
