@@ -173,6 +173,25 @@ def onFrameStart(frame):
         
         # vec5: uParams5 (vignette, 0, 0, 0)
         viz.par.vec5valuex = vignette
+        # Texture sliders -> uniform packing
+        viz.par.vec5valuey = comp.par.Warpamount.eval()
+        viz.par.vec5valuez = comp.par.Noiseintensity.eval()
+        viz.par.vec5valuew = comp.par.Linesmoothness.eval()
+        viz.par.vec6name = "uParams6"
+        viz.par.vec6valuex = comp.par.Materialwarmth.eval()
+        viz.par.vec6valuey = comp.par.Grainamount.eval()
+        viz.par.vec6valuez = comp.par.Linetexture.eval()
+        viz.par.vec6valuew = 0.0
+        viz.par.vec7name = "uParams7"
+        viz.par.vec7valuex = comp.par.Cymlinewidth.eval()
+        viz.par.vec7valuey = comp.par.Cymcolorr.eval()
+        viz.par.vec7valuez = comp.par.Cymcolorg.eval()
+        viz.par.vec7valuew = comp.par.Cymcolorb.eval()
+        viz.par.vec8name = "uParams8"
+        viz.par.vec8valuex = comp.par.Cymscale.eval()
+        viz.par.vec8valuey = comp.par.Noisescale.eval()
+        viz.par.vec8valuez = comp.par.Harmonics.eval()
+        viz.par.vec8valuew = 0.0
     
     # --- Constant CHOP ---
     c = op('/project1/feedback_viz/osc_const')

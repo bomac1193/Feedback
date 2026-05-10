@@ -1,14 +1,14 @@
-// Cymatic Field + Lusona Lines + Dots + Head Glow — TEXTURED EDITION
-// Preserves all original uniform schema; adds FBM noise, domain warp,
-// material grain, audio-amplified warping for clearer reactivity.
+// Cymatic Field + Lusona Lines + Dots + Head Glow — TEXTURED + SLIDERS
+// Live audio reactivity via uChaos (vec0). Slider control via vec5/vec6.
 //
-// vec params (unchanged):
-//   vec0: uChaos (x, y, z, loudness)
-//   vec1: uParams1 (kuramotoR, time, chaosGain, progress)
-//   vec2: uParams2 (lusonaRows, lusonaCols, lusonaMargin, lusonaPoints)
-//   vec3: uParams3 (cymaticBright, lineBright, lineWidth, dotBright)
-//   vec4: uParams4 (headGlow, headX, headY, masterBright)
-//   vec5: uParams5 (vignette, 0, 0, 0)
+// vec params:
+//   vec0: uChaos    (x, y, z, loudness)
+//   vec1: uParams1  (kuramotoR, time, chaosGain, progress)
+//   vec2: uParams2  (lusonaRows, lusonaCols, lusonaMargin, lusonaPoints)
+//   vec3: uParams3  (cymaticBright, lineBright, lineWidth, dotBright)
+//   vec4: uParams4  (headGlow, headX, headY, masterBright)
+//   vec5: uParams5  (vignette, warpAmount, noiseIntensity, lineSmoothness)
+//   vec6: uParams6  (materialWarmth, grainAmount, lineTexture, _)
 
 uniform vec4 uChaos;
 uniform vec4 uParams1;
@@ -16,19 +16,13 @@ uniform vec4 uParams2;
 uniform vec4 uParams3;
 uniform vec4 uParams4;
 uniform vec4 uParams5;
+uniform vec4 uParams6;
+uniform vec4 uParams7;
+uniform vec4 uParams8;
 
 layout(location = 0) out vec4 fragColor;
 
 #define PI 3.14159265359
-
-// Texture knobs (edit these to taste)
-#define WARP_AMOUNT       0.12   // how much audio warps the plate (0=none, 0.3=heavy)
-#define NOISE_SCALE       8.0    // FBM frequency for material grain
-#define NOISE_INTENSITY   0.25   // FBM blend into cymatic field
-#define GRAIN_AMOUNT      0.06   // film grain on top
-#define GRAIN_SCALE       400.0  // grain particle pitch
-#define LINE_TEXTURE      1.0    // 0=clean line, 1=textured stroke
-#define MATERIAL_WARMTH   0.0    // 0=cool blue tint, 1=warm chalk
 
 float hash21(vec2 p) {
     p = fract(p * vec2(123.34, 456.21));
@@ -81,14 +75,27 @@ void main()
     float headGlowP = uParams4.x;
     vec2 headPos = uParams4.yz;
     float masterBright = max(uParams4.w, 0.0);
-    float vignetteAmt = uParams5.x;
+
+    // Slider-driven texture knobs (live from feedback_viz Cymatic page)
+    float vignetteAmt    = uParams5.x;
+    float warpAmount     = uParams5.y;
+    float noiseIntensity = uParams5.z;
+    float lineSmoothness = max(uParams5.w, 0.3);  // 0.3=jagged, 8=very smooth
+    float materialWarmth = uParams6.x;
+    float grainAmount    = uParams6.y;
+    float lineTextureOn  = uParams6.z;
+    float cymLineWidth   = max(uParams7.x, 0.1);   // multiplier on cymatic line core width
+    vec3  cymColorRGB    = uParams7.yzw;            // cymatic line color RGB
+    float cymScale       = max(uParams8.x, 0.1);   // pattern scale (1 = default)
+    float noiseScaleP    = max(uParams8.y, 0.5);   // FBM frequency
+    float harmonicCount  = clamp(uParams8.z, 1.0, 8.0); // number of chladni iterations
 
     // === CHLADNI CYMATIC FIELD (with domain warp + FBM blend) ===
     vec2 plate = (uv - 0.5) * 2.0;
     plate.x *= displayAspect;
 
-    // Domain warp from audio (uChaos.xy) — pattern translates and breathes
-    vec2 audioWarp = vec2(uChaos.x, uChaos.y) * WARP_AMOUNT * (1.0 + loudness * 2.0);
+    // Domain warp from audio (uChaos.xy)
+    vec2 audioWarp = vec2(uChaos.x, uChaos.y) * warpAmount * (1.0 + loudness * 2.0);
     plate += audioWarp;
 
     // Audio scale (breath: expand/contract pulse)
@@ -97,26 +104,38 @@ void main()
 
     float baseN = 2.0 + abs(uChaos.x) * 0.1;
     float baseM = 3.0 + abs(uChaos.y) * 0.08;
-    float drift = t * 0.1 + uChaos.z * 0.5;  // chaos.z slides the drift smoothly
+    float drift = t * 0.1 + uChaos.z * 0.5;
 
+    int hCount = int(harmonicCount + 0.5);
     float cymatic = 0.0;
-    for (int i = 0; i < 3; i++) {
+    float wSum = 0.0;
+    for (int i = 0; i < 8; i++) {
+        if (i >= hCount) break;
         float fi = float(i);
         float ni = baseN + fi * 1.3 + sin(drift + fi) * 0.5;
         float mi = baseM + fi * 0.9 + cos(drift * 0.7 + fi) * 0.5;
-        cymatic += (1.0 / (1.0 + fi * 0.5)) * chladni(plate * 0.5, ni, mi);
+        float w = 1.0 / (1.0 + fi * 0.5);
+        // cymScale shrinks/grows the plate sampling — smaller = bigger pattern
+        cymatic += w * chladni(plate * 0.5 / cymScale, ni, mi);
+        wSum += w;
     }
+    cymatic /= max(wSum, 0.001);
     cymatic *= mix(0.5, 1.0, kr);
 
     // FBM noise blended into the cymatic field for material grain
-    float n = fbm(uv * NOISE_SCALE + t * 0.1) - 0.5;
-    cymatic += n * NOISE_INTENSITY;
+    float n = fbm(uv * noiseScaleP + t * 0.1) - 0.5;
+    cymatic += n * noiseIntensity;
 
-    float fw = fwidth(cymatic);
-    float nodalLine = 1.0 - smoothstep(0.0, fw * 1.5, abs(cymatic));
+    // Smooth vs jagged line: lineSmoothness multiplies the antialiased edge width.
+    // Low smoothness (0.3-1) = sharp/jagged. High smoothness (3-8) = soft/smooth halo.
+    // Line width = how thick the line is; smoothness = how soft the edge is.
+    // Both compose: total threshold = fw * smoothness * width.
+    float fw = max(fwidth(cymatic), 0.0001);
+    float lineThreshold = fw * lineSmoothness * cymLineWidth;
+    float nodalLine = 1.0 - smoothstep(0.0, lineThreshold, abs(cymatic));
 
     // Textural line modulation (chalk/ink stroke feel)
-    if (LINE_TEXTURE > 0.5) {
+    if (lineTextureOn > 0.5) {
         float strokeNoise = fbm(uv * 60.0);
         nodalLine *= mix(0.6, 1.0, strokeNoise);
     }
@@ -145,10 +164,9 @@ void main()
     float hd = length(uv - headPos);
     float headGlow = exp(-hd * hd / 0.001) * headGlowP;
 
-    // === COLOR COMBINE (with material warmth) ===
-    vec3 cymaticCool = vec3(0.92, 0.9, 0.85);
-    vec3 cymaticWarm = vec3(0.98, 0.88, 0.7);
-    vec3 cymaticColor = mix(cymaticCool, cymaticWarm, MATERIAL_WARMTH);
+    // === COLOR COMBINE (cymColorRGB from slider, blended with material warmth) ===
+    vec3 warmTint = vec3(0.98, 0.88, 0.7);
+    vec3 cymaticColor = mix(cymColorRGB, warmTint, materialWarmth * 0.6);
     vec3 lineColor = vec3(0.95, 0.93, 0.88);
     vec3 dotColor = vec3(0.7, 0.68, 0.62);
 
@@ -161,12 +179,6 @@ void main()
     color += dotColor * dotBright * dotBrightP;
     color += vec3(1.0, 0.97, 0.9) * headGlow;
 
-    // Film grain (animated)
-    if (GRAIN_AMOUNT > 0.001) {
-        float g = hash21(uv * GRAIN_SCALE + vec2(t * 60.0, t * 47.0));
-        color += (g - 0.5) * GRAIN_AMOUNT;
-    }
-
     // Vignette
     float vig = 1.0 - length(uv - vec2(0.5)) * vignetteAmt;
     color *= clamp(vig, 0.3, 1.0);
@@ -174,8 +186,14 @@ void main()
     // Master brightness
     color *= masterBright;
 
-    // Background floor
+    // Background floor (dark base on which film grain rides)
     color = max(color, vec3(0.008, 0.007, 0.006));
+
+    // Film grain — applied AFTER background floor so it textures the dark areas too
+    if (grainAmount > 0.001) {
+        float g = hash21(uv * 400.0 + vec2(t * 60.0, t * 47.0));
+        color += (g - 0.5) * grainAmount;
+    }
 
     fragColor = TDOutputSwizzle(vec4(color, 1.0));
 }
